@@ -1,0 +1,13 @@
+import 'package:flutter/material.dart';
+
+class AppColors {
+  static Color primaryColor = const Color(0xff321B0D);
+  static Color secondaryColor = const Color(0xff2E2725);
+  static Color buttonColor = const Color(0xffCD853F);
+  static Color errorColor = const Color(0xffe63737);
+  static Color blackTextColor = Colors.black;
+  static Color whiteTextColor = Colors.white;
+  static Color lightTextColor = const Color(0xff999999);
+  static Color lightGreyColor = Colors.grey.shade400;
+  static Color blueTextColor = const Color(0xff24366F);
+}
