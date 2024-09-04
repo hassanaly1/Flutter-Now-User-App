@@ -3,10 +3,21 @@ import 'package:get/get.dart';
 import 'package:user_app/utils/custom_button.dart';
 import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/utils/reusable_textfield.dart';
+import 'package:user_app/utils/validator.dart';
 import 'package:user_app/views/authentications/login.dart';
 
-class ChangePasswordScreen extends StatelessWidget {
+class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
+
+  @override
+  State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
+}
+
+class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
+  final GlobalKey<FormState> _changePasswordFormKey = GlobalKey<FormState>();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,34 +34,53 @@ class ChangePasswordScreen extends StatelessWidget {
               body: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(height: context.height * 0.15),
-                      Image.asset('assets/images/app-logo.png'),
-                      const SizedBox(height: 16.0),
-                      const CustomTextWidget(
-                        text: 'Enter your new password to access your account',
-                        fontSize: 14.0,
-                        textAlign: TextAlign.center,
-                        fontWeight: FontWeight.w500,
-                        textColor: Colors.white70,
-                        maxLines: 2,
-                      ),
-                      const SizedBox(height: 16.0),
-                      const ReUsableTextField(hintText: 'Password'),
-                      const SizedBox(height: 16.0),
-                      const ReUsableTextField(hintText: 'Confirm Password'),
-                      CustomButton(
-                        buttonText: 'Confirm Password',
-                        onTap: () => Get.offAll(
-                          () => const LoginScreen(),
-                          transition: Transition.size,
-                          duration: const Duration(milliseconds: 400),
+                  child: Form(
+                    key: _changePasswordFormKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(height: context.height * 0.15),
+                        Image.asset('assets/images/app-logo.png'),
+                        const SizedBox(height: 16.0),
+                        const CustomTextWidget(
+                          text:
+                              'Enter your new password to access your account',
+                          fontSize: 14.0,
+                          textAlign: TextAlign.center,
+                          fontWeight: FontWeight.w500,
+                          textColor: Colors.white70,
+                          maxLines: 2,
                         ),
-                      ),
-                      SizedBox(height: context.height * 0.01),
-                    ],
+                        const SizedBox(height: 16.0),
+                        ReUsableTextField(
+                          hintText: 'Password',
+                          controller: _passwordController,
+                          validator: (value) =>
+                              AppValidator.validatePassword(value: value),
+                        ),
+                        const SizedBox(height: 16.0),
+                        ReUsableTextField(
+                          hintText: 'Confirm Password',
+                          controller: _confirmPasswordController,
+                          validator: (value) =>
+                              AppValidator.validatePassword(value: value),
+                        ),
+                        CustomButton(
+                          buttonText: 'Confirm Password',
+                          onTap: () {
+                            if (_changePasswordFormKey.currentState!
+                                .validate()) {
+                              Get.offAll(
+                                () => const LoginScreen(),
+                                transition: Transition.size,
+                                duration: const Duration(milliseconds: 400),
+                              );
+                            }
+                          },
+                        ),
+                        SizedBox(height: context.height * 0.01),
+                      ],
+                    ),
                   ),
                 ),
               ),

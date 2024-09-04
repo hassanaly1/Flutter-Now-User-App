@@ -78,18 +78,18 @@ class ReUsableTextField extends StatelessWidget {
             borderRadius: BorderRadius.circular(8.0),
           ),
           errorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.redAccent),
+            borderSide: BorderSide(color: AppColors.errorColor),
             borderRadius: BorderRadius.circular(8.0),
           ),
           focusedErrorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.redAccent),
+            borderSide: BorderSide(color: AppColors.errorColor),
             borderRadius: BorderRadius.circular(8.0),
           ),
-          errorStyle: const TextStyle(
-            fontSize: 8.0,
+          errorStyle: TextStyle(
+            fontSize: 12.0,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w400,
-            color: Colors.redAccent,
+            color: AppColors.errorColor,
           ),
         ),
       ),

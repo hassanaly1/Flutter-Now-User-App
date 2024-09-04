@@ -9,5 +9,4 @@ class AppColors {
   static Color whiteTextColor = Colors.white;
   static Color lightTextColor = const Color(0xff999999);
   static Color lightGreyColor = Colors.grey.shade400;
-  static Color blueTextColor = const Color(0xff24366F);
 }

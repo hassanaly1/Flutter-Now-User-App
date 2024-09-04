@@ -43,7 +43,7 @@ class CustomButton extends StatelessWidget {
           isLoading ? null : onTap();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: ReUsableContainer(
             width: width,
             verticalPadding: context.height * 0.02,
