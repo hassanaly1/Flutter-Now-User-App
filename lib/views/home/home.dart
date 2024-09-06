@@ -153,8 +153,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: () {
                         if (_controller.userCurrentLocation.value == '') {
                           _controller.getCurrentLocation(
-                              onSuccess: () =>
-                                  Get.to(() => const MySelectLocationScreen()));
+                            onSuccess: () =>
+                                Get.to(() => const MySelectLocationScreen()),
+                          );
                         } else {
                           Get.to(() => const MySelectLocationScreen());
                         }
@@ -215,7 +216,7 @@ class MyRideModuleContainer extends StatelessWidget {
           clipBehavior: Clip.none, // Allows the image to overflow
           children: [
             Container(
-              height: context.height * 0.16,
+              height: context.height * 0.18,
               width: context.width,
               decoration: BoxDecoration(
                 color: AppColors.buttonColor.withOpacity(0.7),
@@ -248,6 +249,7 @@ class MyRideModuleContainer extends StatelessWidget {
             ),
             Positioned(
               top: -context.height * 0.032,
+              bottom: 0,
               // Adjust this value to control how much of the image appears outside
               right: 5,
               // Adjust the horizontal positioning as needed
@@ -281,7 +283,7 @@ class MyCustomModuleContainer extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
         height: context.height * 0.16,
-        width: context.width * 0.42,
+        width: context.width * 0.44,
         decoration: BoxDecoration(
           color: AppColors.buttonColor.withOpacity(0.7),
           borderRadius: BorderRadius.circular(16.0),
@@ -328,7 +330,7 @@ class MyCustomModuleContainer extends StatelessWidget {
                             child: Image.asset(
                               imageUrl,
                               fit: BoxFit.contain,
-                              height: 100,
+                              height: context.height * 0.14,
                             ),
                           ),
                           Positioned(

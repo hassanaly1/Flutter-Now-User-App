@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart'; // For converting coordinates to address
-import 'package:geolocator/geolocator.dart'; // For accessing location services
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/custom_text.dart';
 
 class MyUniversalController extends GetxController {
-  // Observable variable to store the user's current location as a string
   var userCurrentLocation = ''.obs;
 
   // Accepts a callback that defines what to do after getting the location
@@ -57,39 +56,6 @@ class MyUniversalController extends GetxController {
     }
   }
 
-  // Method to get the current location of the user
-  // Future<void> getCurrentLocation() async {
-  //   // Check the current permission status for location access
-  //   LocationPermission permission = await Geolocator.checkPermission();
-  //
-  //   // Request permission if it's not granted
-  //   if (permission == LocationPermission.denied) {
-  //     permission = await Geolocator.requestPermission();
-  //   }
-  //
-  //   // Handle the case when permissions are permanently denied
-  //   if (permission == LocationPermission.deniedForever) {
-  //     userCurrentLocation.value = '';
-  //     showSettingsDialog();
-  //     return;
-  //   }
-  //
-
-  //
-  //   // If permission is granted, get the current position of the device
-  //   Position position = await Geolocator.getCurrentPosition(
-  //     locationSettings: const LocationSettings(
-  //       accuracy: LocationAccuracy.high, // High accuracy for precise location
-  //       distanceFilter:
-  //           100, // Minimum distance in meters before location is updated
-  //     ),
-  //   );
-  //
-  //   // Convert the latitude and longitude to a readable address
-  //   await _getAddressFromLatLng(position);
-  // }
-
-  // Method to convert coordinates into a readable address
   Future<void> _getAddressFromLatLng(Position position) async {
     try {
       // Fetch the address details based on the coordinates

@@ -24,9 +24,9 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
 
   final List<Widget> pages = [
     const HomeScreen(),
-    TabTwo(),
-    TabThree(),
-    TabFour(),
+    const TabTwo(),
+    const TabThree(),
+    const TabFour(),
   ];
 
   @override
@@ -86,6 +86,8 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
 }
 
 class TabTwo extends StatelessWidget {
+  const TabTwo({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -94,7 +96,7 @@ class TabTwo extends StatelessWidget {
         children: [
           Image.asset('assets/images/app-logo-dark.png'),
           // Replace with your image path
-          Text('Search Tab'),
+          const Text('Search Tab'),
         ],
       ),
     );
@@ -102,6 +104,8 @@ class TabTwo extends StatelessWidget {
 }
 
 class TabThree extends StatelessWidget {
+  const TabThree({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -110,7 +114,7 @@ class TabThree extends StatelessWidget {
         children: [
           Image.asset('assets/images/app-logo-dark.png'),
           // Replace with your image path
-          Text('Messages Tab'),
+          const Text('Messages Tab'),
         ],
       ),
     );
@@ -118,6 +122,8 @@ class TabThree extends StatelessWidget {
 }
 
 class TabFour extends StatelessWidget {
+  const TabFour({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -126,7 +132,7 @@ class TabFour extends StatelessWidget {
         children: [
           Image.asset('assets/images/app-logo-dark.png'),
           // Replace with your image path
-          Text('Profile Tab'),
+          const Text('Profile Tab'),
         ],
       ),
     );
