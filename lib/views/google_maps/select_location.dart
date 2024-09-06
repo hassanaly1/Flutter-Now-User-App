@@ -7,6 +7,7 @@ import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/utils/reusable_container.dart';
 import 'package:user_app/utils/searchbar.dart';
+import 'package:user_app/views/google_maps/select_vehicle.dart';
 
 class MySelectLocationScreen extends StatefulWidget {
   const MySelectLocationScreen({super.key});
@@ -66,8 +67,10 @@ class _MySelectLocationScreenState extends State<MySelectLocationScreen> {
                 onCameraIdle: () {
                   if (_controller.currentMapPosition != null) {
                     _controller.addMarker(_controller.currentMapPosition!);
-                    _controller
-                        .getAddressFromLatLng(_controller.currentMapPosition!);
+                    _controller.getAddressFromLatLng(
+                        _controller.currentMapPosition!,
+                        isPickupLocation:
+                            _controller.isSelectingPickupLocation.value);
                   }
                 },
               ),
@@ -104,8 +107,9 @@ class MyShowAddressContainer extends StatelessWidget {
               Visibility(
                 visible: !_controller.isSelectingPickupLocation.value,
                 child: IconButton(
-                  onPressed: () =>
-                      _controller.isSelectingPickupLocation.value = true,
+                  onPressed: () {
+                    _toggleLocations(isSelectingPickupLocation: true);
+                  },
                   icon: Icon(
                     LucideIcons.circleArrowLeft,
                     color: AppColors.buttonColor,
@@ -127,7 +131,13 @@ class MyShowAddressContainer extends StatelessWidget {
                       ),
                       trailing: InkWell(
                         onTap: () {
-                          _controller.isSelectingPickupLocation.value = false;
+                          if (_controller.isSelectingPickupLocation.value) {
+                            _controller.searchController.clear();
+                            _toggleLocations(isSelectingPickupLocation: false);
+                          } else {
+                            Get.to(() => const MySelectVehicleScreen(),
+                                transition: Transition.rightToLeft);
+                          }
                         },
                         child: Icon(
                           LucideIcons.circleArrowRight,
@@ -143,10 +153,18 @@ class MyShowAddressContainer extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                       ),
                       subtitle: CustomTextWidget(
-                        text:
-                            _controller.selectedPickupLocation.value.isNotEmpty
+                        text: _controller.isSelectingPickupLocation.value
+                            ? _controller
+                                    .selectedPickupLocation.value.isNotEmpty
                                 ? _controller.selectedPickupLocation.value
-                                : 'Fetching location...',
+                                : 'Fetching Pickup location...'
+                            : _controller.selectedDestinationLocation.value
+                                    .isNotEmpty
+                                ? _controller.selectedDestinationLocation.value
+                                : _controller
+                                        .selectedDestinationLocation.isEmpty
+                                    ? _controller.selectedPickupLocation.value
+                                    : 'Fetching Drop-off location...',
                         maxLines: 2,
                       ),
                     ),
@@ -158,6 +176,26 @@ class MyShowAddressContainer extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _toggleLocations({required bool isSelectingPickupLocation}) {
+    debugPrint(
+        '-------------------------------------------------------------------------------------');
+    _controller.isSelectingPickupLocation.value = isSelectingPickupLocation;
+    debugPrint(_controller.isSelectingPickupLocation.value.toString());
+    debugPrint(
+        'PickupLocationOnNext: ${_controller.selectedPickupLocation.value}');
+    debugPrint(
+        'DestinationLocationOnNext: ${_controller.selectedDestinationLocation.value}');
+    if (_controller.selectedDestinationLocation.value != '') {
+      if (_controller.selectedPickupLocation.value !=
+          _controller.selectedDestinationLocation.value) {
+        _controller.setCameraLocationFromString(
+            _controller.isSelectingPickupLocation.value
+                ? _controller.selectedPickupLocation.value
+                : _controller.selectedDestinationLocation.value);
+      }
+    }
   }
 }
 

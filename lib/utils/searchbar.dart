@@ -17,9 +17,10 @@ class CustomSearchBar extends StatefulWidget {
 }
 
 class _CustomSearchBarState extends State<CustomSearchBar> {
+  final MyGoogleMapsController _controller = Get.find<MyGoogleMapsController>();
   final GooglePlacesService placesService =
       GooglePlacesService(GOOGLE_MAPS_API_KEY);
-  final TextEditingController _controller = TextEditingController();
+
   final RxList<String> _suggestions = <String>[].obs;
 
   void _onTextChanged(String input) async {
@@ -41,7 +42,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
               child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: TextFormField(
-              controller: _controller,
+              controller: _controller.searchController,
               onChanged: _onTextChanged,
               style: TextStyle(
                 fontFamily: 'Poppins',
@@ -67,7 +68,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                 suffixIcon: InkWell(
                   onTap: () {
                     _suggestions.clear();
-                    _controller.clear();
+                    _controller.searchController.clear();
                   },
                   child: Icon(
                     LucideIcons.circleX,
@@ -121,7 +122,8 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                         ),
                         title: CustomTextWidget(text: _suggestions[index]),
                         onTap: () async {
-                          //   // Handle the tap on a suggestion
+                          FocusManager.instance.primaryFocus
+                              ?.unfocus(); //   // Handle the tap on a suggestion
                           //   debugPrint('Selected Place: ${_suggestions[index]}');
                           // Get the selected place details (latitude, longitude)
                           final placeDetails = await placesService
@@ -141,7 +143,8 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                           }
                           // You can set the selected location, update markers, etc. here
                           // Set the search text and clear suggestions
-                          _controller.text = _suggestions[index];
+                          _controller.searchController.text =
+                              _suggestions[index];
                           _suggestions.clear();
                         },
                       );

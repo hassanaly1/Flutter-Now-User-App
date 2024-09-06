@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:user_app/helpers/profile_avatar.dart';
 import 'package:user_app/utils/custom_text.dart';
 
-class ReUsableAppbar extends StatelessWidget {
+class ReUsableAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Color? iconColor;
   final Color? backgroundColor;
@@ -11,7 +11,7 @@ class ReUsableAppbar extends StatelessWidget {
   final bool showProfileAvatar;
   final Widget? prefixWidget;
 
-  const ReUsableAppbar({
+  const ReUsableAppBar({
     super.key,
     required this.title,
     this.showBackArrow = true,
@@ -23,32 +23,36 @@ class ReUsableAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: backgroundColor,
-      padding: const EdgeInsets.all(12.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          prefixWidget ??
-              IconButton(
-                  onPressed: () => showBackArrow ? Get.back() : null,
-                  icon: Icon(Icons.arrow_back,
-                      color: showBackArrow ? iconColor : Colors.transparent)),
-          Flexible(
-            child: CustomTextWidget(
-              text: title,
-              maxLines: 2,
-              fontWeight: FontWeight.w500,
-              fontSize: 20.0,
-              textColor: Colors.white,
-            ),
-          ),
-          showProfileAvatar
-              ? const ProfileAvatar()
-              : const CircleAvatar(
-                  radius: 22, backgroundColor: Colors.transparent)
-        ],
+    return AppBar(
+      backgroundColor: backgroundColor,
+      elevation: 0,
+      automaticallyImplyLeading: false,
+      // Prevents default back button
+      leading: prefixWidget ??
+          (showBackArrow
+              ? IconButton(
+                  onPressed: () => Get.back(),
+                  icon: Icon(Icons.arrow_back, color: iconColor),
+                )
+              : null),
+      title: CustomTextWidget(
+        text: title,
+        maxLines: 2,
+        fontWeight: FontWeight.w500,
+        fontSize: 20.0,
+        textColor: Colors.white,
       ),
+      centerTitle: true,
+      // Centers the title
+      actions: [
+        showProfileAvatar
+            ? const ProfileAvatar() // Custom profile avatar
+            : const CircleAvatar(
+                radius: 22, backgroundColor: Colors.transparent),
+      ],
     );
   }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

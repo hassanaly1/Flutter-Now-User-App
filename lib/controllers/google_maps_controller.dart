@@ -13,6 +13,7 @@ class MyGoogleMapsController extends GetxController {
   var selectedPickupLocation = ''.obs;
   var selectedDestinationLocation = ''.obs;
   BitmapDescriptor? customMarkerIcon; // Variable to hold custom marker icon
+  final TextEditingController searchController = TextEditingController();
 
   @override
   void onInit() {
@@ -56,6 +57,29 @@ class MyGoogleMapsController extends GetxController {
     }
   }
 
+  void setCameraLocationFromString(String locationString) async {
+    print('locationString: $locationString');
+    List<Location> locations = await locationFromAddress(locationString);
+    if (locations.isNotEmpty) {
+      LatLng positionLatLng =
+          LatLng(locations.first.latitude, locations.first.longitude);
+      addMarker(positionLatLng);
+      // selectedPickupLocation.value = locationString; // Set initial location
+      // Correctly assign the location value based on the selection type
+      if (isSelectingPickupLocation.value) {
+        selectedPickupLocation.value = locationString;
+      } else {
+        selectedDestinationLocation.value = locationString;
+      }
+      if (googleMapsController != null) {
+        googleMapsController!.animateCamera(
+          CameraUpdate.newLatLngZoom(positionLatLng, 15),
+        );
+      }
+      update();
+    }
+  }
+
   void addMarker(LatLng position) {
     markers.clear();
     markers.add(
@@ -67,19 +91,26 @@ class MyGoogleMapsController extends GetxController {
         // Use custom icon if loaded
         draggable: true,
         onDragEnd: (newPosition) async {
-          await getAddressFromLatLng(newPosition); // Update location on drag
+          await getAddressFromLatLng(newPosition,
+              isPickupLocation:
+                  isSelectingPickupLocation.value); // Update location on drag
         },
       ),
     );
   }
 
-  Future<void> getAddressFromLatLng(LatLng position) async {
+  Future<void> getAddressFromLatLng(LatLng position,
+      {required bool isPickupLocation}) async {
     try {
       List<Placemark> placemarks =
           await placemarkFromCoordinates(position.latitude, position.longitude);
       if (placemarks.isNotEmpty) {
-        selectedPickupLocation.value =
-            "${placemarks.first.street}, ${placemarks.first.locality} , ${placemarks.first.country}";
+        isPickupLocation
+            ? selectedPickupLocation.value =
+                "${placemarks.first.street}, ${placemarks.first.locality} , ${placemarks.first.country}"
+            : selectedDestinationLocation.value =
+                "${placemarks.first.street}, ${placemarks.first.locality} , ${placemarks.first.country}";
+        update();
       }
     } catch (e) {
       debugPrint('Error fetching address: $e');
