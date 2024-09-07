@@ -5,7 +5,6 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:user_app/controllers/google_maps_controller.dart';
 import 'package:user_app/services/google_places_service.dart';
 import 'package:user_app/utils/appcolors.dart';
-import 'package:user_app/utils/conts.dart';
 import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/utils/reusable_container.dart';
 
@@ -18,8 +17,7 @@ class CustomSearchBar extends StatefulWidget {
 
 class _CustomSearchBarState extends State<CustomSearchBar> {
   final MyGoogleMapsController _controller = Get.find<MyGoogleMapsController>();
-  final GooglePlacesService placesService =
-      GooglePlacesService(GOOGLE_MAPS_API_KEY);
+  final MyGooglePlacesService placesService = MyGooglePlacesService();
 
   final RxList<String> _suggestions = <String>[].obs;
 
@@ -132,14 +130,13 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                           if (placeDetails != null) {
                             // Update the marker position on the map
                             Get.find<MyGoogleMapsController>()
-                                .addMarker(placeDetails);
+                                .addSingleMarker(placeDetails);
 
                             // Update the map's camera position
                             Get.find<MyGoogleMapsController>()
                                 .googleMapsController
                                 ?.animateCamera(
-                                  CameraUpdate.newLatLng(placeDetails),
-                                );
+                                    CameraUpdate.newLatLng(placeDetails));
                           }
                           // You can set the selected location, update markers, etc. here
                           // Set the search text and clear suggestions

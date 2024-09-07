@@ -7,6 +7,7 @@ import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/utils/reusable_container.dart';
 import 'package:user_app/utils/searchbar.dart';
+import 'package:user_app/utils/toast.dart';
 import 'package:user_app/views/google_maps/select_vehicle.dart';
 
 class MySelectLocationScreen extends StatefulWidget {
@@ -66,7 +67,8 @@ class _MySelectLocationScreenState extends State<MySelectLocationScreen> {
                 rotateGesturesEnabled: true,
                 onCameraIdle: () {
                   if (_controller.currentMapPosition != null) {
-                    _controller.addMarker(_controller.currentMapPosition!);
+                    _controller
+                        .addSingleMarker(_controller.currentMapPosition!);
                     _controller.getAddressFromLatLng(
                         _controller.currentMapPosition!,
                         isPickupLocation:
@@ -135,8 +137,16 @@ class MyShowAddressContainer extends StatelessWidget {
                             _controller.searchController.clear();
                             _toggleLocations(isSelectingPickupLocation: false);
                           } else {
-                            Get.to(() => const MySelectVehicleScreen(),
-                                transition: Transition.rightToLeft);
+                            if (_controller.selectedPickupLocation.value !=
+                                _controller.selectedDestinationLocation.value) {
+                              Get.to(() => const MySelectVehicleScreen(),
+                                  transition: Transition.rightToLeft);
+                            } else {
+                              MyCustomErrorToast(
+                                      title:
+                                          'Please select different Pickup and Drop-off locations')
+                                  .showToast(context);
+                            }
                           }
                         },
                         child: Icon(
