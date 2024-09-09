@@ -8,8 +8,8 @@ import 'package:user_app/utils/conts.dart';
 const String apiKey = GOOGLE_MAPS_API_KEY;
 const String baseUrl = 'https://maps.googleapis.com/maps/api/';
 
-class MyGooglePlacesService {
-  MyGooglePlacesService();
+class MyGoogleMapsService {
+  MyGoogleMapsService();
 
   Future<List<String>> getPlaceSuggestions(String input) async {
     final url = '${baseUrl}place/autocomplete/json?input=$input&key=$apiKey';
@@ -87,5 +87,61 @@ class MyGooglePlacesService {
       return null;
     }
     return null;
+  }
+
+  // Method to get route coordinates from Google Directions API
+  Future<List<LatLng>> getRouteCoordinates(LatLng start, LatLng end) async {
+    final url =
+        '${baseUrl}directions/json?origin=${start.latitude},${start.longitude}&destination=${end.latitude},${end.longitude}&key=$apiKey';
+
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final routes = data['routes'] as List;
+
+        if (routes.isNotEmpty) {
+          final overviewPolyline = routes[0]['overview_polyline']['points'];
+          return _decodePolyline(overviewPolyline);
+        }
+      } else {
+        throw Exception('Failed to fetch route');
+      }
+    } catch (e) {
+      print('Error fetching route: $e');
+    }
+    return [];
+  }
+
+  // Helper method to decode the polyline string into a list of LatLng points
+  List<LatLng> _decodePolyline(String polyline) {
+    List<LatLng> points = [];
+    int index = 0, len = polyline.length;
+    int lat = 0, lng = 0;
+
+    while (index < len) {
+      int b, shift = 0, result = 0;
+      do {
+        b = polyline.codeUnitAt(index++) - 63;
+        result |= (b & 0x1F) << shift;
+        shift += 5;
+      } while (b >= 0x20);
+      int dlat = (result & 1) != 0 ? ~(result >> 1) : (result >> 1);
+      lat += dlat;
+
+      shift = 0;
+      result = 0;
+      do {
+        b = polyline.codeUnitAt(index++) - 63;
+        result |= (b & 0x1F) << shift;
+        shift += 5;
+      } while (b >= 0x20);
+      int dlng = (result & 1) != 0 ? ~(result >> 1) : (result >> 1);
+      lng += dlng;
+
+      points.add(LatLng(lat / 1E5, lng / 1E5));
+    }
+
+    return points;
   }
 }

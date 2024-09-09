@@ -3,12 +3,12 @@ import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:user_app/controllers/universal_controller.dart';
-import 'package:user_app/services/google_places_service.dart';
+import 'package:user_app/services/google_maps_service.dart';
 import 'package:user_app/utils/appcolors.dart';
 
 class MyGoogleMapsController extends GetxController {
   final MyUniversalController universalController = Get.find();
-  MyGooglePlacesService service = MyGooglePlacesService();
+  MyGoogleMapsService googleMapsService = MyGoogleMapsService();
   var isSelectingPickupLocation = true.obs;
 
   var markers = <Marker>{}.obs;
@@ -20,18 +20,36 @@ class MyGoogleMapsController extends GetxController {
   var selectedPickupLocation = ''.obs;
   var selectedDestinationLocation = ''.obs;
 
+  var pickupLatLng = const LatLng(0, 0).obs;
+  var destinationLatLng = const LatLng(0, 0).obs;
+
   BitmapDescriptor? customMarkerIcon;
   final TextEditingController searchController = TextEditingController();
+
+  var calculatedDistance = ''.obs;
+  var calculatedDuration = ''.obs;
+
+  RxString selectedVehicle = ''.obs;
+  final RxInt selectedPriceIndex = 0.obs;
+  RxInt selectedPriceInDollars = 0.obs;
+
+  // List of prices to display in the picker
+  final List<int> prices = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
 
   @override
   void onInit() {
     super.onInit();
-    _loadCustomMarkerIcon();
+    // _loadCustomMarkerIcon();
     _setInitialLocation();
 
     // Listeners to update locations and draw polyline when pickup/destination changes
     ever(selectedPickupLocation, (_) => setLocationsAndDrawPolyline());
     ever(selectedDestinationLocation, (_) => setLocationsAndDrawPolyline());
+  }
+
+  // Function to select a vehicle
+  void selectVehicle(String vehicleInfo) {
+    selectedVehicle.value = vehicleInfo;
   }
 
   // Load the custom marker icon from assets
@@ -105,7 +123,9 @@ class MyGoogleMapsController extends GetxController {
         markerId: const MarkerId('current_location'),
         position: position,
         icon: customMarkerIcon ??
-            BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+            BitmapDescriptor.defaultMarkerWithHue(
+              BitmapDescriptor.hueAzure,
+            ),
         draggable: true,
         onDragEnd: (newPosition) async {
           // Update the address when the marker is dragged
@@ -145,13 +165,19 @@ class MyGoogleMapsController extends GetxController {
     _setInitialLocation();
   }
 
+  void onSelectVehicleMapCreated(GoogleMapController controller) {
+    // googleMapsController = controller;
+  }
+
   // Method to Calculate distance and time between two locations
   void calculateDistanceAndTimeFromLatLng(LatLng start, LatLng end) async {
-    var result = await service.getDistanceAndDuration(start, end);
+    var result = await googleMapsService.getDistanceAndDuration(start, end);
 
     if (result != null) {
-      print('Distance: ${result['distance']}');
-      print('Duration: ${result['duration']}');
+      calculatedDistance.value = result['distance'] ?? '';
+      calculatedDuration.value = result['duration'] ?? '';
+      print('CalculatedDistance: ${calculatedDistance.value}');
+      print('CalculatedDuration: ${calculatedDuration.value}');
     } else {
       print('Failed to fetch distance and time.');
     }
@@ -168,6 +194,8 @@ class MyGoogleMapsController extends GetxController {
         // Fetch locations from the selected addresses
         final pickupLocation = selectedPickupLocation.value;
         final destinationLocation = selectedDestinationLocation.value;
+        print('PickUpLocation: $pickupLocation');
+        print('DestinationLocation: $destinationLocation');
 
         // Convert addresses to LatLng
         locationFromAddress(pickupLocation).then((pickupLatLng) {
@@ -197,24 +225,32 @@ class MyGoogleMapsController extends GetxController {
   }
 
   // Draws a polyline between two locations on the map
-  void drawPolyline(LatLng start, LatLng end) {
+  Future<void> drawPolyline(LatLng start, LatLng end) async {
     const String polylineId = 'route_polyline';
+    List<LatLng> routePoints =
+        await googleMapsService.getRouteCoordinates(start, end);
 
     // Create a Polyline object with required properties
     final polyline = Polyline(
       polylineId: const PolylineId(polylineId),
-      color: AppColors.primaryColor,
+      color: AppColors.buttonColor,
       // Polyline color
       width: 5,
+      geodesic: true,
+      jointType: JointType.bevel,
       // Width of the line
-      points: [start, end],
+      // points: [start, end],
+      points: routePoints,
       // LatLng points for the polyline
       visible: true,
     );
 
     // Clear existing polylines and add the new one
-    polylines.clear();
-    polylines.add(polyline);
+
+    if (routePoints.isNotEmpty) {
+      polylines.clear();
+      polylines.add(polyline);
+    }
 
     // Update the map with the new polyline
     update();
@@ -229,14 +265,14 @@ class MyGoogleMapsController extends GetxController {
         markerId: const MarkerId('pickup_location'),
         position: pickupPosition,
         icon: customMarkerIcon ??
-            BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+            BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
         infoWindow: const InfoWindow(title: 'Pickup Location'),
       ),
       Marker(
         markerId: const MarkerId('destination_location'),
         position: destinationPosition,
         icon: customMarkerIcon ??
-            BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+            BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
         infoWindow: const InfoWindow(title: 'Destination Location'),
       ),
     ]);

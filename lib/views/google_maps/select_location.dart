@@ -69,6 +69,13 @@ class _MySelectLocationScreenState extends State<MySelectLocationScreen> {
                   if (_controller.currentMapPosition != null) {
                     _controller
                         .addSingleMarker(_controller.currentMapPosition!);
+                    if (_controller.isSelectingPickupLocation.value) {
+                      _controller.pickupLatLng.value =
+                          _controller.currentMapPosition!;
+                    } else {
+                      _controller.destinationLatLng.value =
+                          _controller.currentMapPosition!;
+                    }
                     _controller.getAddressFromLatLng(
                         _controller.currentMapPosition!,
                         isPickupLocation:
@@ -137,8 +144,15 @@ class MyShowAddressContainer extends StatelessWidget {
                             _controller.searchController.clear();
                             _toggleLocations(isSelectingPickupLocation: false);
                           } else {
-                            if (_controller.selectedPickupLocation.value !=
-                                _controller.selectedDestinationLocation.value) {
+                            if (_controller.destinationLatLng.value ==
+                                const LatLng(0, 0)) {
+                              MyCustomErrorToast(
+                                      title: 'Please select Drop-off location')
+                                  .showToast(context);
+                            } else if (_controller.pickupLatLng.value !=
+                                _controller.destinationLatLng.value) {
+                              print(_controller.pickupLatLng.value);
+                              print(_controller.destinationLatLng.value);
                               Get.to(() => const MySelectVehicleScreen(),
                                   transition: Transition.rightToLeft);
                             } else {

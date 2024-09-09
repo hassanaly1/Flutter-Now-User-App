@@ -44,3 +44,4 @@ app.*.map.json
 
 # MyFiles
 /lib/utils/conts.dart
+/android/app/src/main/AndroidManifest.xml

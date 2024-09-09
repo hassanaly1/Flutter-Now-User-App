@@ -47,46 +47,48 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Image.asset(
-                            'assets/images/app-logo-dark.png',
-                            height: 40,
-                          ),
-                          Visibility(
-                            visible:
-                                _controller.userCurrentLocation.value != '',
-                            child: InkWell(
-                                onTap: () => _controller.getCurrentLocation(),
-                                child: Icon(Icons.location_on,
-                                    color: AppColors.primaryColor)),
-                          ),
-                          const SizedBox(width: 4.0),
-                          Obx(() => Flexible(
-                                child: InkWell(
+                    Obx(
+                      () => Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Image.asset(
+                              'assets/images/app-logo-dark.png',
+                              height: 40,
+                            ),
+                            Visibility(
+                              visible:
+                                  _controller.userCurrentLocation.value != '',
+                              child: InkWell(
                                   onTap: () => _controller.getCurrentLocation(),
-                                  child: CustomTextWidget(
-                                    text: _controller
-                                                .userCurrentLocation.value ==
-                                            ''
-                                        ? ''
-                                        : _controller.userCurrentLocation.value,
-                                    textColor: AppColors.buttonColor,
-                                    maxLines: 2,
-                                  ),
+                                  child: Icon(Icons.location_on,
+                                      color: AppColors.primaryColor)),
+                            ),
+                            const SizedBox(width: 4.0),
+                            Flexible(
+                              child: InkWell(
+                                onTap: () => _controller.getCurrentLocation(),
+                                child: CustomTextWidget(
+                                  text: _controller.userCurrentLocation.value ==
+                                          ''
+                                      ? ''
+                                      : _controller.userCurrentLocation.value,
+                                  textColor: AppColors.buttonColor,
+                                  maxLines: 2,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                              )),
-                          const SizedBox(width: 4.0),
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.notification_add,
-                                color: AppColors.buttonColor,
-                              ))
-                        ],
+                              ),
+                            ),
+                            const SizedBox(width: 4.0),
+                            IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.notification_add,
+                                  color: AppColors.buttonColor,
+                                ))
+                          ],
+                        ),
                       ),
                     ),
                     const SizeBetweenWidgets(),
