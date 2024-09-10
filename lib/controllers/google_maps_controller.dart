@@ -11,15 +11,14 @@ class MyGoogleMapsController extends GetxController {
   MyGoogleMapsService googleMapsService = MyGoogleMapsService();
   var isSelectingPickupLocation = true.obs;
 
-  var markers = <Marker>{}.obs;
-  var polylines = <Polyline>{}.obs;
-
   GoogleMapController? googleMapsController;
   LatLng? currentMapPosition;
 
+  var markers = <Marker>{}.obs;
+  var polylines = <Polyline>{}.obs;
+
   var selectedPickupLocation = ''.obs;
   var selectedDestinationLocation = ''.obs;
-
   var pickupLatLng = const LatLng(0, 0).obs;
   var destinationLatLng = const LatLng(0, 0).obs;
 
