@@ -4,12 +4,12 @@ import 'package:user_app/models/location_model.dart';
 import 'package:user_app/models/review_model.dart';
 import 'package:user_app/models/user_model.dart';
 
-class Ride {
+class MyRideModel {
   final String? id;
-  final User? user;
-  final Driver? driver;
-  final Location? pickupLocation;
-  final Location? dropOffLocation;
+  final MyUserModel? user;
+  final MyDriverModel? driver;
+  final MyLocationModel? pickupLocation;
+  final MyLocationModel? dropOffLocation;
   final DateTime? requestedTime;
   final double? proposedFare;
   final double? agreedFare;
@@ -20,8 +20,8 @@ class Ride {
   final VehicleType? vehicleType;
   final PaymentStatus? paymentStatus;
   final PaymentType? paymentType;
-  final Review? userReview;
-  final Review? driverReview;
+  final MyReviewModel? userReview;
+  final MyReviewModel? driverReview;
   final String? cancellationReason;
   final DateTime? startTime;
   final DateTime? endTime;
@@ -30,7 +30,7 @@ class Ride {
   final bool? isRideStarted;
   final UserType? rideCancelledBy;
 
-  Ride({
+  MyRideModel({
     this.id,
     this.user,
     this.driver,

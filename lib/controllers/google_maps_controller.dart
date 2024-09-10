@@ -17,6 +17,7 @@ class MyGoogleMapsController extends GetxController {
   var markers = <Marker>{}.obs;
   var polylines = <Polyline>{}.obs;
 
+  ///BeforeRide
   var selectedPickupLocation = ''.obs;
   var selectedDestinationLocation = ''.obs;
   var pickupLatLng = const LatLng(0, 0).obs;
@@ -28,12 +29,22 @@ class MyGoogleMapsController extends GetxController {
   var calculatedDistance = ''.obs;
   var calculatedDuration = ''.obs;
 
+  ///Select-Ride-Screen
   RxString selectedVehicle = ''.obs;
   final RxInt selectedPriceIndex = 0.obs;
   RxInt selectedPriceInDollars = 0.obs;
 
   // List of prices to display in the picker
   final List<int> prices = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+
+  ///AfterRide
+  RxBool isDriverArrived = false.obs;
+  Rx<LatLng> driverCurrentLocation = const LatLng(0, 0).obs;
+  Rx<LatLng> userCurrentLocation = const LatLng(0, 0).obs;
+
+  // Mock of the driver's initial location - replace with real-time data from backend or location services
+  LatLng driverInitialLocation =
+      const LatLng(24.9258396433174, 67.09227611185437);
 
   @override
   void onInit() {
@@ -159,7 +170,7 @@ class MyGoogleMapsController extends GetxController {
   }
 
   // Callback when the Google Map is created, sets initial location
-  void onMapCreated(GoogleMapController controller) {
+  void onSelectLocationsMapCreated(GoogleMapController controller) {
     googleMapsController = controller;
     _setInitialLocation();
   }
@@ -279,88 +290,3 @@ class MyGoogleMapsController extends GetxController {
     update(); // Trigger UI update
   }
 }
-// // Method to add markers with text and icon combined
-//   Future<void> addMarkersForPickupAndDestination(
-//       LatLng pickupPosition, LatLng destinationPosition) async {
-//     clearMarkers(); // Clear existing markers
-//
-//     // Create combined marker icons with text and image
-//     BitmapDescriptor pickupIcon = await createCombinedMarkerIcon(
-//         'Pickup Location', 'assets/images/marker.png');
-//     BitmapDescriptor dropoffIcon = await createCombinedMarkerIcon(
-//         'Drop-off Location', 'assets/images/marker.png');
-//
-//     markers.addAll([
-//       Marker(
-//         markerId: const MarkerId('pickup_location'),
-//         position: pickupPosition,
-//         icon: pickupIcon,
-//         infoWindow: const InfoWindow(title: 'Pickup Location'),
-//       ),
-//       Marker(
-//         markerId: const MarkerId('destination_location'),
-//         position: destinationPosition,
-//         icon: dropoffIcon,
-//         infoWindow: const InfoWindow(title: 'Drop-off Location'),
-//       ),
-//     ]);
-//     update(); // Trigger UI update
-//   }
-//
-// // Helper method to create a combined marker icon with text label
-//   Future<BitmapDescriptor> createCombinedMarkerIcon(
-//       String label, String iconPath) async {
-//     // Load the marker icon from assets
-//     final Uint8List markerIcon =
-//         await getBytesFromAsset(iconPath, 100); // Adjust size as needed
-//
-//     // Create a picture recorder for drawing
-//     final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
-//     final Canvas canvas = Canvas(pictureRecorder);
-//
-//     // Draw the marker icon onto the canvas
-//     final ui.Image image = await decodeImageFromList(markerIcon);
-//     canvas.drawImage(image, Offset(0, 40), Paint()); // Adjust offset as needed
-//
-//     // Set up text painter for the label
-//     final TextPainter textPainter = TextPainter(
-//       textDirection: TextDirection.ltr,
-//       textAlign: TextAlign.center,
-//       text: TextSpan(
-//         text: label,
-//         style: TextStyle(
-//           fontSize: 16.0, // Adjust font size as needed
-//           color: Colors.black,
-//           backgroundColor: Colors.white,
-//         ),
-//       ),
-//     );
-//
-//     // Layout the text and position it above the icon
-//     textPainter.layout();
-//     textPainter.paint(
-//         canvas,
-//         Offset(
-//             (image.width - textPainter.width) / 2, 10)); // Adjust positioning
-//
-//     // Convert the combined canvas to an image
-//     final ui.Image finalImage = await pictureRecorder
-//         .endRecording()
-//         .toImage(image.width, image.height + 50);
-//     final byteData =
-//         await finalImage.toByteData(format: ui.ImageByteFormat.png);
-//
-//     // Convert to BitmapDescriptor for use in Google Maps
-//     return BitmapDescriptor.fromBytes(byteData!.buffer.asUint8List());
-//   }
-//
-// // Helper method to load the asset image bytes
-//   Future<Uint8List> getBytesFromAsset(String path, int width) async {
-//     final ByteData data = await rootBundle.load(path);
-//     final codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
-//         targetWidth: width);
-//     final frame = await codec.getNextFrame();
-//     final ByteData? byteData =
-//         await frame.image.toByteData(format: ui.ImageByteFormat.png);
-//     return byteData!.buffer.asUint8List();
-//   }

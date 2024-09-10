@@ -1,4 +1,4 @@
-class Review {
+class MyReviewModel {
   final String id;
   final String rideId;
   final String reviewerId;
@@ -7,7 +7,7 @@ class Review {
   final String comment;
   final DateTime timestamp;
 
-  Review({
+  MyReviewModel({
     required this.id,
     required this.rideId,
     required this.reviewerId,

@@ -1,14 +1,14 @@
 import 'package:user_app/models/location_model.dart';
 
-class AppNotification {
+class MyAppNotificationModel {
   final String id;
   final String title;
   final String message;
   final DateTime timestamp;
   final String userId;
-  final Location location;
+  final MyLocationModel location;
 
-  AppNotification({
+  MyAppNotificationModel({
     required this.id,
     required this.title,
     required this.message,

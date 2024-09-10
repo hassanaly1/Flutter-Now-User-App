@@ -3,7 +3,7 @@ import 'package:user_app/models/location_model.dart';
 import 'package:user_app/models/review_model.dart';
 import 'package:user_app/models/ride_model.dart';
 
-class Driver {
+class MyDriverModel {
   final String id;
   final String name;
   final String email;
@@ -15,18 +15,18 @@ class Driver {
   final UserStatus? status;
   final DateTime accountCreatedDate;
   final DateTime? lastActive;
-  final Location currentLocation;
+  final MyLocationModel currentLocation;
   final String licenseNumber;
   final String vehicleType;
   final String vehicleNumber;
   final String vehicleModel;
   final String insuranceDetails;
   final int totalRidesCompleted;
-  final List<Review>? ratingsReceived;
-  final List<Ride>? rideHistory;
+  final List<MyReviewModel>? ratingsReceived;
+  final List<MyRideModel>? rideHistory;
   final DriverVerification? verification;
 
-  Driver({
+  MyDriverModel({
     required this.id,
     required this.name,
     required this.email,

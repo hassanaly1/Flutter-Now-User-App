@@ -39,7 +39,7 @@ class _MySelectLocationScreenState extends State<MySelectLocationScreen> {
             Obx(
               () => GoogleMap(
                 mapType: MapType.terrain,
-                onMapCreated: _controller.onMapCreated,
+                onMapCreated: _controller.onSelectLocationsMapCreated,
                 initialCameraPosition: CameraPosition(
                   target: _controller.markers.isNotEmpty
                       ? _controller.markers.first.position

@@ -53,6 +53,7 @@ dependencies:
   http: ^1.2.2
   flutter_staggered_animations: ^1.1.1
   shimmer: ^3.0.0
+  custom_rating_bar: ^3.0.0
 
 dev_dependencies:
   flutter_test:
