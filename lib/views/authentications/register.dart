@@ -74,7 +74,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           validator: (value) =>
                               AppValidator.validatePassword(value: value),
                         ),
-                        CustomButton(
+                        MyCustomButton(
                           buttonText: 'Register',
                           onTap: () {
                             if (_registerFormKey.currentState!.validate()) {

@@ -42,23 +42,11 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
             child: TextFormField(
               controller: _controller.searchController,
               onChanged: _onTextChanged,
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                fontSize: 16,
-                fontWeight: FontWeight.w300,
-                color: AppColors.blackTextColor,
-              ),
               decoration: InputDecoration(
                 floatingLabelBehavior: FloatingLabelBehavior.auto,
                 filled: true,
                 fillColor: Colors.transparent,
                 hintText: 'Search for Places',
-                hintStyle: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: 16,
-                  fontWeight: FontWeight.w300,
-                  color: AppColors.blackTextColor,
-                ),
                 prefixIcon: Icon(
                   LucideIcons.search,
                   color: AppColors.blackTextColor,
@@ -80,17 +68,9 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                 focusedBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: Colors.transparent),
                     borderRadius: BorderRadius.circular(8.0)),
-                errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.errorColor),
-                    borderRadius: BorderRadius.circular(8.0)),
                 focusedErrorBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.errorColor),
                     borderRadius: BorderRadius.circular(8.0)),
-                errorStyle: TextStyle(
-                    fontSize: 12.0,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.errorColor),
               ),
             ),
           )),

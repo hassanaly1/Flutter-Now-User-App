@@ -5,7 +5,7 @@ import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/utils/reusable_container.dart';
 
-class CustomButton extends StatelessWidget {
+class MyCustomButton extends StatelessWidget {
   final String buttonText;
   final VoidCallback onTap;
   final Color? textColor;
@@ -18,7 +18,7 @@ class CustomButton extends StatelessWidget {
   final bool hasIcon;
   final String? iconUrl;
 
-  const CustomButton({
+  const MyCustomButton({
     super.key,
     required this.buttonText,
     required this.onTap,

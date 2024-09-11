@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:user_app/utils/appcolors.dart';
 
 class MyCustomDivider extends StatelessWidget {
@@ -26,5 +27,20 @@ class SizeBetweenWidgets extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(height: context.height * 0.02);
+  }
+}
+
+class MyBackIcon extends StatelessWidget {
+  final Color? color;
+
+  const MyBackIcon({super.key, this.color = Colors.black87});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () => Get.back(),
+      icon: const Icon(LucideIcons.arrowLeft),
+      color: color,
+    );
   }
 }

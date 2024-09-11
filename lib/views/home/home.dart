@@ -7,6 +7,7 @@ import 'package:user_app/controllers/universal_controller.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/common_widgets.dart';
 import 'package:user_app/utils/custom_text.dart';
+import 'package:user_app/views/food_delivery/food.dart';
 import 'package:user_app/views/google_maps/select_location.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -164,15 +165,27 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                     const SizeBetweenWidgets(),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        MyCustomModuleContainer(
+                        const MyCustomModuleContainer(
                             text: 'Ride Share',
                             usePadding: true,
                             imageUrl: 'assets/images/ride-share.png'),
                         MyCustomModuleContainer(
-                            text: 'Food', imageUrl: 'assets/images/food.png'),
+                          onTap: () {
+                            if (_controller.userCurrentLocation.value == '') {
+                              _controller.getCurrentLocation(
+                                onSuccess: () =>
+                                    Get.to(() => const MainFoodScreen()),
+                              );
+                            } else {
+                              Get.to(() => const MainFoodScreen());
+                            }
+                          },
+                          text: 'Food',
+                          imageUrl: 'assets/images/food.png',
+                        ),
                       ],
                     ),
                     const Row(
@@ -272,91 +285,98 @@ class MyCustomModuleContainer extends StatelessWidget {
   final String text;
   final String imageUrl;
   final bool usePadding;
+  final VoidCallback? onTap;
 
-  const MyCustomModuleContainer(
-      {super.key,
-      required this.text,
-      required this.imageUrl,
-      this.usePadding = false});
+  const MyCustomModuleContainer({
+    super.key,
+    required this.text,
+    required this.imageUrl,
+    this.usePadding = false,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Container(
-        height: context.height * 0.16,
-        width: context.width * 0.44,
-        decoration: BoxDecoration(
-          color: AppColors.buttonColor.withOpacity(0.7),
-          borderRadius: BorderRadius.circular(16.0),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 2,
-              spreadRadius: 3,
-              offset: const Offset(0, 1),
-              color: AppColors.blackTextColor.withOpacity(0.1),
-            ),
-          ],
-        ),
-        child: Stack(
-          children: [
-            // Wave clipper background
-            ClipPath(
-              clipper: WaveClipperTwo(),
-              child: Container(
-                height: context.height * 0.15,
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          height: context.height * 0.16,
+          width: context.width * 0.44,
+          decoration: BoxDecoration(
+            color: AppColors.buttonColor.withOpacity(0.7),
+            borderRadius: BorderRadius.circular(16.0),
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 2,
+                spreadRadius: 3,
+                offset: const Offset(0, 1),
+                color: AppColors.blackTextColor.withOpacity(0.1),
+              ),
+            ],
+          ),
+          child: Stack(
+            children: [
+              // Wave clipper background
+              ClipPath(
+                clipper: WaveClipperTwo(),
+                child: Container(
+                  height: context.height * 0.15,
+                  decoration: BoxDecoration(
+                    color: AppColors.whiteTextColor.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                ),
+              ),
+              Container(
                 decoration: BoxDecoration(
-                  color: AppColors.whiteTextColor.withOpacity(0.3),
+                  color: Colors.transparent,
                   borderRadius: BorderRadius.circular(16.0),
                 ),
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(16.0),
-              ),
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Expanded(
-                      child: Stack(
-                        alignment: Alignment.bottomRight,
-                        children: [
-                          Padding(
-                            padding: usePadding
-                                ? const EdgeInsets.only(right: 4.0, bottom: 6.0)
-                                : const EdgeInsets.all(0.0),
-                            child: Image.asset(
-                              imageUrl,
-                              fit: BoxFit.contain,
-                              height: context.height * 0.14,
-                            ),
-                          ),
-                          Positioned(
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: CustomTextWidget(
-                                text: text,
-                                textColor: AppColors.whiteTextColor,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w700,
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Expanded(
+                        child: Stack(
+                          alignment: Alignment.bottomRight,
+                          children: [
+                            Padding(
+                              padding: usePadding
+                                  ? const EdgeInsets.only(
+                                      right: 4.0, bottom: 6.0)
+                                  : const EdgeInsets.all(0.0),
+                              child: Image.asset(
+                                imageUrl,
+                                fit: BoxFit.contain,
+                                height: context.height * 0.14,
                               ),
                             ),
-                          ),
-                        ],
+                            Positioned(
+                              left: 0,
+                              right: 0,
+                              bottom: 0,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CustomTextWidget(
+                                  text: text,
+                                  textColor: AppColors.whiteTextColor,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

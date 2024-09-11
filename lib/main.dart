@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/storage_helper.dart';
 import 'package:user_app/views/authentications/onboarding.dart';
-import 'package:user_app/views/google_maps/driver_coming.dart';
+import 'package:user_app/views/home/bottom_navigation_bar.dart';
 
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
     log('IsFirstTime: $isFirstTime');
     return GetMaterialApp(
       // initialBinding: InitialScreenBindings(),
+      debugShowCheckedModeBanner: false,
       title: 'Now-User-App',
       theme: ThemeData(
         appBarTheme:
@@ -35,7 +36,10 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Poppins',
         useMaterial3: true,
       ),
-      home: isFirstTime ? const OnBoardingScreen() : const DriverComingScreen(),
+
+      home: isFirstTime
+          ? const OnBoardingScreen()
+          : const MyBottomNavigationBar(),
     );
   }
 }

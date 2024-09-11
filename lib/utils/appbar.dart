@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:user_app/helpers/profile_avatar.dart';
+import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/custom_text.dart';
 
 class ReUsableAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -38,9 +39,9 @@ class ReUsableAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: CustomTextWidget(
         text: title,
         maxLines: 2,
-        fontWeight: FontWeight.w500,
-        fontSize: 20.0,
-        textColor: Colors.white,
+        fontWeight: FontWeight.w600,
+        fontSize: 18.0,
+        textColor: AppColors.primaryColor,
       ),
       centerTitle: true,
       // Centers the title

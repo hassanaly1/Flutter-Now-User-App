@@ -65,7 +65,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                           validator: (value) =>
                               AppValidator.validatePassword(value: value),
                         ),
-                        CustomButton(
+                        MyCustomButton(
                           buttonText: 'Confirm Password',
                           onTap: () {
                             if (_changePasswordFormKey.currentState!
