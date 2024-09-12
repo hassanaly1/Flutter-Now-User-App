@@ -59,15 +59,7 @@ class _MainFoodScreenState extends State<PopularDealsScreen> {
                       color: AppColors.blackTextColor,
                     ),
                   ),
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    visualDensity: VisualDensity.compact,
-                    onPressed: () {},
-                    icon: const Icon(
-                      LucideIcons.shoppingCart,
-                      color: AppColors.blackTextColor,
-                    ),
-                  ),
+                  const MyCartIcon(),
                 ],
                 expandedHeight: context.height * 0.22,
                 backgroundColor: AppColors.backgroundColor,

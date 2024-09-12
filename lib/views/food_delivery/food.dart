@@ -10,6 +10,7 @@ import 'package:user_app/utils/common_widgets.dart';
 import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/utils/reusable_container.dart';
 import 'package:user_app/views/food_delivery/common_widgets/custom_food_widget.dart';
+import 'package:user_app/views/food_delivery/favourites.dart';
 import 'package:user_app/views/food_delivery/food_description.dart';
 import 'package:user_app/views/food_delivery/popular_deals.dart';
 import 'package:user_app/views/home/home.dart';
@@ -57,21 +58,16 @@ class _MainFoodScreenState extends State<MainFoodScreen> {
                   IconButton(
                     padding: EdgeInsets.zero,
                     visualDensity: VisualDensity.compact,
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(() => const MyFavouritesScreen(),
+                          transition: Transition.upToDown);
+                    },
                     icon: const Icon(
                       LucideIcons.heart,
                       color: AppColors.blackTextColor,
                     ),
                   ),
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    visualDensity: VisualDensity.compact,
-                    onPressed: () {},
-                    icon: const Icon(
-                      LucideIcons.shoppingCart,
-                      color: AppColors.blackTextColor,
-                    ),
-                  ),
+                  const MyCartIcon(),
                 ],
                 expandedHeight: context.height * 0.22,
                 backgroundColor: AppColors.backgroundColor,

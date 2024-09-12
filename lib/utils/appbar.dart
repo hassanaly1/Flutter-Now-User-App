@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:user_app/helpers/profile_avatar.dart';
 import 'package:user_app/utils/appcolors.dart';
+import 'package:user_app/utils/common_widgets.dart';
 import 'package:user_app/utils/custom_text.dart';
 
-class ReUsableAppBar extends StatelessWidget implements PreferredSizeWidget {
+class MyCustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Color? iconColor;
   final Color? backgroundColor;
   final bool showBackArrow;
-  final bool showProfileAvatar;
-  final Widget? prefixWidget;
+  final Widget? leading;
+  final List<Widget>? actions;
 
-  const ReUsableAppBar({
+  const MyCustomAppbar({
     super.key,
     required this.title,
     this.showBackArrow = true,
-    this.showProfileAvatar = true,
     this.iconColor = Colors.white,
     this.backgroundColor = Colors.transparent,
-    this.prefixWidget,
+    this.leading,
+    this.actions,
   });
 
   @override
@@ -29,13 +28,7 @@ class ReUsableAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       automaticallyImplyLeading: false,
       // Prevents default back button
-      leading: prefixWidget ??
-          (showBackArrow
-              ? IconButton(
-                  onPressed: () => Get.back(),
-                  icon: Icon(Icons.arrow_back, color: iconColor),
-                )
-              : null),
+      leading: leading ?? (showBackArrow ? const MyBackIcon() : null),
       title: CustomTextWidget(
         text: title,
         maxLines: 2,
@@ -45,12 +38,7 @@ class ReUsableAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       centerTitle: true,
       // Centers the title
-      actions: [
-        showProfileAvatar
-            ? const ProfileAvatar() // Custom profile avatar
-            : const CircleAvatar(
-                radius: 22, backgroundColor: Colors.transparent),
-      ],
+      actions: actions ?? const [],
     );
   }
 
