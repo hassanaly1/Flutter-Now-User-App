@@ -23,6 +23,7 @@ class MainFoodScreen extends StatefulWidget {
 
 class _MainFoodScreenState extends State<MainFoodScreen> {
   final MyUniversalController _controller = Get.find<MyUniversalController>();
+  final FocusNode _searchFocusNode = FocusNode();
   final CarouselSliderController _carouselController =
       CarouselSliderController();
   final _currentIndex = 0.obs;
@@ -74,7 +75,10 @@ class _MainFoodScreenState extends State<MainFoodScreen> {
                 ],
                 expandedHeight: context.height * 0.22,
                 backgroundColor: AppColors.backgroundColor,
-                bottom: const MyCustomSearchbar(hintText: 'Search for Food'),
+                bottom: MyCustomSearchbar(
+                  hintText: 'Search for Food',
+                  focusNode: _searchFocusNode,
+                ),
               ),
             ];
           },
@@ -221,10 +225,12 @@ class _MainFoodScreenState extends State<MainFoodScreen> {
 
 class MyCustomSearchbar extends StatelessWidget implements PreferredSizeWidget {
   final String hintText;
+  final FocusNode? focusNode;
 
   const MyCustomSearchbar({
     super.key,
     required this.hintText,
+    this.focusNode,
   });
 
   @override
@@ -232,38 +238,44 @@ class MyCustomSearchbar extends StatelessWidget implements PreferredSizeWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ReUsableContainer(
+          height: 55,
+          verticalPadding: 0.0,
+          showBackgroundShadow: false,
+          padding: EdgeInsets.zero,
           child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: TextFormField(
-          decoration: InputDecoration(
-            floatingLabelBehavior: FloatingLabelBehavior.auto,
-            filled: true,
-            fillColor: Colors.transparent,
-            hintText: hintText,
-            prefixIcon: const Icon(
-              LucideIcons.search,
-              color: AppColors.blackTextColor,
-            ),
-            suffixIcon: InkWell(
-              onTap: () {},
-              child: const Icon(
-                LucideIcons.circleX,
-                color: AppColors.blackTextColor,
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: TextFormField(
+              focusNode: focusNode,
+              decoration: InputDecoration(
+                // isDense: true,
+                // floatingLabelBehavior: FloatingLabelBehavior.auto,
+                filled: true,
+                fillColor: Colors.transparent,
+                hintText: hintText,
+                prefixIcon: const Icon(
+                  LucideIcons.search,
+                  color: AppColors.blackTextColor,
+                ),
+                suffixIcon: InkWell(
+                  onTap: () {},
+                  child: const Icon(
+                    LucideIcons.circleX,
+                    color: AppColors.blackTextColor,
+                  ),
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12.0),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.white38),
+                    borderRadius: BorderRadius.circular(8.0)),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.transparent),
+                    borderRadius: BorderRadius.circular(8.0)),
+                focusedErrorBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: AppColors.errorColor),
+                    borderRadius: BorderRadius.circular(8.0)),
               ),
             ),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 12.0),
-            enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.white38),
-                borderRadius: BorderRadius.circular(8.0)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.circular(8.0)),
-            focusedErrorBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: AppColors.errorColor),
-                borderRadius: BorderRadius.circular(8.0)),
-          ),
-        ),
-      )),
+          )),
     );
   }
 
@@ -277,29 +289,26 @@ class FoodCategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: context.height * 0.2,
+      height: context.height * 0.16,
       color: Colors.transparent,
       child: ListView.builder(
         itemCount: 10,
         scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.all(6.0),
-          child: SizedBox(
-            width: context.width * 0.25,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CircleAvatar(
-                  radius: context.height * 0.07,
-                  backgroundImage: const AssetImage('assets/images/food-1.png'),
-                ),
-                CustomTextWidget(
-                  text: 'Category $index',
-                  maxLines: 1,
-                  fontSize: context.height * 0.02,
-                ),
-              ],
-            ),
+        itemBuilder: (context, index) => SizedBox(
+          width: context.width * 0.22,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CircleAvatar(
+                radius: context.height * 0.05,
+                backgroundImage: const AssetImage('assets/images/food-1.png'),
+              ),
+              CustomTextWidget(
+                text: 'Category $index',
+                maxLines: 1,
+                fontSize: context.height * 0.02,
+              ),
+            ],
           ),
         ),
       ),

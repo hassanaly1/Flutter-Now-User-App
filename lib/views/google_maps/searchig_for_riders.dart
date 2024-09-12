@@ -167,7 +167,7 @@ class CustomDriverRequestWidget extends StatelessWidget {
                                   mainAxisSize: MainAxisSize.min,
                                   children: List.generate(
                                     5,
-                                    (index) => Icon(
+                                    (index) => const Icon(
                                       Icons.star,
                                       size: 16.0,
                                       color: AppColors.buttonColor,
@@ -189,7 +189,7 @@ class CustomDriverRequestWidget extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Row(
+                          const Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Icon(
@@ -197,7 +197,7 @@ class CustomDriverRequestWidget extends StatelessWidget {
                                 size: 16.0,
                                 color: AppColors.buttonColor,
                               ),
-                              const SizedBox(width: 4.0),
+                              SizedBox(width: 4.0),
                               CustomTextWidget(
                                 text: '25.99',
                                 fontSize: 16.0,
@@ -207,7 +207,7 @@ class CustomDriverRequestWidget extends StatelessWidget {
                             ],
                           ),
                           const SizedBox(height: 4.0),
-                          Row(
+                          const Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Icon(
@@ -215,8 +215,8 @@ class CustomDriverRequestWidget extends StatelessWidget {
                                 size: 16.0,
                                 color: AppColors.buttonColor,
                               ),
-                              const SizedBox(width: 4.0),
-                              const CustomTextWidget(
+                              SizedBox(width: 4.0),
+                              CustomTextWidget(
                                 text: '12 Minutes',
                                 fontSize: 12.0,
                               ),
@@ -242,14 +242,14 @@ class CustomDriverRequestWidget extends StatelessWidget {
                                   );
                                   showWaitingForDriverDialog();
                                 },
-                                child: Icon(
+                                child: const Icon(
                                   LucideIcons.circleCheck,
                                   size: 32.0,
                                   color: AppColors.successColor,
                                 ),
                               ),
                               const SizedBox(width: 4.0),
-                              Icon(
+                              const Icon(
                                 LucideIcons.circleX,
                                 size: 32.0,
                                 color: AppColors.errorColor,
@@ -273,7 +273,7 @@ class CustomDriverRequestWidget extends StatelessWidget {
 void showWaitingForDriverDialog() {
   Get.defaultDialog(
     title: 'Waiting for Driver',
-    titleStyle: TextStyle(
+    titleStyle: const TextStyle(
       fontSize: 18.0,
       fontWeight: FontWeight.w700,
       color: AppColors.buttonColor,
@@ -287,7 +287,7 @@ void showWaitingForDriverDialog() {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        CustomTextWidget(
+        const CustomTextWidget(
           text: "Waiting for Driver to Accept the Ride",
           fontSize: 18.0,
           maxLines: 2,
@@ -298,7 +298,7 @@ void showWaitingForDriverDialog() {
         const SizedBox(height: 16.0),
         // Adds spacing between message and buttons
         // Optional progress indicator
-        Center(
+        const Center(
             child: SpinKitRipple(
           color: AppColors.buttonColor,
         )),

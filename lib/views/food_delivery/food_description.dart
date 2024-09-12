@@ -8,6 +8,7 @@ import 'package:user_app/utils/common_widgets.dart';
 import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/utils/reusable_container.dart';
 import 'package:user_app/views/food_delivery/common_widgets/custom_food_widget.dart';
+import 'package:user_app/views/food_delivery/restaurant_page.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   const ProductDetailScreen({super.key});
@@ -116,7 +117,7 @@ class ProductDetailScreen extends StatelessWidget {
                             ))
                       ],
                     ),
-                    const SizedBox(height: 8.0),
+                    const SizeBetweenWidgets(),
                     //Price
                     Row(
                       children: [
@@ -147,14 +148,14 @@ class ProductDetailScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8.0),
+                    const SizeBetweenWidgets(),
                     //Title
                     const CustomTextWidget(
                       text: 'Arabian Pasta',
                       fontSize: 18.0,
                       fontWeight: FontWeight.w500,
                     ),
-                    const SizedBox(height: 8.0),
+                    const SizeBetweenWidgets(),
                     //Stock
                     const CustomTextWidget(text: 'Status'),
                     const CustomTextWidget(
@@ -183,7 +184,7 @@ class ProductDetailScreen extends StatelessWidget {
                       fontSize: 16.0,
                       fontWeight: FontWeight.w500,
                     ),
-                    const SizedBox(height: 8.0),
+                    const SizeBetweenWidgets(),
                     const ReadMoreText(
                       'Arabian Pasta is a fusion dish that combines traditional pasta with Middle Eastern flavors, creating a unique and aromatic meal. Typically, this pasta features a rich and creamy sauce infused with spices like cumin, coriander, and cinnamon, alongside ingredients such as garlic, onions, and peppers. Often garnished with toasted pine nuts, fresh herbs, and sometimes topped with grilled chicken or lamb, Arabian Pasta offers a delightful blend of creamy textures and bold, exotic spices, making it a flavorful twist on a classic pasta dish.',
                       trimLines: 2,
@@ -195,7 +196,7 @@ class ProductDetailScreen extends StatelessWidget {
                       lessStyle:
                           TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
                     ),
-                    const SizedBox(height: 8.0),
+                    const SizeBetweenWidgets(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -206,8 +207,38 @@ class ProductDetailScreen extends StatelessWidget {
                         ),
                         IconButton(
                             onPressed: () {},
-                            icon: const Icon(LucideIcons.arrowRight))
+                            icon: const Icon(LucideIcons.arrowRight)),
                       ],
+                    ),
+                    const SizeBetweenWidgets(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const CustomTextWidget(
+                          text: 'More from this Restaurant',
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Get.to(() => const RestaurantPageScreen(),
+                                transition: Transition.rightToLeft);
+                          },
+                          child: const CustomTextWidget(
+                            text: 'See All',
+                            fontSize: 12.0,
+                            maxLines: 2,
+                            fontWeight: FontWeight.w400,
+                            textColor: AppColors.buttonColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizeBetweenWidgets(),
+                    Container(
+                      height: context.height * 0.4,
+                      color: Colors.transparent,
+                      child: const MoreFromThisRestaurant(),
                     )
                   ],
                 ),
@@ -216,6 +247,24 @@ class ProductDetailScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class MoreFromThisRestaurant extends StatelessWidget {
+  const MoreFromThisRestaurant({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: 10,
+      shrinkWrap: true,
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (context, index) {
+        return CustomFoodWidget(
+          onTap: () {},
+        );
+      },
     );
   }
 }

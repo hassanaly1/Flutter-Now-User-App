@@ -27,14 +27,14 @@ class OnBoardingScreen extends StatelessWidget {
                 children: [
                   Image.asset('assets/images/app-logo.png'),
                   const SizeBetweenWidgets(),
-                  CustomTextWidget(
+                  const CustomTextWidget(
                     text: 'Welcome to Now User App',
                     fontSize: 20.0,
                     fontWeight: FontWeight.w500,
                     textColor: AppColors.whiteTextColor,
                   ),
                   const SizedBox(height: 6.0),
-                  CustomTextWidget(
+                  const CustomTextWidget(
                     text: 'Your Ultimate Ride Sharing and Delivery Solution',
                     fontSize: 14.0,
                     fontWeight: FontWeight.w500,

@@ -94,7 +94,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 duration: const Duration(seconds: 1),
                               );
                             },
-                            child: Text.rich(
+                            child: const Text.rich(
                               TextSpan(
                                 text: 'Already have an account? ',
                                 style: TextStyle(

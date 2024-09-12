@@ -105,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               transition: Transition.size,
                               duration: const Duration(milliseconds: 400),
                             ),
-                            child: Text.rich(
+                            child: const Text.rich(
                               TextSpan(
                                 text: 'If you don’t have any account? ',
                                 style: TextStyle(

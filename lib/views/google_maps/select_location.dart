@@ -119,7 +119,7 @@ class MyShowAddressContainer extends StatelessWidget {
                   onPressed: () {
                     _toggleLocations(isSelectingPickupLocation: true);
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     LucideIcons.circleArrowLeft,
                     color: AppColors.buttonColor,
                     size: 40,
@@ -134,7 +134,7 @@ class MyShowAddressContainer extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Obx(
                     () => ListTile(
-                      leading: Icon(
+                      leading: const Icon(
                         LucideIcons.mapPinned,
                         color: AppColors.blackTextColor,
                       ),
@@ -163,7 +163,7 @@ class MyShowAddressContainer extends StatelessWidget {
                             }
                           }
                         },
-                        child: Icon(
+                        child: const Icon(
                           LucideIcons.circleArrowRight,
                           color: AppColors.buttonColor,
                           size: 30,

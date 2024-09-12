@@ -362,7 +362,7 @@ class MyHeaderContainer extends StatelessWidget {
       children: [
         IconButton(
             onPressed: () => Get.back(),
-            icon: Icon(LucideIcons.circleArrowLeft,
+            icon: const Icon(LucideIcons.circleArrowLeft,
                 color: AppColors.buttonColor)),
         CustomTextWidget(
           text: title,

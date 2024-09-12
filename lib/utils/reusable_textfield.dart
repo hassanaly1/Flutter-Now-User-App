@@ -45,7 +45,7 @@ class ReUsableTextField extends StatelessWidget {
         validator: validator,
         maxLines: maxLines,
         obscureText: obscureText,
-        style: TextStyle(
+        style: const TextStyle(
           fontFamily: 'Poppins',
           fontSize: 14,
           fontWeight: FontWeight.w300,
@@ -78,14 +78,14 @@ class ReUsableTextField extends StatelessWidget {
             borderRadius: BorderRadius.circular(8.0),
           ),
           errorBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.errorColor),
+            borderSide: const BorderSide(color: AppColors.errorColor),
             borderRadius: BorderRadius.circular(8.0),
           ),
           focusedErrorBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.errorColor),
+            borderSide: const BorderSide(color: AppColors.errorColor),
             borderRadius: BorderRadius.circular(8.0),
           ),
-          errorStyle: TextStyle(
+          errorStyle: const TextStyle(
             fontSize: 12.0,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w400,

@@ -93,14 +93,14 @@ class MyUniversalController extends GetxController {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomTextWidget(
+          const CustomTextWidget(
             text: "Location Permission Required",
             fontSize: 18.0,
             fontWeight: FontWeight.w700,
             textColor: AppColors.buttonColor,
             textAlign: TextAlign.start,
           ),
-          CustomTextWidget(
+          const CustomTextWidget(
             text:
                 "Location permission is permanently denied. Please enable it from app settings for a better user experience.",
             fontSize: 15.0,
@@ -127,7 +127,7 @@ class MyUniversalController extends GetxController {
                       await Geolocator.openAppSettings();
                       Get.back();
                     },
-                    child: CustomTextWidget(
+                    child: const CustomTextWidget(
                       text: "Open Settings",
                       textColor: AppColors.buttonColor,
                       fontWeight: FontWeight.w700,

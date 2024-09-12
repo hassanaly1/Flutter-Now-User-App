@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   _controller.userCurrentLocation.value != '',
                               child: InkWell(
                                   onTap: () => _controller.getCurrentLocation(),
-                                  child: Icon(Icons.location_on,
+                                  child: const Icon(Icons.location_on,
                                       color: AppColors.primaryColor)),
                             ),
                             const SizedBox(width: 4.0),
@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             const SizedBox(width: 4.0),
                             IconButton(
                                 onPressed: () {},
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.notification_add,
                                   color: AppColors.buttonColor,
                                 ))
@@ -93,8 +93,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     const SizeBetweenWidgets(),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12.0),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 12.0),
                       child: CustomTextWidget(
                         text: 'What are you looking for today?',
                         fontSize: 16.0,
@@ -140,8 +140,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizeBetweenWidgets(),
                     const MyCustomDivider(),
                     const SizeBetweenWidgets(),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12.0),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 12.0),
                       child: CustomTextWidget(
                         text:
                             'Your Dashboard for Book Ride,\n Ride Sharing, Deliveries, and More',
@@ -250,8 +250,8 @@ class MyRideModuleContainer extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12.0),
                   color: AppColors.whiteTextColor.withOpacity(0.3),
-                  child: Align(
-                    alignment: const Alignment(-1, 0.5),
+                  child: const Align(
+                    alignment: Alignment(-1, 0.5),
                     child: CustomTextWidget(
                       text: 'Ride',
                       textColor: AppColors.whiteTextColor,

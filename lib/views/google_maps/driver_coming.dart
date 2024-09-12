@@ -110,7 +110,7 @@ class _DriverComingScreenState extends State<DriverComingScreen> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: List.generate(
                                     5,
-                                    (index) => Icon(
+                                    (index) => const Icon(
                                       Icons.star,
                                       size: 16.0,
                                       color: AppColors.buttonColor,
@@ -136,14 +136,14 @@ class _DriverComingScreenState extends State<DriverComingScreen> {
                         () => _controller.isDriverArrived.value
                             ? InkWell(
                                 onTap: () => showCompleteRideDialog(context),
-                                child: Row(
+                                child: const Row(
                                   children: [
                                     CustomTextWidget(
                                       text: 'Arrived?',
                                       textColor: AppColors.successColor,
                                       fontWeight: FontWeight.w600,
                                     ),
-                                    const SizedBox(width: 4.0),
+                                    SizedBox(width: 4.0),
                                     Icon(
                                       LucideIcons.circleCheck,
                                       size: 24.0,
@@ -155,13 +155,13 @@ class _DriverComingScreenState extends State<DriverComingScreen> {
                             : Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Row(
+                                  const Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Icon(LucideIcons.dollarSign,
                                           size: 16.0,
                                           color: AppColors.buttonColor),
-                                      const SizedBox(width: 4.0),
+                                      SizedBox(width: 4.0),
                                       CustomTextWidget(
                                           text: '25.99',
                                           fontSize: 16.0,
@@ -170,14 +170,14 @@ class _DriverComingScreenState extends State<DriverComingScreen> {
                                     ],
                                   ),
                                   const SizedBox(height: 8.0),
-                                  Row(
+                                  const Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Icon(LucideIcons.timer,
                                           size: 16.0,
                                           color: AppColors.buttonColor),
-                                      const SizedBox(width: 4.0),
-                                      const CustomTextWidget(
+                                      SizedBox(width: 4.0),
+                                      CustomTextWidget(
                                           text: '12 Minutes', fontSize: 12.0),
                                     ],
                                   ),
@@ -187,12 +187,12 @@ class _DriverComingScreenState extends State<DriverComingScreen> {
                                     children: [
                                       InkWell(
                                         onTap: () {},
-                                        child: Icon(LucideIcons.phoneCall,
+                                        child: const Icon(LucideIcons.phoneCall,
                                             size: 32.0,
                                             color: AppColors.primaryColor),
                                       ),
                                       const SizedBox(width: 12.0),
-                                      Icon(LucideIcons.messageCircle,
+                                      const Icon(LucideIcons.messageCircle,
                                           size: 32.0,
                                           color: AppColors.primaryColor),
                                     ],
@@ -231,7 +231,7 @@ void showCompleteRideDialog(BuildContext context) {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'You have Arrived to your Destination',
                     style: TextStyle(
                       fontSize: 18.0,
@@ -240,7 +240,7 @@ void showCompleteRideDialog(BuildContext context) {
                     ),
                   ),
                   const SizedBox(height: 16.0),
-                  Row(
+                  const Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       CustomTextWidget(
@@ -254,7 +254,7 @@ void showCompleteRideDialog(BuildContext context) {
                         size: 22.0,
                         color: AppColors.primaryColor,
                       ),
-                      const SizedBox(width: 2.0),
+                      SizedBox(width: 2.0),
                       CustomTextWidget(
                         text: "25.99",
                         fontSize: 18.0,
@@ -264,7 +264,7 @@ void showCompleteRideDialog(BuildContext context) {
                     ],
                   ),
                   const SizedBox(height: 8.0),
-                  CustomTextWidget(
+                  const CustomTextWidget(
                     text: "How was your trip?",
                     fontSize: 14.0,
                     fontWeight: FontWeight.w500,
@@ -280,7 +280,7 @@ void showCompleteRideDialog(BuildContext context) {
                     maxRating: 5,
                   ),
                   const SizedBox(height: 8.0),
-                  CustomTextWidget(
+                  const CustomTextWidget(
                     text: "Any Comments?",
                     fontSize: 14.0,
                     fontWeight: FontWeight.w500,
@@ -306,11 +306,11 @@ void showCompleteRideDialog(BuildContext context) {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: AppColors.errorColor),
+                            borderSide: const BorderSide(color: AppColors.errorColor),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedErrorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: AppColors.errorColor),
+                            borderSide: const BorderSide(color: AppColors.errorColor),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
@@ -328,7 +328,7 @@ void showCompleteRideDialog(BuildContext context) {
                                   'Ride Completed Successfully, Thank you for using Now Ride Service. You can also explore other services.')
                           .showToast(context);
                     },
-                    child: CustomTextWidget(
+                    child: const CustomTextWidget(
                       text: "Submit Review",
                       fontSize: 16.0,
                       textColor: AppColors.successColor,

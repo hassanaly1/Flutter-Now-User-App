@@ -47,7 +47,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                 filled: true,
                 fillColor: Colors.transparent,
                 hintText: 'Search for Places',
-                prefixIcon: Icon(
+                prefixIcon: const Icon(
                   LucideIcons.search,
                   color: AppColors.blackTextColor,
                 ),
@@ -56,7 +56,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                     _suggestions.clear();
                     _controller.searchController.clear();
                   },
-                  child: Icon(
+                  child: const Icon(
                     LucideIcons.circleX,
                     color: AppColors.blackTextColor,
                   ),
@@ -69,7 +69,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                     borderSide: const BorderSide(color: Colors.transparent),
                     borderRadius: BorderRadius.circular(8.0)),
                 focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.errorColor),
+                    borderSide: const BorderSide(color: AppColors.errorColor),
                     borderRadius: BorderRadius.circular(8.0)),
               ),
             ),
@@ -90,11 +90,11 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                     itemCount: _suggestions.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        leading: Icon(
+                        leading: const Icon(
                           LucideIcons.mapPinned,
                           color: AppColors.blackTextColor,
                         ),
-                        trailing: Icon(
+                        trailing: const Icon(
                           LucideIcons.navigation,
                           color: AppColors.blackTextColor,
                         ),
