@@ -117,7 +117,7 @@ class CustomFoodWidget extends StatelessWidget {
                     CustomTextWidget(
                       text: '\$15.00',
                       maxLines: 1,
-                      fontSize: context.height * 0.025,
+                      fontSize: 18.0,
                       fontWeight: FontWeight.w700,
                       textColor: Colors.black.withOpacity(0.8),
                     ),

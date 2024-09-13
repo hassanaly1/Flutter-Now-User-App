@@ -70,22 +70,22 @@ class CustomButton extends StatelessWidget {
                               const SizedBox(width: 8.0),
                               CustomTextWidget(
                                 text: buttonText,
-                                fontSize: fontSize ?? 16,
+                                fontSize: fontSize ?? 16.0,
                                 textColor: useButtonColor
                                     ? AppColors.whiteTextColor
                                     : AppColors.blackTextColor,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                                 textAlign: TextAlign.center,
                               ),
                             ],
                           )
                         : CustomTextWidget(
                             text: buttonText,
-                            fontSize: fontSize ?? 16,
+                            fontSize: fontSize ?? 16.0,
                             textColor: useButtonColor
                                 ? AppColors.whiteTextColor
                                 : AppColors.blackTextColor,
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.w600,
                             textAlign: TextAlign.center,
                           )),
           ),

@@ -82,7 +82,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                 : null,
                             errorTextStyle: const TextStyle(
                               fontFamily: 'Poppins',
-                              fontSize: 12,
+                              fontSize: 12.0,
                               color: Colors.redAccent,
                             ),
                             pinputAutovalidateMode:
@@ -94,7 +94,7 @@ class _OtpScreenState extends State<OtpScreen> {
                               height: 60,
                               textStyle: const TextStyle(
                                 fontFamily: 'Poppins',
-                                fontSize: 18,
+                                fontSize: 18.0,
                                 fontWeight: FontWeight.w600,
                                 color: Color.fromRGBO(30, 60, 87, 1),
                               ),
@@ -148,7 +148,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                       const CustomTextWidget(
                                         text: 'Didn\'t receive the code?',
                                         textColor: Colors.white54,
-                                        fontSize: 14,
+                                        fontSize: 14.0,
                                       ),
                                       TextButton(
                                         onPressed: () {
@@ -160,7 +160,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                         },
                                         child: const CustomTextWidget(
                                           text: 'Resend OTP',
-                                          fontSize: 16,
+                                          fontSize: 16.0,
                                           textColor: Colors.white70,
                                           fontWeight: FontWeight.w500,
                                         ),

@@ -61,7 +61,7 @@ class ProductDetailScreen extends StatelessWidget {
                   child: const Center(
                       child: CustomTextWidget(
                     text: 'Add to cart',
-                    fontSize: 16,
+                    fontSize: 16.0,
                     textColor: AppColors.blackTextColor,
                     fontWeight: FontWeight.w400,
                     textAlign: TextAlign.center,
@@ -172,7 +172,7 @@ class ProductDetailScreen extends StatelessWidget {
                       child: const Center(
                           child: CustomTextWidget(
                         text: 'Checkout',
-                        fontSize: 16,
+                        fontSize: 16.0,
                         textColor: AppColors.blackTextColor,
                         fontWeight: FontWeight.w400,
                         textAlign: TextAlign.center,
@@ -191,10 +191,10 @@ class ProductDetailScreen extends StatelessWidget {
                       trimMode: TrimMode.Line,
                       trimCollapsedText: 'Show More',
                       trimExpandedText: 'Less',
-                      moreStyle:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
-                      lessStyle:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                      moreStyle: TextStyle(
+                          fontSize: 14.0, fontWeight: FontWeight.w800),
+                      lessStyle: TextStyle(
+                          fontSize: 14.0, fontWeight: FontWeight.w800),
                     ),
                     const SizeBetweenWidgets(),
                     Row(

@@ -8,6 +8,7 @@ import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/utils/reusable_container.dart';
 import 'package:user_app/views/food_delivery/food_description.dart';
 import 'package:user_app/views/home/add_to_cart.dart';
+import 'package:user_app/views/home/success.dart';
 
 class CheckoutScreen extends StatelessWidget {
   const CheckoutScreen({super.key});
@@ -24,18 +25,22 @@ class CheckoutScreen extends StatelessWidget {
               Get.to(() => const CheckoutScreen(),
                   transition: Transition.rightToLeft);
             },
-            child: ReUsableContainer(
-              verticalPadding: context.height * 0.02,
-              height: 50,
-              color: AppColors.buttonColor.withOpacity(0.9),
-              child: const Center(
-                  child: CustomTextWidget(
-                text: 'Place Order',
-                fontSize: 16,
-                textColor: AppColors.blackTextColor,
-                fontWeight: FontWeight.w400,
-                textAlign: TextAlign.center,
-              )),
+            child: InkWell(
+              onTap: () => Get.to(() => const SuccessScreen(),
+                  transition: Transition.rightToLeft),
+              child: ReUsableContainer(
+                verticalPadding: context.height * 0.02,
+                height: 50,
+                color: AppColors.buttonColor.withOpacity(0.9),
+                child: const Center(
+                    child: CustomTextWidget(
+                  text: 'Place Order',
+                  fontSize: 16.0,
+                  textColor: AppColors.blackTextColor,
+                  fontWeight: FontWeight.w400,
+                  textAlign: TextAlign.center,
+                )),
+              ),
             ),
           ),
           body: SingleChildScrollView(
@@ -46,7 +51,7 @@ class CheckoutScreen extends StatelessWidget {
                 children: [
                   const CustomTextWidget(
                     text: 'My Orders',
-                    fontSize: 16,
+                    fontSize: 16.0,
                     fontWeight: FontWeight.w500,
                   ),
                   SizedBox(
@@ -65,7 +70,7 @@ class CheckoutScreen extends StatelessWidget {
                   const MyCustomDivider(),
                   const CustomTextWidget(
                     text: 'Delivery Address',
-                    fontSize: 16,
+                    fontSize: 16.0,
                     fontWeight: FontWeight.w500,
                   ),
                   ReUsableContainer(
@@ -107,7 +112,7 @@ class CheckoutScreen extends StatelessWidget {
                       )),
                   const CustomTextWidget(
                     text: 'Payment Method',
-                    fontSize: 16,
+                    fontSize: 16.0,
                     fontWeight: FontWeight.w500,
                   ),
                   Row(
@@ -135,7 +140,7 @@ class CheckoutScreen extends StatelessWidget {
                   ),
                   const CustomTextWidget(
                     text: 'Order Summary',
-                    fontSize: 16,
+                    fontSize: 16.0,
                     fontWeight: FontWeight.w500,
                   ),
                   const OrderSummaryWidget(title: 'SubTotal', price: 120),
@@ -170,13 +175,13 @@ class OrderSummaryWidget extends StatelessWidget {
         children: [
           CustomTextWidget(
             text: title,
-            fontSize: 16,
+            fontSize: 16.0,
             fontWeight: FontWeight.w500,
             textColor: AppColors.lightTextColor,
           ),
           CustomTextWidget(
             text: '\$$price',
-            fontSize: 16,
+            fontSize: 16.0,
             fontWeight: FontWeight.w500,
           ),
         ],

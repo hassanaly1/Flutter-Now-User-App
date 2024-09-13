@@ -172,13 +172,13 @@ class ChatCard extends StatelessWidget {
             children: [
               CustomTextWidget(
                 text: !message.isSender ? 'You' : 'The Garlics Restaurant',
-                fontSize: 10,
+                fontSize: 10.0,
                 textColor: message.isSender ? Colors.black : Colors.white,
                 fontWeight: FontWeight.w600,
               ),
               CustomTextWidget(
                 text: message.content,
-                fontSize: 14,
+                fontSize: 14.0,
                 textColor: message.isSender ? Colors.black : Colors.white,
                 maxLines: 10,
               ),
@@ -188,7 +188,7 @@ class ChatCard extends StatelessWidget {
                   CustomTextWidget(
                     text:
                         '${message.timestamp.hour.toString().padLeft(2, '0')}:${message.timestamp.minute.toString().padLeft(2, '0')}',
-                    fontSize: 10,
+                    fontSize: 10.0,
                     textColor: message.isSender ? Colors.black : Colors.white,
                   ),
                   const SizedBox(width: 4.0),

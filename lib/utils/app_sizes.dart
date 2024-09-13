@@ -1,9 +1,30 @@
 import 'package:flutter/material.dart';
 
 class AppSizes {
+  // static double scaleFontSize(BuildContext context, double baseFontSize) {
+  //   double screenWidth = MediaQuery.of(context).size.width;
+  //   return baseFontSize * (screenWidth / 415.0);
+  // }
+
   static double scaleFontSize(BuildContext context, double baseFontSize) {
+    // Get the dimensions of the screen
     double screenWidth = MediaQuery.of(context).size.width;
-    return baseFontSize * (screenWidth / 415.0);
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    // Define the reference width and height
+    // Use the dimensions of the reference screen or your design's ideal dimensions
+    double referenceWidth = 410.0;
+    double referenceHeight = 720.0;
+
+    // Calculate scaling factors based on width and height
+    double widthScale = screenWidth / referenceWidth;
+    double heightScale = screenHeight / referenceHeight;
+
+    // Use the minimum scaling factor to maintain aspect ratio
+    double scale = widthScale < heightScale ? widthScale : heightScale;
+
+    // Return the scaled font size
+    return baseFontSize * scale;
   }
 
   static double fontSize4(BuildContext context) => scaleFontSize(context, 4.0);

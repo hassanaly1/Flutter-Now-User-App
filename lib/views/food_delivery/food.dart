@@ -335,7 +335,7 @@ class FoodCategoryList extends StatelessWidget {
               CustomTextWidget(
                 text: 'Category $index',
                 maxLines: 1,
-                fontSize: context.height * 0.02,
+                fontSize: 12.0,
               ),
             ],
           ),

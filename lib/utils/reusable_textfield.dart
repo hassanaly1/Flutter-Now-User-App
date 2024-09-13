@@ -47,7 +47,7 @@ class ReUsableTextField extends StatelessWidget {
         obscureText: obscureText,
         style: const TextStyle(
           fontFamily: 'Poppins',
-          fontSize: 14,
+          fontSize: 14.0,
           fontWeight: FontWeight.w300,
           color: AppColors.whiteTextColor,
         ),

@@ -38,7 +38,7 @@ class AddToCartScreen extends StatelessWidget {
             child: const Center(
                 child: CustomTextWidget(
               text: 'Checkout',
-              fontSize: 16,
+              fontSize: 16.0,
               textColor: AppColors.blackTextColor,
               fontWeight: FontWeight.w400,
               textAlign: TextAlign.center,
@@ -60,14 +60,14 @@ class CustomAddToCartWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.12, // Responsive height
         decoration: BoxDecoration(
           color: Colors.grey.shade300,
           border: Border.all(color: Colors.black12),
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -75,29 +75,28 @@ class CustomAddToCartWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12.0),
                 child: Image.network(
                   'https://media.istockphoto.com/id/1191080960/photo/traditional-turkish-breakfast-and-people-taking-various-food-wide-composition.jpg?s=612x612&w=0&k=20&c=PP5ejMisEwzcLWrNmJ8iPPm_u-4P6rOWHEDpBPL2n7Q=',
-                  width: MediaQuery.of(context).size.width *
-                      0.25, // Responsive width
-                  height: MediaQuery.of(context).size.height *
-                      0.15, // Responsive height
+                  width: context.width * 0.25,
+                  height: context.height * 0.12,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            Expanded(
+            const Expanded(
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const CustomTextWidget(
-                      text: 'Alfred Chicken',
+                    CustomTextWidget(
+                      text:
+                          'The Special Alfred Chicken The Special Alfred Chicken',
                       fontSize: 16.0,
                       fontWeight: FontWeight.w400,
+                      maxLines: 2,
                     ),
-                    const CustomTextWidget(
-                      text: 'The Garlics Restaurant',
+                    CustomTextWidget(
+                      text: 'The Garlics Restaurant & Bar',
                       fontSize: 12.0,
                       fontWeight: FontWeight.w600,
                       textColor: AppColors.lightTextColor,
@@ -110,14 +109,14 @@ class CustomAddToCartWidget extends StatelessWidget {
                           color: AppColors.buttonColor,
                           size: 24.0,
                         ),
-                        const SizedBox(width: 8.0),
-                        const CustomTextWidget(
+                        SizedBox(width: 8.0),
+                        CustomTextWidget(
                           text: '7',
                           fontSize: 18.0,
                           fontWeight: FontWeight.w600,
                           textColor: AppColors.blackTextColor,
                         ),
-                        const SizedBox(width: 8.0),
+                        SizedBox(width: 8.0),
                         Icon(
                           LucideIcons.circleMinus,
                           color: AppColors.buttonColor,
@@ -130,16 +129,18 @@ class CustomAddToCartWidget extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   const CustomTextWidget(
-                    text: '\$120.00',
+                    text: '\$120,000.00',
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
                   ),
+                  SizedBox(height: context.height * 0.03),
                   IconButton(
+                    visualDensity: VisualDensity.compact,
                     onPressed: () {},
                     icon: const Icon(
                       LucideIcons.trash,
