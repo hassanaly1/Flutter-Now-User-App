@@ -169,7 +169,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                   ),
                                 );
                         }),
-                        MyCustomButton(
+                        CustomButton(
                           buttonText: 'Verify OTP',
                           onTap: () {
                             if (_otpFormKey.currentState!.validate()) {

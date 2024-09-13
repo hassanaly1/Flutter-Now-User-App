@@ -57,8 +57,7 @@ class MyCartIcon extends StatelessWidget {
       padding: EdgeInsets.zero,
       visualDensity: VisualDensity.compact,
       onPressed: () {
-        Get.to(() => const MyAddToCartScreen(),
-            transition: Transition.upToDown);
+        Get.to(() => const AddToCartScreen(), transition: Transition.upToDown);
       },
       icon: const Icon(
         LucideIcons.shoppingCart,

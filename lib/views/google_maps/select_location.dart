@@ -10,14 +10,14 @@ import 'package:user_app/utils/searchbar.dart';
 import 'package:user_app/utils/toast.dart';
 import 'package:user_app/views/google_maps/select_vehicle.dart';
 
-class MySelectLocationScreen extends StatefulWidget {
-  const MySelectLocationScreen({super.key});
+class SelectLocationScreen extends StatefulWidget {
+  const SelectLocationScreen({super.key});
 
   @override
-  State<MySelectLocationScreen> createState() => _MySelectLocationScreenState();
+  State<SelectLocationScreen> createState() => _SelectLocationScreenState();
 }
 
-class _MySelectLocationScreenState extends State<MySelectLocationScreen> {
+class _SelectLocationScreenState extends State<SelectLocationScreen> {
   late MyGoogleMapsController _controller;
 
   @override
@@ -84,8 +84,8 @@ class _MySelectLocationScreenState extends State<MySelectLocationScreen> {
                 },
               ),
             ),
-            const MyShowSearchbarContainer(),
-            MyShowAddressContainer(controller: _controller),
+            const ShowSearchbarContainer(),
+            ShowAddressContainer(controller: _controller),
           ],
         ),
       ),
@@ -93,8 +93,8 @@ class _MySelectLocationScreenState extends State<MySelectLocationScreen> {
   }
 }
 
-class MyShowAddressContainer extends StatelessWidget {
-  const MyShowAddressContainer({
+class ShowAddressContainer extends StatelessWidget {
+  const ShowAddressContainer({
     super.key,
     required MyGoogleMapsController controller,
   }) : _controller = controller;
@@ -153,7 +153,7 @@ class MyShowAddressContainer extends StatelessWidget {
                                 _controller.destinationLatLng.value) {
                               print(_controller.pickupLatLng.value);
                               print(_controller.destinationLatLng.value);
-                              Get.to(() => const MySelectVehicleScreen(),
+                              Get.to(() => const SelectVehicleScreen(),
                                   transition: Transition.rightToLeft);
                             } else {
                               MyCustomErrorToast(
@@ -223,8 +223,8 @@ class MyShowAddressContainer extends StatelessWidget {
   }
 }
 
-class MyShowSearchbarContainer extends StatelessWidget {
-  const MyShowSearchbarContainer({
+class ShowSearchbarContainer extends StatelessWidget {
+  const ShowSearchbarContainer({
     super.key,
   });
 

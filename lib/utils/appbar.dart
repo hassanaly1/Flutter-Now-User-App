@@ -3,7 +3,7 @@ import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/common_widgets.dart';
 import 'package:user_app/utils/custom_text.dart';
 
-class MyCustomAppbar extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Color? iconColor;
   final Color? backgroundColor;
@@ -11,7 +11,7 @@ class MyCustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? leading;
   final List<Widget>? actions;
 
-  const MyCustomAppbar({
+  const CustomAppbar({
     super.key,
     required this.title,
     this.showBackArrow = true,

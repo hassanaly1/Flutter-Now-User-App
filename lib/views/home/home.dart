@@ -152,15 +152,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     const SizeBetweenWidgets(),
-                    MyRideModuleContainer(
+                    RideModuleContainer(
                       onTap: () {
                         if (_controller.userCurrentLocation.value == '') {
                           _controller.getCurrentLocation(
                             onSuccess: () =>
-                                Get.to(() => const MySelectLocationScreen()),
+                                Get.to(() => const SelectLocationScreen()),
                           );
                         } else {
-                          Get.to(() => const MySelectLocationScreen());
+                          Get.to(() => const SelectLocationScreen());
                         }
                       },
                     ),
@@ -168,11 +168,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        const MyCustomModuleContainer(
+                        const CustomModuleContainer(
                             text: 'Ride Share',
                             usePadding: true,
                             imageUrl: 'assets/images/ride-share.png'),
-                        MyCustomModuleContainer(
+                        CustomModuleContainer(
                           onTap: () {
                             if (_controller.userCurrentLocation.value == '') {
                               _controller.getCurrentLocation(
@@ -191,11 +191,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        MyCustomModuleContainer(
+                        CustomModuleContainer(
                             text: 'Packages',
                             usePadding: true,
                             imageUrl: 'assets/images/package.png'),
-                        MyCustomModuleContainer(
+                        CustomModuleContainer(
                             text: 'Documents',
                             usePadding: true,
                             imageUrl: 'assets/images/document.png'),
@@ -213,10 +213,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class MyRideModuleContainer extends StatelessWidget {
+class RideModuleContainer extends StatelessWidget {
   final VoidCallback onTap;
 
-  const MyRideModuleContainer({
+  const RideModuleContainer({
     super.key,
     required this.onTap,
   });
@@ -281,13 +281,13 @@ class MyRideModuleContainer extends StatelessWidget {
   }
 }
 
-class MyCustomModuleContainer extends StatelessWidget {
+class CustomModuleContainer extends StatelessWidget {
   final String text;
   final String imageUrl;
   final bool usePadding;
   final VoidCallback? onTap;
 
-  const MyCustomModuleContainer({
+  const CustomModuleContainer({
     super.key,
     required this.text,
     required this.imageUrl,

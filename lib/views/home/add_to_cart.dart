@@ -7,18 +7,16 @@ import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/utils/reusable_container.dart';
 import 'package:user_app/views/food_delivery/food_description.dart';
+import 'package:user_app/views/home/checkout.dart';
 
-class MyAddToCartScreen extends StatelessWidget {
-  const MyAddToCartScreen({super.key});
+class AddToCartScreen extends StatelessWidget {
+  const AddToCartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: const MyCustomAppbar(
-          title: 'My Cart',
-          showBackArrow: true,
-        ),
+        appBar: const CustomAppbar(title: 'My Cart', showBackArrow: true),
         body: ListView.builder(
           itemCount: 20,
           itemBuilder: (context, index) {
@@ -29,7 +27,10 @@ class MyAddToCartScreen extends StatelessWidget {
           },
         ),
         bottomNavigationBar: InkWell(
-          onTap: () {},
+          onTap: () {
+            Get.to(() => const CheckoutScreen(),
+                transition: Transition.rightToLeft);
+          },
           child: ReUsableContainer(
             verticalPadding: context.height * 0.02,
             height: 50,
@@ -59,7 +60,7 @@ class CustomAddToCartWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        height: 100,
+        height: MediaQuery.of(context).size.height * 0.12, // Responsive height
         decoration: BoxDecoration(
           color: Colors.grey.shade300,
           border: Border.all(color: Colors.black12),
@@ -74,56 +75,60 @@ class CustomAddToCartWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12.0),
                 child: Image.network(
                   'https://media.istockphoto.com/id/1191080960/photo/traditional-turkish-breakfast-and-people-taking-various-food-wide-composition.jpg?s=612x612&w=0&k=20&c=PP5ejMisEwzcLWrNmJ8iPPm_u-4P6rOWHEDpBPL2n7Q=',
-                  width: context.width * 0.3,
-                  height: context.height,
+                  width: MediaQuery.of(context).size.width *
+                      0.25, // Responsive width
+                  height: MediaQuery.of(context).size.height *
+                      0.15, // Responsive height
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomTextWidget(
-                    text: 'Alfred Chicken',
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  CustomTextWidget(
-                    text: 'The Garlics Restaurant',
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.w600,
-                    textColor: AppColors.lightTextColor,
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        CupertinoIcons.plus_circle_fill,
-                        color: AppColors.buttonColor,
-                        size: 24.0,
-                      ),
-                      SizedBox(width: 8.0),
-                      CustomTextWidget(
-                        text: '7',
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w600,
-                        textColor: AppColors.blackTextColor,
-                      ),
-                      SizedBox(width: 8.0),
-                      Icon(
-                        LucideIcons.circleMinus,
-                        color: AppColors.buttonColor,
-                        size: 24.0,
-                      ),
-                    ],
-                  ),
-                ],
+            Expanded(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const CustomTextWidget(
+                      text: 'Alfred Chicken',
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    const CustomTextWidget(
+                      text: 'The Garlics Restaurant',
+                      fontSize: 12.0,
+                      fontWeight: FontWeight.w600,
+                      textColor: AppColors.lightTextColor,
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          CupertinoIcons.plus_circle_fill,
+                          color: AppColors.buttonColor,
+                          size: 24.0,
+                        ),
+                        const SizedBox(width: 8.0),
+                        const CustomTextWidget(
+                          text: '7',
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w600,
+                          textColor: AppColors.blackTextColor,
+                        ),
+                        const SizedBox(width: 8.0),
+                        Icon(
+                          LucideIcons.circleMinus,
+                          color: AppColors.buttonColor,
+                          size: 24.0,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-            const Spacer(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -143,7 +148,7 @@ class CustomAddToCartWidget extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

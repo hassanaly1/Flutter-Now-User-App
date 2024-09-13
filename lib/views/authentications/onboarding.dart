@@ -42,14 +42,14 @@ class OnBoardingScreen extends StatelessWidget {
                   ),
                   const SizeBetweenWidgets(),
                   const SizeBetweenWidgets(),
-                  MyCustomButton(
+                  CustomButton(
                     buttonText: 'Login',
                     onTap: () {
                       appStorage.write('isFirstTime', false);
                       Get.offAll(() => const LoginScreen());
                     },
                   ),
-                  MyCustomButton(
+                  CustomButton(
                     buttonText: 'Register',
                     onTap: () {
                       appStorage.write('isFirstTime', false);

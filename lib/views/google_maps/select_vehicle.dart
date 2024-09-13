@@ -9,14 +9,14 @@ import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/utils/reusable_container.dart';
 import 'package:user_app/views/google_maps/searchig_for_riders.dart';
 
-class MySelectVehicleScreen extends StatefulWidget {
-  const MySelectVehicleScreen({super.key});
+class SelectVehicleScreen extends StatefulWidget {
+  const SelectVehicleScreen({super.key});
 
   @override
-  State<MySelectVehicleScreen> createState() => _MySelectVehicleScreenState();
+  State<SelectVehicleScreen> createState() => _SelectVehicleScreenState();
 }
 
-class _MySelectVehicleScreenState extends State<MySelectVehicleScreen> {
+class _SelectVehicleScreenState extends State<SelectVehicleScreen> {
   late MyGoogleMapsController _controller;
 
   @override
@@ -33,7 +33,7 @@ class _MySelectVehicleScreenState extends State<MySelectVehicleScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Column(
             children: [
-              const MyHeaderContainer(title: 'Select Vehicle'),
+              const CustomHeaderContainer(title: 'Select Vehicle'),
               Obx(
                 () => Expanded(
                   child: ReUsableContainer(
@@ -56,8 +56,8 @@ class _MySelectVehicleScreenState extends State<MySelectVehicleScreen> {
                   ),
                 ),
               ),
-              MyShowSelectedLocationsContainer(controller: _controller),
-              MyShowSelectVehicleContainer(controller: _controller)
+              ShowSelectedLocationsContainer(controller: _controller),
+              ShowSelectVehicleContainer(controller: _controller)
             ],
           ),
         ),
@@ -78,8 +78,8 @@ class _MySelectVehicleScreenState extends State<MySelectVehicleScreen> {
   }
 }
 
-class MyShowSelectedLocationsContainer extends StatelessWidget {
-  const MyShowSelectedLocationsContainer({
+class ShowSelectedLocationsContainer extends StatelessWidget {
+  const ShowSelectedLocationsContainer({
     super.key,
     required MyGoogleMapsController controller,
   }) : _controller = controller;
@@ -172,10 +172,10 @@ class MyShowSelectedLocationsContainer extends StatelessWidget {
   }
 }
 
-class MyShowSelectVehicleContainer extends StatelessWidget {
+class ShowSelectVehicleContainer extends StatelessWidget {
   final MyGoogleMapsController controller;
 
-  const MyShowSelectVehicleContainer({super.key, required this.controller});
+  const ShowSelectVehicleContainer({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -192,22 +192,22 @@ class MyShowSelectVehicleContainer extends StatelessWidget {
                 const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    MyCustomVehicleContainer(
+                    CustomVehicleContainer(
                       price: '\$18.6',
                       imageUrl: 'assets/images/bike.png',
                       vehicleInfo: 'Bike',
                     ),
-                    MyCustomVehicleContainer(
+                    CustomVehicleContainer(
                       price: '\$33.9',
                       imageUrl: 'assets/images/auto.png',
                       vehicleInfo: 'Auto',
                     ),
-                    MyCustomVehicleContainer(
+                    CustomVehicleContainer(
                       price: '\$60',
                       imageUrl: 'assets/images/car.png',
                       vehicleInfo: 'Car',
                     ),
-                    MyCustomVehicleContainer(
+                    CustomVehicleContainer(
                       price: '\$100',
                       imageUrl: 'assets/images/ac-car.png',
                       vehicleInfo: 'AC Car',
@@ -215,7 +215,7 @@ class MyShowSelectVehicleContainer extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 6.0),
-                MyCustomPriceWheelSpinner(controller: controller),
+                CustomPriceWheelSpinner(controller: controller),
               ],
             ),
           )),
@@ -223,8 +223,8 @@ class MyShowSelectVehicleContainer extends StatelessWidget {
   }
 }
 
-class MyCustomPriceWheelSpinner extends StatelessWidget {
-  const MyCustomPriceWheelSpinner({
+class CustomPriceWheelSpinner extends StatelessWidget {
+  const CustomPriceWheelSpinner({
     super.key,
     required this.controller,
   });
@@ -280,13 +280,13 @@ class MyCustomPriceWheelSpinner extends StatelessWidget {
   }
 }
 
-class MyCustomVehicleContainer extends StatefulWidget {
+class CustomVehicleContainer extends StatefulWidget {
   final String imageUrl;
   final String price;
   final String vehicleInfo; // Add a parameter to hold vehicle information
   // final VoidCallback? onTap;
 
-  const MyCustomVehicleContainer({
+  const CustomVehicleContainer({
     super.key,
     required this.imageUrl,
     required this.price,
@@ -295,11 +295,10 @@ class MyCustomVehicleContainer extends StatefulWidget {
   });
 
   @override
-  State<MyCustomVehicleContainer> createState() =>
-      _MyCustomVehicleContainerState();
+  State<CustomVehicleContainer> createState() => _CustomVehicleContainerState();
 }
 
-class _MyCustomVehicleContainerState extends State<MyCustomVehicleContainer> {
+class _CustomVehicleContainerState extends State<CustomVehicleContainer> {
   final MyGoogleMapsController _controller = Get.find<MyGoogleMapsController>();
 
   @override
@@ -346,10 +345,10 @@ class _MyCustomVehicleContainerState extends State<MyCustomVehicleContainer> {
   }
 }
 
-class MyHeaderContainer extends StatelessWidget {
+class CustomHeaderContainer extends StatelessWidget {
   final String title;
 
-  const MyHeaderContainer({
+  const CustomHeaderContainer({
     super.key,
     required this.title,
   });

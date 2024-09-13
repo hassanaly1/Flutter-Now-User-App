@@ -36,6 +36,11 @@ class _MainFoodScreenState extends State<MainFoodScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    // Calculate the child aspect ratio to ensure items are responsive
+    double childAspectRatio = (screenWidth / 2) / (screenHeight * 0.35);
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: SafeArea(
@@ -59,7 +64,7 @@ class _MainFoodScreenState extends State<MainFoodScreen> {
                     padding: EdgeInsets.zero,
                     visualDensity: VisualDensity.compact,
                     onPressed: () {
-                      Get.to(() => const MyFavouritesScreen(),
+                      Get.to(() => const FavouritesScreen(),
                           transition: Transition.upToDown);
                     },
                     icon: const Icon(
@@ -71,7 +76,7 @@ class _MainFoodScreenState extends State<MainFoodScreen> {
                 ],
                 expandedHeight: context.height * 0.22,
                 backgroundColor: AppColors.backgroundColor,
-                bottom: MyCustomSearchbar(
+                bottom: CustomSearchbar(
                   hintText: 'Search for Food',
                   focusNode: _searchFocusNode,
                 ),
@@ -182,8 +187,9 @@ class _MainFoodScreenState extends State<MainFoodScreen> {
                       const SizeBetweenWidgets(),
                       GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: context.height * 0.0012,
+                          crossAxisCount: 2, // Always 2 columns
+                          childAspectRatio:
+                              childAspectRatio, // Responsive aspect ratio
                         ),
                         itemCount: 10,
                         shrinkWrap: true,
@@ -207,6 +213,33 @@ class _MainFoodScreenState extends State<MainFoodScreen> {
                           );
                         },
                       )
+                      // GridView.builder(
+                      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      //     crossAxisCount: 2,
+                      //     childAspectRatio: context.height * 0.0012,
+                      //   ),
+                      //   itemCount: 10,
+                      //   shrinkWrap: true,
+                      //   physics: const NeverScrollableScrollPhysics(),
+                      //   itemBuilder: (context, index) {
+                      //     return OpenContainer(
+                      //       openColor: Colors.transparent,
+                      //       closedColor: Colors.transparent,
+                      //       transitionDuration:
+                      //           const Duration(milliseconds: 500),
+                      //       closedBuilder: (context, action) =>
+                      //           CustomFoodWidget(onTap: action),
+                      //       openBuilder: (context, action) =>
+                      //           const ProductDetailScreen(),
+                      //       openElevation: 0,
+                      //       closedElevation: 0,
+                      //       closedShape: RoundedRectangleBorder(
+                      //         borderRadius: BorderRadius.circular(
+                      //             0), // Set border radius to 0
+                      //       ),
+                      //     );
+                      //   },
+                      // )
                     ],
                   ),
                 ),
@@ -219,11 +252,11 @@ class _MainFoodScreenState extends State<MainFoodScreen> {
   }
 }
 
-class MyCustomSearchbar extends StatelessWidget implements PreferredSizeWidget {
+class CustomSearchbar extends StatelessWidget implements PreferredSizeWidget {
   final String hintText;
   final FocusNode? focusNode;
 
-  const MyCustomSearchbar({
+  const CustomSearchbar({
     super.key,
     required this.hintText,
     this.focusNode,

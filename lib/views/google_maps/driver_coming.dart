@@ -44,7 +44,7 @@ class _DriverComingScreenState extends State<DriverComingScreen> {
             children: [
               // Header Container with title
               Obx(
-                () => MyHeaderContainer(
+                () => CustomHeaderContainer(
                   title: _controller.isDriverArrived.value
                       ? 'On the Way to your Destination'
                       : 'Driver is Coming',
@@ -306,11 +306,13 @@ void showCompleteRideDialog(BuildContext context) {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           errorBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: AppColors.errorColor),
+                            borderSide:
+                                const BorderSide(color: AppColors.errorColor),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedErrorBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: AppColors.errorColor),
+                            borderSide:
+                                const BorderSide(color: AppColors.errorColor),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),

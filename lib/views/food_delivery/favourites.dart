@@ -9,14 +9,14 @@ import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/views/food_delivery/common_widgets/custom_food_widget.dart';
 import 'package:user_app/views/food_delivery/food_description.dart';
 
-class MyFavouritesScreen extends StatelessWidget {
-  const MyFavouritesScreen({super.key});
+class FavouritesScreen extends StatelessWidget {
+  const FavouritesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: const MyCustomAppbar(
+        appBar: const CustomAppbar(
           title: 'My Favourites',
           showBackArrow: true,
           actions: [MyCartIcon()],

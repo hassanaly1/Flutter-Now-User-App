@@ -86,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ),
-                        MyCustomButton(
+                        CustomButton(
                           buttonText: 'Login',
                           onTap: () {
                             // if (_loginFormKey.currentState!.validate()) {
@@ -135,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontWeight: FontWeight.w500,
                         ),
                         SizedBox(height: context.height * 0.01),
-                        MyCustomButton(
+                        CustomButton(
                           useButtonColor: false,
                           buttonText: 'Sign In with Google',
                           hasIcon: true,

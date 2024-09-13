@@ -117,13 +117,13 @@ class CustomFoodWidget extends StatelessWidget {
                     CustomTextWidget(
                       text: '\$15.00',
                       maxLines: 1,
-                      fontSize: 22.0,
+                      fontSize: context.height * 0.025,
                       fontWeight: FontWeight.w700,
                       textColor: Colors.black.withOpacity(0.8),
                     ),
                     Container(
-                      height: 50,
-                      width: 60,
+                      height: context.height * 0.06,
+                      width: context.width * 0.15,
                       decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.8),
                           borderRadius: const BorderRadius.only(

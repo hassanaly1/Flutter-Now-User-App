@@ -64,7 +64,7 @@ class _MainFoodScreenState extends State<PopularDealsScreen> {
                 expandedHeight: context.height * 0.22,
                 backgroundColor: AppColors.backgroundColor,
                 // flexibleSpace: const MyCustomSearchbar(),
-                bottom: const MyCustomSearchbar(
+                bottom: const CustomSearchbar(
                   hintText: 'Search for Deals',
                 ),
               ),

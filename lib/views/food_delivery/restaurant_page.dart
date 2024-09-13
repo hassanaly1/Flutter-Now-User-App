@@ -74,7 +74,7 @@ class _RestaurantPageScreenState extends State<RestaurantPageScreen> {
           physics: const BouncingScrollPhysics(),
           controller: _scrollController, // Attach the scroll controller here
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
-            MySliverAppBar(
+            CustomSliverAppBar(
               appbarColorNotifier: _appBarColorNotifier,
               searchFocusNode: _searchFocusNode,
               scrollController: _scrollController,
@@ -100,12 +100,12 @@ class _RestaurantPageScreenState extends State<RestaurantPageScreen> {
   }
 }
 
-class MySliverAppBar extends StatelessWidget {
+class CustomSliverAppBar extends StatelessWidget {
   final ValueNotifier<Color> appbarColorNotifier;
   final FocusNode? searchFocusNode;
   final ScrollController scrollController;
 
-  const MySliverAppBar({
+  const CustomSliverAppBar({
     super.key,
     required this.appbarColorNotifier,
     this.searchFocusNode,
@@ -174,7 +174,7 @@ class MySliverAppBar extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      bottom: MyCustomSearchbar(
+      bottom: CustomSearchbar(
           hintText: 'Search for Food', focusNode: searchFocusNode),
     );
   }

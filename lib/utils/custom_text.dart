@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:user_app/utils/app_sizes.dart';
 import 'package:user_app/utils/appcolors.dart';
 
 class CustomTextWidget extends StatelessWidget {
@@ -34,7 +35,7 @@ class CustomTextWidget extends StatelessWidget {
         fontFamily: 'Poppins',
         decoration: decoration,
         fontStyle: fontStyle ?? FontStyle.normal,
-        fontSize: fontSize ?? 14,
+        fontSize: fontSize ?? AppSizes.fontSize14(context),
         fontWeight: fontWeight ?? FontWeight.w400,
         color: textColor ?? AppColors.blackTextColor,
       ),

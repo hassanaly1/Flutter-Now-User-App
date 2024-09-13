@@ -61,7 +61,7 @@ class _ForgetPasswordOrConfirmEmailScreenState
                           validator: (value) =>
                               AppValidator.validateEmail(value: value),
                         ),
-                        MyCustomButton(
+                        CustomButton(
                           buttonText: 'Send OTP',
                           onTap: () {
                             if (_formKey.currentState!.validate()) {

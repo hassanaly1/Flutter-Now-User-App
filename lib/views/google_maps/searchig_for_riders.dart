@@ -68,7 +68,7 @@ class _SearchingForRidersScreenState extends State<SearchingForRidersScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Column(
             children: [
-              const MyHeaderContainer(title: 'Searching For Riders'),
+              const CustomHeaderContainer(title: 'Searching For Riders'),
               Obx(
                 () => controller.isRidersAreLoading.value
                     ? const MyListTileShimmerEffect()
