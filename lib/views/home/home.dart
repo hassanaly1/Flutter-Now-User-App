@@ -10,6 +10,7 @@ import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/views/food_delivery/food.dart';
 import 'package:user_app/views/google_maps/select_location.dart';
 import 'package:user_app/views/package_and_document_delivery/package_and_document.dart';
+import 'package:user_app/views/ride-share/ride_share.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -169,10 +170,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        const CustomModuleContainer(
-                            text: 'Ride Share',
-                            usePadding: true,
-                            imageUrl: 'assets/images/ride-share.png'),
+                        CustomModuleContainer(
+                          usePadding: true,
+                          onTap: () {
+                            if (_controller.userCurrentLocation.value == '') {
+                              _controller.getCurrentLocation(
+                                onSuccess: () =>
+                                    Get.to(() => const MainRideShareScreen()),
+                              );
+                            } else {
+                              Get.to(() => const MainRideShareScreen());
+                            }
+                          },
+                          text: 'Ride Share',
+                          imageUrl: 'assets/images/ride-share.png',
+                        ),
                         CustomModuleContainer(
                           onTap: () {
                             if (_controller.userCurrentLocation.value == '') {
