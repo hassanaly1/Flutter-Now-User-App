@@ -9,6 +9,7 @@ import 'package:user_app/utils/common_widgets.dart';
 import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/views/food_delivery/food.dart';
 import 'package:user_app/views/google_maps/select_location.dart';
+import 'package:user_app/views/package_and_document_delivery/package_and_document.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -188,17 +189,44 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         CustomModuleContainer(
-                            text: 'Packages',
-                            usePadding: true,
-                            imageUrl: 'assets/images/package.png'),
+                          onTap: () {
+                            if (_controller.userCurrentLocation.value == '') {
+                              _controller.getCurrentLocation(
+                                onSuccess: () => Get.to(
+                                    () => const MainPackageAndDocumentScreen()),
+                              );
+                            } else {
+                              Get.to(
+                                  () => const MainPackageAndDocumentScreen());
+                            }
+                          },
+                          usePadding: true,
+                          text: 'Packages',
+                          imageUrl: 'assets/images/package.png',
+                        ),
                         CustomModuleContainer(
-                            text: 'Documents',
-                            usePadding: true,
-                            imageUrl: 'assets/images/document.png'),
+                          onTap: () {
+                            if (_controller.userCurrentLocation.value == '') {
+                              _controller.getCurrentLocation(
+                                onSuccess: () => Get.to(
+                                    () => const MainPackageAndDocumentScreen(
+                                          isPackageScreen: false,
+                                        )),
+                              );
+                            } else {
+                              Get.to(() => const MainPackageAndDocumentScreen(
+                                    isPackageScreen: false,
+                                  ));
+                            }
+                          },
+                          usePadding: true,
+                          text: 'Documents',
+                          imageUrl: 'assets/images/document.png',
+                        ),
                       ],
                     ),
                     const SizeBetweenWidgets(),

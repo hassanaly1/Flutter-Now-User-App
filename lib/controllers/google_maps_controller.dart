@@ -49,29 +49,37 @@ class MyGoogleMapsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // _loadCustomMarkerIcon();
+    // loadCustomMarkerIcon('assets/images/marker.png');
     _setInitialLocation();
 
     // Listeners to update locations and draw polyline when pickup/destination changes
-    ever(selectedPickupLocation, (_) => setLocationsAndDrawPolyline());
-    ever(selectedDestinationLocation, (_) => setLocationsAndDrawPolyline());
+    // ever(selectedPickupLocation, (_) => setLocationsAndDrawPolyline());
+    // ever(selectedDestinationLocation, (_) => setLocationsAndDrawPolyline());
+  }
+
+  // Callback when the Google Map is created, sets initial location
+  void onSelectLocationsMapCreated(GoogleMapController controller) {
+    googleMapsController = controller;
+    _setInitialLocation();
+  }
+
+  void onSelectVehicleMapCreated(GoogleMapController controller) {
+    // googleMapsController = controller;
   }
 
   // Function to select a vehicle
-  void selectVehicle(String vehicleInfo) {
-    selectedVehicle.value = vehicleInfo;
-  }
+  void selectVehicle(String vehicleInfo) => selectedVehicle.value = vehicleInfo;
 
   // Load the custom marker icon from assets
-  Future<void> _loadCustomMarkerIcon() async {
-    customMarkerIcon = await BitmapDescriptor.asset(
-      const ImageConfiguration(size: Size(80, 100)),
-      'assets/images/marker.png',
-    );
-  }
+  Future<void> loadCustomMarkerIcon(imageUrl) async =>
+      customMarkerIcon = await BitmapDescriptor.asset(
+        const ImageConfiguration(size: Size(80, 100)),
+        imageUrl,
+      );
 
   // Set the initial map location using the user's current location from the universal controller
   Future<void> _setInitialLocation() async {
+    print('SetInitialLocationCalled');
     String locationString = universalController.userCurrentLocation.value;
 
     if (locationString.isNotEmpty) {
@@ -106,7 +114,7 @@ class MyGoogleMapsController extends GetxController {
     if (locations.isNotEmpty) {
       LatLng positionLatLng =
           LatLng(locations.first.latitude, locations.first.longitude);
-      addSingleMarker(positionLatLng); // Add marker for new location
+      // addSingleMarker(positionLatLng); // Add marker for new location
 
       // Assign the location value based on the selection type (pickup/destination)
       if (isSelectingPickupLocation.value) {
@@ -118,7 +126,7 @@ class MyGoogleMapsController extends GetxController {
       // Animate the map camera to the new location
       if (googleMapsController != null) {
         googleMapsController!.animateCamera(
-          CameraUpdate.newLatLngZoom(positionLatLng, 15),
+          CameraUpdate.newLatLngZoom(positionLatLng, 16),
         );
       }
       update(); // Trigger UI update
@@ -134,7 +142,7 @@ class MyGoogleMapsController extends GetxController {
         position: position,
         icon: customMarkerIcon ??
             BitmapDescriptor.defaultMarkerWithHue(
-              BitmapDescriptor.hueAzure,
+              BitmapDescriptor.hueRed,
             ),
         draggable: true,
         onDragEnd: (newPosition) async {
@@ -169,18 +177,8 @@ class MyGoogleMapsController extends GetxController {
     }
   }
 
-  // Callback when the Google Map is created, sets initial location
-  void onSelectLocationsMapCreated(GoogleMapController controller) {
-    googleMapsController = controller;
-    _setInitialLocation();
-  }
-
-  void onSelectVehicleMapCreated(GoogleMapController controller) {
-    // googleMapsController = controller;
-  }
-
   // Method to Calculate distance and time between two locations
-  void calculateDistanceAndTimeFromLatLng(LatLng start, LatLng end) async {
+  calculateDistanceAndTimeFromLatLng(LatLng start, LatLng end) async {
     var result = await googleMapsService.getDistanceAndDuration(start, end);
 
     if (result != null) {
@@ -188,6 +186,7 @@ class MyGoogleMapsController extends GetxController {
       calculatedDuration.value = result['duration'] ?? '';
       print('CalculatedDistance: ${calculatedDistance.value}');
       print('CalculatedDuration: ${calculatedDuration.value}');
+      return result;
     } else {
       print('Failed to fetch distance and time.');
     }
@@ -274,8 +273,9 @@ class MyGoogleMapsController extends GetxController {
       Marker(
         markerId: const MarkerId('pickup_location'),
         position: pickupPosition,
+        flat: true,
         icon: customMarkerIcon ??
-            BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+            BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
         infoWindow: const InfoWindow(title: 'Pickup Location'),
       ),
       Marker(

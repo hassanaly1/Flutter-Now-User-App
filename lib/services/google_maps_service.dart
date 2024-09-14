@@ -11,6 +11,7 @@ const String baseUrl = 'https://maps.googleapis.com/maps/api/';
 class MyGoogleMapsService {
   MyGoogleMapsService();
 
+  // Get place suggestions based on user search input
   Future<List<String>> getPlaceSuggestions(String input) async {
     final url = '${baseUrl}place/autocomplete/json?input=$input&key=$apiKey';
 
@@ -33,8 +34,8 @@ class MyGoogleMapsService {
     }
   }
 
+  // Get the selected place details from the place description
   Future<LatLng?> getPlaceDetails(String placeDescription) async {
-    // Construct the API call to fetch the place details
     final url =
         '${baseUrl}place/findplacefromtext/json?input=$placeDescription&inputtype=textquery&fields=geometry&key=$apiKey';
 
@@ -49,13 +50,12 @@ class MyGoogleMapsService {
       print('Error fetching place details: $e');
     }
 
-    return null; // Return null if unable to fetch the location
+    return null;
   }
 
   // Method to calculate the distance and duration between two locations
   Future<Map<String, String>?> getDistanceAndDuration(
       LatLng start, LatLng end) async {
-    // Construct the API call to get distance and duration
     final url =
         '${baseUrl}distancematrix/json?units=metric&origins=${start.latitude},${start.longitude}&destinations=${end.latitude},${end.longitude}&key=$apiKey';
 
@@ -113,7 +113,7 @@ class MyGoogleMapsService {
     return [];
   }
 
-  // Helper method to decode the polyline string into a list of LatLng points
+  // Helper Method to decode the polyline string into a list of LatLng points
   List<LatLng> _decodePolyline(String polyline) {
     List<LatLng> points = [];
     int index = 0, len = polyline.length;

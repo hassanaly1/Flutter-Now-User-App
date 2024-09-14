@@ -6,8 +6,8 @@ import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/common_widgets.dart';
 import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/utils/reusable_container.dart';
+import 'package:user_app/views/food_delivery/add_to_cart.dart';
 import 'package:user_app/views/food_delivery/food_description.dart';
-import 'package:user_app/views/home/add_to_cart.dart';
 import 'package:user_app/views/home/success.dart';
 
 class CheckoutScreen extends StatelessWidget {
@@ -21,13 +21,10 @@ class CheckoutScreen extends StatelessWidget {
         child: Scaffold(
           appBar: const CustomAppbar(title: 'Checkout', showBackArrow: true),
           bottomNavigationBar: InkWell(
-            onTap: () {
-              Get.to(() => const CheckoutScreen(),
-                  transition: Transition.rightToLeft);
-            },
-            child: InkWell(
-              onTap: () => Get.to(() => const SuccessScreen(),
-                  transition: Transition.rightToLeft),
+            onTap: () => Get.to(() => const SuccessScreen(),
+                transition: Transition.rightToLeft),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: context.width * 0.06),
               child: ReUsableContainer(
                 verticalPadding: context.height * 0.02,
                 height: 50,

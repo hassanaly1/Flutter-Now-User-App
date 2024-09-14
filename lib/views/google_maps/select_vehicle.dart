@@ -23,6 +23,7 @@ class _SelectVehicleScreenState extends State<SelectVehicleScreen> {
   void initState() {
     super.initState();
     _controller = Get.find<MyGoogleMapsController>();
+    _controller.setLocationsAndDrawPolyline();
   }
 
   @override

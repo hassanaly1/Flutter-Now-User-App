@@ -31,18 +31,21 @@ class AddToCartScreen extends StatelessWidget {
             Get.to(() => const CheckoutScreen(),
                 transition: Transition.rightToLeft);
           },
-          child: ReUsableContainer(
-            verticalPadding: context.height * 0.02,
-            height: 50,
-            color: AppColors.buttonColor.withOpacity(0.9),
-            child: const Center(
-                child: CustomTextWidget(
-              text: 'Checkout',
-              fontSize: 16.0,
-              textColor: AppColors.blackTextColor,
-              fontWeight: FontWeight.w400,
-              textAlign: TextAlign.center,
-            )),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: context.width * 0.06),
+            child: ReUsableContainer(
+              verticalPadding: context.height * 0.02,
+              height: 50,
+              color: AppColors.buttonColor.withOpacity(0.9),
+              child: const Center(
+                  child: CustomTextWidget(
+                text: 'Checkout',
+                fontSize: 16.0,
+                textColor: AppColors.blackTextColor,
+                fontWeight: FontWeight.w400,
+                textAlign: TextAlign.center,
+              )),
+            ),
           ),
         ),
       ),

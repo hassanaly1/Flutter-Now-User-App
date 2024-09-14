@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:user_app/controllers/google_maps_controller.dart';
 import 'package:user_app/services/google_maps_service.dart';
 
 class MyRideController extends GetxController {
@@ -20,25 +21,20 @@ class MyRideController extends GetxController {
   var polylines = <Polyline>{}.obs;
   GoogleMapController? googleMapsController;
   late StreamSubscription<Position> locationSubscription;
-  BitmapDescriptor? customMarkerIconForDriver;
+
+  // BitmapDescriptor? customMarkerIconForDriver;
 
   final Geolocator geolocator = Geolocator();
 
-  final MyGoogleMapsService _googleMapsService = MyGoogleMapsService();
+  final MyGoogleMapsService _service = MyGoogleMapsService();
+  MyGoogleMapsController? _controller;
 
   @override
   void onInit() {
     super.onInit();
-    _loadCustomMarkerIcon();
+    _controller = Get.put(MyGoogleMapsController());
+    _controller?.loadCustomMarkerIcon('assets/images/car.png');
     // _initializeLocationTracking();
-  }
-
-  // Load the custom marker icon from assets
-  Future<void> _loadCustomMarkerIcon() async {
-    customMarkerIconForDriver = await BitmapDescriptor.asset(
-      const ImageConfiguration(size: Size(70, 40)),
-      'assets/images/car.png',
-    );
   }
 
   void onMapCreated(GoogleMapController controller) {
@@ -98,55 +94,55 @@ class MyRideController extends GetxController {
   // Update markers and draw polyline between user and driver
   void updateMarkersAndPolyline() async {
     markers.clear();
-    markers.add(Marker(
-      markerId: const MarkerId('user'),
-      position: userCurrentLocation.value,
-      infoWindow: const InfoWindow(title: 'User Location'),
-    ));
-    markers.add(Marker(
-      markerId: const MarkerId('driver'),
-      icon: customMarkerIconForDriver ??
-          BitmapDescriptor.defaultMarkerWithHue(
-            BitmapDescriptor.hueAzure,
-          ),
-      position: driverCurrentLocation.value,
-      infoWindow: const InfoWindow(title: 'Driver Location'),
-    ));
+    markers.add(
+      Marker(
+        markerId: const MarkerId('user'),
+        position: userCurrentLocation.value,
+        infoWindow: const InfoWindow(title: 'User Location'),
+      ),
+    );
+    markers.add(
+      Marker(
+        markerId: const MarkerId('driver'),
+        icon: _controller?.customMarkerIcon ??
+            BitmapDescriptor.defaultMarkerWithHue(
+              BitmapDescriptor.hueAzure,
+            ),
+        position: driverCurrentLocation.value,
+        infoWindow: const InfoWindow(title: 'Driver Location'),
+      ),
+    );
 
     // Get route coordinates
     routePoints.clear();
-    routePoints.addAll(await _googleMapsService.getRouteCoordinates(
-      userCurrentLocation.value,
-      driverCurrentLocation.value,
-    ));
+    routePoints.addAll(
+      await _service.getRouteCoordinates(
+          userCurrentLocation.value, driverCurrentLocation.value),
+    );
 
     // Update polyline
     polylines.clear();
-    polylines.add(Polyline(
-      polylineId: const PolylineId('route'),
-      points: routePoints,
-      color: const Color(0xFF42A5F5),
-      width: 5,
-    ));
+    polylines.add(
+      Polyline(
+        polylineId: const PolylineId('route'),
+        points: routePoints,
+        color: const Color(0xFF42A5F5),
+        width: 5,
+      ),
+    );
 
     // Calculate distance and duration
-    final distDur = await _googleMapsService.getDistanceAndDuration(
-      userCurrentLocation.value,
-      driverCurrentLocation.value,
-    );
+    final distDur = await _service.getDistanceAndDuration(
+        userCurrentLocation.value, driverCurrentLocation.value);
     if (distDur != null) {
       distance.value = distDur['distance']!;
       duration.value = distDur['duration']!;
     }
 
     // Move the camera to show the entire route
-    if (_calculateDistance(
-          userCurrentLocation.value.latitude,
-          userCurrentLocation.value.longitude,
-          driverCurrentLocation.value.latitude,
-          driverCurrentLocation.value.longitude,
-        ) >
-        5000) {
+    var result = _controller?.calculateDistanceAndTimeFromLatLng(
+        userCurrentLocation.value, driverCurrentLocation.value);
+    if (result != null && result['distance'] < 5000) {
       googleMapsController?.animateCamera(
         CameraUpdate.newLatLngZoom(userCurrentLocation.value, 15),
       );
@@ -174,13 +170,19 @@ class MyRideController extends GetxController {
   }
 
   void _checkDriverArrival() {
-    const double arrivalRadius = 50; // 50 meters
-    final double distanceBetween = _calculateDistance(
-      userCurrentLocation.value.latitude,
-      userCurrentLocation.value.longitude,
-      driverCurrentLocation.value.latitude,
-      driverCurrentLocation.value.longitude,
-    );
+    double distanceBetween = 0.0;
+    const double arrivalRadius = 50;
+    var result = _controller?.calculateDistanceAndTimeFromLatLng(
+        userCurrentLocation.value, driverCurrentLocation.value);
+    if (result != null) {
+      distanceBetween = result['distance']!;
+    }
+    // final double distanceBetween = _calculateDistance(
+    //   userCurrentLocation.value.latitude,
+    //   userCurrentLocation.value.longitude,
+    //   driverCurrentLocation.value.latitude,
+    //   driverCurrentLocation.value.longitude,
+    // );
 
     if (distanceBetween <= arrivalRadius) {
       isDriverArrived.value = true;
@@ -190,20 +192,20 @@ class MyRideController extends GetxController {
   }
 
   // Calculate the distance between two coordinates using Haversine formula
-  double _calculateDistance(
-      double lat1, double lon1, double lat2, double lon2) {
-    const double earthRadius = 6371000; // meters
-    final double dLat = (lat2 - lat1) * (3.141592653589793 / 180.0);
-    final double dLon = (lon2 - lon1) * (3.141592653589793 / 180.0);
-
-    final double a = (0.5 - cos(dLat) / 2) +
-        cos(lat1 * (3.141592653589793 / 180.0)) *
-            cos(lat2 * (3.141592653589793 / 180.0)) *
-            (1 - cos(dLon)) /
-            2;
-
-    return earthRadius * 2 * asin(sqrt(a));
-  }
+  // double _calculateDistance(
+  //     double lat1, double lon1, double lat2, double lon2) {
+  //   const double earthRadius = 6371000; // meters
+  //   final double dLat = (lat2 - lat1) * (3.141592653589793 / 180.0);
+  //   final double dLon = (lon2 - lon1) * (3.141592653589793 / 180.0);
+  //
+  //   final double a = (0.5 - cos(dLat) / 2) +
+  //       cos(lat1 * (3.141592653589793 / 180.0)) *
+  //           cos(lat2 * (3.141592653589793 / 180.0)) *
+  //           (1 - cos(dLon)) /
+  //           2;
+  //
+  //   return earthRadius * 2 * asin(sqrt(a));
+  // }
 
   @override
   void onClose() {

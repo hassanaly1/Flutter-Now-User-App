@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:user_app/utils/appcolors.dart';
-import 'package:user_app/views/home/add_to_cart.dart';
+import 'package:user_app/views/food_delivery/add_to_cart.dart';
 
 class MyCustomDivider extends StatelessWidget {
   const MyCustomDivider({

@@ -57,6 +57,8 @@ dependencies:
   readmore: ^3.0.0
   animations: ^2.0.11
   lottie: ^3.1.2
+  country_picker: ^2.0.26
+  dotted_border: ^2.1.0
 
 dev_dependencies:
   flutter_test:
