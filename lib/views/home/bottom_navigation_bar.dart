@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:user_app/utils/appcolors.dart';
+import 'package:user_app/views/bookings/bookings.dart';
+import 'package:user_app/views/chats/messages.dart';
 import 'package:user_app/views/home/home.dart';
+import 'package:user_app/views/profile/profile.dart';
 
 class BottomNavController extends GetxController {
   var selectedIndex = 0.obs;
@@ -23,10 +26,10 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   final BottomNavController controller = Get.put(BottomNavController());
 
   final List<Widget> pages = [
-    const HomeScreen(),
-    const TabTwo(),
-    const TabThree(),
-    const TabFour(),
+    const MyHomeScreen(),
+    const MyBookingsScreen(),
+    const MyMessageScreen(),
+    const MyProfileScreen(),
   ];
 
   @override
@@ -66,8 +69,8 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: Icon(LucideIcons.search),
-                label: 'Search',
+                icon: Icon(LucideIcons.bookCheck),
+                label: 'Bookings',
               ),
               BottomNavigationBarItem(
                 icon: Icon(LucideIcons.messageCircle),
@@ -80,60 +83,6 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class TabTwo extends StatelessWidget {
-  const TabTwo({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset('assets/images/app-logo-dark.png'),
-          // Replace with your image path
-          const Text('Search Tab'),
-        ],
-      ),
-    );
-  }
-}
-
-class TabThree extends StatelessWidget {
-  const TabThree({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset('assets/images/app-logo-dark.png'),
-          // Replace with your image path
-          const Text('Messages Tab'),
-        ],
-      ),
-    );
-  }
-}
-
-class TabFour extends StatelessWidget {
-  const TabFour({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset('assets/images/app-logo-dark.png'),
-          // Replace with your image path
-          const Text('Profile Tab'),
-        ],
       ),
     );
   }

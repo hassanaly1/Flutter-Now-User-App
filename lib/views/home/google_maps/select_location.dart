@@ -8,10 +8,13 @@ import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/utils/reusable_container.dart';
 import 'package:user_app/utils/searchbar.dart';
 import 'package:user_app/utils/toast.dart';
-import 'package:user_app/views/google_maps/select_vehicle.dart';
+import 'package:user_app/views/home/google_maps/select_vehicle.dart';
+import 'package:user_app/views/home/ride-share/search_share_rides.dart';
 
 class SelectLocationScreen extends StatefulWidget {
-  const SelectLocationScreen({super.key});
+  final bool isRideShareScreen;
+
+  const SelectLocationScreen({super.key, this.isRideShareScreen = false});
 
   @override
   State<SelectLocationScreen> createState() => _SelectLocationScreenState();
@@ -51,17 +54,19 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
                   // Update the current position
                   _controller.currentMapPosition = position.target;
                 },
+                buildingsEnabled: true,
                 myLocationEnabled: true,
-                // buildingsEnabled: true,
-                // compassEnabled: true,
-                // fortyFiveDegreeImageryEnabled: true,
-                // // indoorViewEnabled: true,
-                // // liteModeEnabled: true,
-                // mapToolbarEnabled: true,
-                // myLocationButtonEnabled: true,
+                compassEnabled: true,
+                fortyFiveDegreeImageryEnabled: true,
+                // indoorViewEnabled: true,
+                // liteModeEnabled: true,
+                mapToolbarEnabled: true,
+                myLocationButtonEnabled: true,
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).size.height * 0.15),
                 // scrollGesturesEnabled: true,
                 // zoomGesturesEnabled: true,
-                // zoomControlsEnabled: true,
+                zoomControlsEnabled: true,
                 // trafficEnabled: true,
                 // tiltGesturesEnabled: true,
                 // rotateGesturesEnabled: true,
@@ -85,7 +90,10 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
               ),
             ),
             const ShowSearchbarContainer(),
-            ShowAddressContainer(controller: _controller),
+            ShowAddressContainer(
+              controller: _controller,
+              isRideShareScreen: widget.isRideShareScreen,
+            ),
           ],
         ),
       ),
@@ -97,9 +105,11 @@ class ShowAddressContainer extends StatelessWidget {
   const ShowAddressContainer({
     super.key,
     required MyGoogleMapsController controller,
+    required this.isRideShareScreen,
   }) : _controller = controller;
 
   final MyGoogleMapsController _controller;
+  final bool isRideShareScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -153,8 +163,13 @@ class ShowAddressContainer extends StatelessWidget {
                                 _controller.destinationLatLng.value) {
                               print(_controller.pickupLatLng.value);
                               print(_controller.destinationLatLng.value);
-                              Get.to(() => const SelectVehicleScreen(),
-                                  transition: Transition.rightToLeft);
+                              if (isRideShareScreen) {
+                                Get.to(() => const SearchShareRidesScreen(),
+                                    transition: Transition.rightToLeft);
+                              } else {
+                                Get.to(() => const SelectVehicleScreen(),
+                                    transition: Transition.rightToLeft);
+                              }
                             } else {
                               MyCustomErrorToast(
                                       title:

@@ -25,12 +25,12 @@ class CustomTabBar extends StatelessWidget {
         dividerColor: Colors.transparent,
         indicator: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
-          color: AppColors.secondaryColor,
+          color: AppColors.buttonColor,
         ),
         labelStyle: const TextStyle(
-            fontSize: 12, fontWeight: FontWeight.w400, fontFamily: 'poppins'),
+            fontSize: 14, fontWeight: FontWeight.w400, fontFamily: 'poppins'),
         labelColor: Colors.white,
-        unselectedLabelColor: AppColors.primaryColor,
+        unselectedLabelColor: AppColors.buttonColor,
         indicatorSize: TabBarIndicatorSize.tab,
         // isScrollable: true,
         // tabAlignment: TabAlignment.center,

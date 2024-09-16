@@ -7,8 +7,8 @@ import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/common_widgets.dart';
 import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/utils/reusable_container.dart';
-import 'package:user_app/views/food_delivery/common_widgets/custom_food_widget.dart';
-import 'package:user_app/views/food_delivery/restaurant_page.dart';
+import 'package:user_app/views/home/food_delivery/common_widgets/custom_food_widget.dart';
+import 'package:user_app/views/home/food_delivery/restaurant_page.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   const ProductDetailScreen({super.key});

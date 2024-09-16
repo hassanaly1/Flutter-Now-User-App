@@ -22,8 +22,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('Screen Height: ${context.height}');
-    debugPrint('Screen Width: ${context.width}');
     bool isFirstTime = appStorage.read('isFirstTime') ?? true;
     log('IsFirstTime: $isFirstTime');
     return GetMaterialApp(

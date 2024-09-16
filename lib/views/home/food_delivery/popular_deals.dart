@@ -7,9 +7,9 @@ import 'package:user_app/controllers/universal_controller.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/common_widgets.dart';
 import 'package:user_app/utils/custom_text.dart';
-import 'package:user_app/views/food_delivery/common_widgets/custom_food_widget.dart';
-import 'package:user_app/views/food_delivery/food.dart';
-import 'package:user_app/views/food_delivery/food_description.dart';
+import 'package:user_app/views/home/food_delivery/common_widgets/custom_food_widget.dart';
+import 'package:user_app/views/home/food_delivery/food.dart';
+import 'package:user_app/views/home/food_delivery/food_description.dart';
 
 class PopularDealsScreen extends StatefulWidget {
   const PopularDealsScreen({super.key});

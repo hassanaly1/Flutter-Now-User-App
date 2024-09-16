@@ -4,8 +4,8 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/custom_text.dart';
 
-class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key});
+class MessageDetailScreen extends StatelessWidget {
+  const MessageDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

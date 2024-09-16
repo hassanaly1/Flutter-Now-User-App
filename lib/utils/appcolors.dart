@@ -9,6 +9,6 @@ class AppColors {
   static const Color errorColor = Color(0xffe63737);
   static const Color blackTextColor = Colors.black;
   static const Color whiteTextColor = Colors.white;
-  static const Color lightTextColor = Color(0xff999999);
+  static const Color lightTextColor = Colors.black54;
   static Color lightGreyColor = Colors.grey.shade400;
 }

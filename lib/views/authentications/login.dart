@@ -8,7 +8,7 @@ import 'package:user_app/utils/toast.dart';
 import 'package:user_app/utils/validator.dart';
 import 'package:user_app/views/authentications/forget_password.dart';
 import 'package:user_app/views/authentications/register.dart';
-import 'package:user_app/views/home/home.dart';
+import 'package:user_app/views/home/bottom_navigation_bar.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             // if (_loginFormKey.currentState!.validate()) {
                             //   Get.offAll(() => const HomeScreen());
                             // }
-                            Get.offAll(() => const HomeScreen());
+                            Get.offAll(() => const MyBottomNavigationBar());
                             MyCustomSuccessToast(title: 'Login Successful')
                                 .showToast(context);
                           },

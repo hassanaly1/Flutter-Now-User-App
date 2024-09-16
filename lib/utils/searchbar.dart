@@ -37,41 +37,39 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: ReUsableContainer(
-              child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: TextFormField(
-              controller: _controller.searchController,
-              onChanged: _onTextChanged,
-              decoration: InputDecoration(
-                floatingLabelBehavior: FloatingLabelBehavior.auto,
-                filled: true,
-                fillColor: Colors.transparent,
-                hintText: 'Search for Places',
-                prefixIcon: const Icon(
-                  LucideIcons.search,
+              child: TextFormField(
+            controller: _controller.searchController,
+            onChanged: _onTextChanged,
+            decoration: InputDecoration(
+              floatingLabelBehavior: FloatingLabelBehavior.auto,
+              filled: true,
+              fillColor: Colors.transparent,
+              hintText: 'Search for Places',
+              hintStyle: const TextStyle(color: AppColors.lightTextColor),
+              prefixIcon: const Icon(
+                LucideIcons.search,
+                color: AppColors.blackTextColor,
+              ),
+              suffixIcon: InkWell(
+                onTap: () {
+                  _suggestions.clear();
+                  _controller.searchController.clear();
+                },
+                child: const Icon(
+                  LucideIcons.circleX,
                   color: AppColors.blackTextColor,
                 ),
-                suffixIcon: InkWell(
-                  onTap: () {
-                    _suggestions.clear();
-                    _controller.searchController.clear();
-                  },
-                  child: const Icon(
-                    LucideIcons.circleX,
-                    color: AppColors.blackTextColor,
-                  ),
-                ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12.0),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white38),
-                    borderRadius: BorderRadius.circular(8.0)),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.transparent),
-                    borderRadius: BorderRadius.circular(8.0)),
-                focusedErrorBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: AppColors.errorColor),
-                    borderRadius: BorderRadius.circular(8.0)),
               ),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12.0),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.white38),
+                  borderRadius: BorderRadius.circular(8.0)),
+              focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.transparent),
+                  borderRadius: BorderRadius.circular(8.0)),
+              focusedErrorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: AppColors.errorColor),
+                  borderRadius: BorderRadius.circular(8.0)),
             ),
           )),
         ),

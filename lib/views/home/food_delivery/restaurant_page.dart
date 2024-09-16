@@ -6,11 +6,11 @@ import 'package:user_app/controllers/universal_controller.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/common_widgets.dart';
 import 'package:user_app/utils/custom_text.dart';
-import 'package:user_app/views/food_delivery/common_widgets/custom_food_widget.dart';
-import 'package:user_app/views/food_delivery/food.dart';
-import 'package:user_app/views/food_delivery/food_description.dart';
-import 'package:user_app/views/food_delivery/popular_deals.dart';
-import 'package:user_app/views/home/chat.dart';
+import 'package:user_app/views/chats/message_detail.dart';
+import 'package:user_app/views/home/food_delivery/common_widgets/custom_food_widget.dart';
+import 'package:user_app/views/home/food_delivery/food.dart';
+import 'package:user_app/views/home/food_delivery/food_description.dart';
+import 'package:user_app/views/home/food_delivery/popular_deals.dart';
 
 class RestaurantPageScreen extends StatefulWidget {
   const RestaurantPageScreen({super.key});
@@ -87,7 +87,7 @@ class _RestaurantPageScreenState extends State<RestaurantPageScreen> {
         ),
         floatingActionButton: FloatingActionButton(
             onPressed: () {
-              Get.to(() => const ChatScreen());
+              Get.to(() => const MessageDetailScreen());
             },
             tooltip: 'Chat with Restaurant',
             backgroundColor: AppColors.whiteTextColor.withOpacity(0.9),

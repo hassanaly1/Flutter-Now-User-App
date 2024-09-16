@@ -7,19 +7,19 @@ import 'package:user_app/controllers/universal_controller.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/common_widgets.dart';
 import 'package:user_app/utils/custom_text.dart';
-import 'package:user_app/views/food_delivery/food.dart';
-import 'package:user_app/views/google_maps/select_location.dart';
-import 'package:user_app/views/package_and_document_delivery/package_and_document.dart';
-import 'package:user_app/views/ride-share/ride_share.dart';
+import 'package:user_app/views/home/food_delivery/food.dart';
+import 'package:user_app/views/home/google_maps/select_location.dart';
+import 'package:user_app/views/home/package_and_document_delivery/package_and_document.dart';
+import 'package:user_app/views/home/ride-share/ride_share.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class MyHomeScreen extends StatefulWidget {
+  const MyHomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<MyHomeScreen> createState() => _MyHomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _MyHomeScreenState extends State<MyHomeScreen> {
   final MyUniversalController _controller = Get.put(MyUniversalController());
   final CarouselSliderController _carouselController =
       CarouselSliderController();

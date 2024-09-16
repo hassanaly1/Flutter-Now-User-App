@@ -9,7 +9,7 @@ import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/utils/dropdown.dart';
 import 'package:user_app/utils/heading_and_textfield.dart';
 import 'package:user_app/utils/reusable_container.dart';
-import 'package:user_app/views/google_maps/select_location.dart';
+import 'package:user_app/views/home/google_maps/select_location.dart';
 
 class MainPackageAndDocumentScreen extends StatefulWidget {
   final bool isPackageScreen;

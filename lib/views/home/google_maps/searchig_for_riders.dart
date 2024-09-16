@@ -10,8 +10,8 @@ import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/utils/reusable_container.dart';
 import 'package:user_app/utils/shiimmers.dart';
 import 'package:user_app/utils/toast.dart';
-import 'package:user_app/views/google_maps/driver_coming.dart';
-import 'package:user_app/views/google_maps/select_vehicle.dart';
+import 'package:user_app/views/home/google_maps/driver_coming.dart';
+import 'package:user_app/views/home/google_maps/select_vehicle.dart';
 
 class SearchingForRidersController extends GetxController {
   var isRidersAreLoading = true.obs;

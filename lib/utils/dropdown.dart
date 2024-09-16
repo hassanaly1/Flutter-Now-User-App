@@ -21,13 +21,13 @@ class CustomDropdown extends StatelessWidget {
       padding: EdgeInsets.zero,
       child: DropdownButtonFormField(
         padding: EdgeInsets.zero,
-        iconSize: 12.0,
+        iconSize: 14.0,
         alignment: Alignment.centerLeft,
         isExpanded: false,
         hint: CustomTextWidget(
           text: hintText,
-          fontSize: 10,
-          fontWeight: FontWeight.w300,
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
           textColor: AppColors.lightTextColor,
         ),
         isDense: true,
@@ -36,7 +36,7 @@ class CustomDropdown extends StatelessWidget {
         icon: const Icon(Icons.keyboard_arrow_down_rounded),
         style: const TextStyle(
           fontFamily: 'Poppins',
-          fontSize: 10,
+          fontSize: 14,
           fontWeight: FontWeight.w300,
           color: AppColors.lightTextColor,
         ),
@@ -50,7 +50,7 @@ class CustomDropdown extends StatelessWidget {
                 value: option,
                 child: CustomTextWidget(
                   text: option ?? '',
-                  fontSize: 12.0,
+                  fontSize: 14.0,
                   fontWeight: FontWeight.w300,
                   textColor: AppColors.blackTextColor,
                 )))

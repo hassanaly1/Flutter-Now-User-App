@@ -6,8 +6,8 @@ import 'package:user_app/utils/appbar.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/utils/reusable_container.dart';
-import 'package:user_app/views/food_delivery/food_description.dart';
 import 'package:user_app/views/home/checkout.dart';
+import 'package:user_app/views/home/food_delivery/food_description.dart';
 
 class AddToCartScreen extends StatelessWidget {
   const AddToCartScreen({super.key});

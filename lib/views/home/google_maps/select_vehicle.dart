@@ -7,7 +7,7 @@ import 'package:user_app/controllers/google_maps_controller.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/utils/reusable_container.dart';
-import 'package:user_app/views/google_maps/searchig_for_riders.dart';
+import 'package:user_app/views/home/google_maps/searchig_for_riders.dart';
 
 class SelectVehicleScreen extends StatefulWidget {
   const SelectVehicleScreen({super.key});
