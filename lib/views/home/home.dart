@@ -2,11 +2,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:user_app/controllers/connectivity_controller.dart';
 import 'package:user_app/controllers/universal_controller.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/common_widgets.dart';
 import 'package:user_app/utils/custom_text.dart';
+import 'package:user_app/utils/toast.dart';
 import 'package:user_app/views/home/food_delivery/food.dart';
 import 'package:user_app/views/home/google_maps/select_location.dart';
 import 'package:user_app/views/home/package_and_document_delivery/package_and_document.dart';
@@ -20,7 +23,9 @@ class MyHomeScreen extends StatefulWidget {
 }
 
 class _MyHomeScreenState extends State<MyHomeScreen> {
-  final MyUniversalController _controller = Get.put(MyUniversalController());
+  final MyUniversalController _controller = Get.find<MyUniversalController>();
+  final ConnectivityController _connectivityController =
+      Get.find<ConnectivityController>();
   final CarouselSliderController _carouselController =
       CarouselSliderController();
   final _currentIndex = 0.obs;
@@ -34,6 +39,22 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
   void initState() {
     super.initState();
     _controller.getCurrentLocation();
+    // Listeners to update internet connectivity status.
+    ever(_connectivityController.isInternetConnected,
+        // Observe the Rx variable directly
+        (isConnected) {
+      if (isConnected == true) {
+        MyCustomSuccessToast(
+                title: 'You\'re Back Online.',
+                backgroundColor: AppColors.successColor)
+            .showToast(context);
+      } else {
+        MyCustomErrorToast(
+                title:
+                    'Disconnected from the Internet, Please Check your Internet Connection.')
+            .showToast(context);
+      }
+    });
   }
 
   @override
@@ -64,9 +85,12 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
                               visible:
                                   _controller.userCurrentLocation.value != '',
                               child: InkWell(
-                                  onTap: () => _controller.getCurrentLocation(),
-                                  child: const Icon(Icons.location_on,
-                                      color: AppColors.primaryColor)),
+                                onTap: () => _controller.getCurrentLocation(),
+                                child: const Icon(
+                                  LucideIcons.mapPinCheckInside,
+                                  color: AppColors.buttonColor,
+                                ),
+                              ),
                             ),
                             const SizedBox(width: 4.0),
                             Flexible(

@@ -93,8 +93,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             //   Get.offAll(() => const HomeScreen());
                             // }
                             Get.offAll(() => const MyBottomNavigationBar());
-                            MyCustomSuccessToast(title: 'Login Successful')
-                                .showToast(context);
+                            MyCustomSuccessToast(
+                              title: 'Logged In Successfully!',
+                              duration: 5,
+                            ).showToast(context);
                           },
                         ),
                         SizedBox(height: context.height * 0.01),

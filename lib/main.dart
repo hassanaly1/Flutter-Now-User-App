@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
+import 'package:user_app/controllers/connectivity_controller.dart';
+import 'package:user_app/controllers/universal_controller.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/storage_helper.dart';
 import 'package:user_app/views/authentications/onboarding.dart';
@@ -24,8 +26,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isFirstTime = appStorage.read('isFirstTime') ?? true;
     log('IsFirstTime: $isFirstTime');
+
     return GetMaterialApp(
-      // initialBinding: InitialScreenBindings(),
+      initialBinding: MyInitialBindings(),
       debugShowCheckedModeBanner: false,
       title: 'Now-User-App',
       theme: ThemeData(
@@ -36,6 +39,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Poppins',
         useMaterial3: true,
       ),
+      // home: const ConnectivityStatusWidget(),
       home: isFirstTime
           ? const OnBoardingScreen()
           : const MyBottomNavigationBar(),
@@ -43,11 +47,39 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// class InitialScreenBindings implements Bindings {
-//   InitialScreenBindings();
-//
-//   @override
-//   void dependencies() {
-//     Get.put(MyUniversalController());
-//   }
-// }
+class MyInitialBindings implements Bindings {
+  MyInitialBindings();
+
+  @override
+  void dependencies() {
+    Get.lazyPut<MyUniversalController>(() => MyUniversalController());
+    Get.lazyPut<ConnectivityController>(() => ConnectivityController());
+  }
+}
+
+class ConnectivityStatusWidget extends StatelessWidget {
+  const ConnectivityStatusWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final ConnectivityController connectivityController = Get.find();
+
+    return SafeArea(child: Scaffold(
+      body: Center(
+        child: Obx(() {
+          if (connectivityController.isInternetConnected.value) {
+            return const Text(
+              'You are online',
+              style: TextStyle(color: Colors.green, fontSize: 22.0),
+            );
+          } else {
+            return const Text(
+              'No Internet Connection',
+              style: TextStyle(color: Colors.red, fontSize: 22.0),
+            );
+          }
+        }),
+      ),
+    ));
+  }
+}

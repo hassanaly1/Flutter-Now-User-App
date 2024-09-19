@@ -7,6 +7,7 @@ import 'package:user_app/utils/custom_text.dart';
 
 class MyUniversalController extends GetxController {
   var userCurrentLocation = ''.obs;
+  var isConnectedToInternet = false.obs;
 
   // Accepts a callback that defines what to do after getting the location
   Future<void> getCurrentLocation({Function? onSuccess}) async {
@@ -69,7 +70,18 @@ class MyUniversalController extends GetxController {
         Placemark place = placemarks.first;
         // Update the observable variable with a formatted address
         userCurrentLocation.value =
-            '${place.name}, ${place.locality}, ${place.administrativeArea}, ${place.country}';
+            '${place.subLocality}, ${place.locality}, ${place.administrativeArea}, ${place.country}';
+        // print('Street: ${place.street}');
+        // print('SubLocality: ${place.subLocality}');
+        // print('Locality: ${place.locality}');
+        // print('AdministrativeArea: ${place.administrativeArea}');
+        // print('PostalCode: ${place.postalCode}');
+        // print('Country: ${place.country}');
+        // print('Name: ${place.name}');
+        // print('ISOCountryCode: ${place.isoCountryCode}');
+        // print('SubThoroughfare: ${place.subThoroughfare}');
+        // print('Thoroughfare: ${place.thoroughfare}');
+        // print('SubAdministrativeArea: ${place.subAdministrativeArea}');
       } else {
         // Handle the case where no address could be found
         userCurrentLocation.value = '';

@@ -11,4 +11,9 @@ class AppColors {
   static const Color whiteTextColor = Colors.white;
   static const Color lightTextColor = Colors.black54;
   static Color lightGreyColor = Colors.grey.shade400;
+  static Color lighterGreyColor = Colors.grey.shade300;
+  static Color shimmerBaseColor = lighterGreyColor;
+
+  // static Color shimmerBaseColor = const Color(0xffE6E8EB);
+  static Color shimmerHighlightColor = const Color(0xffF9F9FB);
 }

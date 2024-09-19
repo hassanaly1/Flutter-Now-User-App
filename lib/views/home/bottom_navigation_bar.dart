@@ -7,7 +7,7 @@ import 'package:user_app/views/chats/messages.dart';
 import 'package:user_app/views/home/home.dart';
 import 'package:user_app/views/profile/profile.dart';
 
-class BottomNavController extends GetxController {
+class MyBottomNavController extends GetxController {
   var selectedIndex = 0.obs;
 
   void changeTabIndex(int index) {
@@ -23,7 +23,7 @@ class MyBottomNavigationBar extends StatefulWidget {
 }
 
 class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
-  final BottomNavController controller = Get.put(BottomNavController());
+  final MyBottomNavController controller = Get.put(MyBottomNavController());
 
   final List<Widget> pages = [
     const MyHomeScreen(),
@@ -54,27 +54,27 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
             enableFeedback: false,
             backgroundColor: AppColors.primaryColor,
             selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.white60,
+            unselectedItemColor: Colors.white38,
             selectedLabelStyle:
-                const TextStyle(fontFamily: 'Poppins', fontSize: 10.0),
+                const TextStyle(fontFamily: 'Poppins', fontSize: 12.0),
             unselectedLabelStyle:
-                const TextStyle(fontFamily: 'Poppins', fontSize: 10.0),
+                const TextStyle(fontFamily: 'Poppins', fontSize: 12.0),
             iconSize: 24.0,
             showSelectedLabels: true,
             showUnselectedLabels: true,
             // type: BottomNavigationBarType.fixed,
             items: const [
               BottomNavigationBarItem(
-                icon: Icon(LucideIcons.house),
+                icon: Icon(Icons.home_filled),
                 label: 'Home',
               ),
               BottomNavigationBarItem(
                 icon: Icon(LucideIcons.bookCheck),
-                label: 'Bookings',
+                label: 'My Bookings',
               ),
               BottomNavigationBarItem(
                 icon: Icon(LucideIcons.messageCircle),
-                label: 'Message',
+                label: 'Messages',
               ),
               BottomNavigationBarItem(
                 icon: Icon(LucideIcons.user),

@@ -59,6 +59,9 @@ dependencies:
   lottie: ^3.1.2
   country_picker: ^2.0.26
   dotted_border: ^2.1.0
+  easy_date_timeline: ^1.1.3
+  connectivity_plus: ^6.0.5
+  rxdart: ^0.28.0
 
 dev_dependencies:
   flutter_test:

@@ -1,52 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:user_app/controllers/searching_for_driver_controller.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/custom_text.dart';
+import 'package:user_app/utils/dialogs.dart';
 import 'package:user_app/utils/reusable_container.dart';
 import 'package:user_app/utils/shiimmers.dart';
 import 'package:user_app/utils/toast.dart';
 import 'package:user_app/views/home/google_maps/driver_coming.dart';
 import 'package:user_app/views/home/google_maps/select_vehicle.dart';
-
-class SearchingForRidersController extends GetxController {
-  var isRidersAreLoading = true.obs;
-  RxList<bool> showItems = List.generate(10, (_) => false).obs;
-  RxList<int> itemTimers = List.generate(10, (_) => 10).obs;
-
-  @override
-  void onInit() {
-    super.onInit();
-    Timer(const Duration(seconds: 5), () {
-      isRidersAreLoading.value = false;
-      _startShowingItems();
-    });
-  }
-
-  void _startShowingItems() {
-    for (int i = 0; i < showItems.length; i++) {
-      Timer(Duration(seconds: i * 5), () {
-        showItems[i] = true;
-        _startItemTimer(i);
-      });
-    }
-  }
-
-  void _startItemTimer(int index) {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (itemTimers[index] <= 0) {
-        showItems[index] = false;
-        timer.cancel();
-      } else {
-        itemTimers[index]--;
-      }
-    });
-  }
-}
 
 class SearchingForRidersScreen extends StatefulWidget {
   const SearchingForRidersScreen({super.key});
@@ -268,51 +234,4 @@ class CustomDriverRequestWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-void showWaitingForDriverDialog() {
-  Get.defaultDialog(
-    title: 'Waiting for Driver',
-    titleStyle: const TextStyle(
-      fontSize: 18.0,
-      fontWeight: FontWeight.w700,
-      color: AppColors.buttonColor,
-    ),
-    contentPadding:
-        const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-    barrierDismissible: false,
-    radius: 16.0,
-    // Rounded corners of the dialog
-    content: Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const CustomTextWidget(
-          text: "Waiting for Driver to Accept the Ride",
-          fontSize: 18.0,
-          maxLines: 2,
-          fontWeight: FontWeight.w700,
-          textColor: AppColors.blackTextColor,
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 16.0),
-        // Adds spacing between message and buttons
-        // Optional progress indicator
-        const Center(
-            child: SpinKitRipple(
-          color: AppColors.buttonColor,
-        )),
-
-        const SizedBox(height: 16.0),
-        InkWell(
-          onTap: () => Get.back(),
-          child: const CustomTextWidget(
-            text: "Cancel Request",
-            textColor: Colors.redAccent,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      ],
-    ),
-  );
 }

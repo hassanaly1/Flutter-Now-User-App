@@ -7,16 +7,20 @@ import 'package:user_app/utils/custom_text.dart';
 class MyCustomSuccessToast {
   final String title;
   final VoidCallback? onTap;
+  final Color? backgroundColor;
+  final int duration;
 
   MyCustomSuccessToast({
     required this.title,
     this.onTap,
+    this.backgroundColor,
+    this.duration = 3,
   });
 
   void showToast(BuildContext context) {
     DelightToastBar(
       autoDismiss: true,
-      snackbarDuration: const Duration(seconds: 3),
+      snackbarDuration: Duration(seconds: duration),
       builder: (context) => ToastCard(
         onTap: onTap,
         leading: const Icon(
@@ -29,8 +33,9 @@ class MyCustomSuccessToast {
           fontSize: 14.0,
           fontWeight: FontWeight.w500,
           maxLines: 5,
+          textColor: AppColors.whiteTextColor,
         ),
-        color: AppColors.buttonColor,
+        color: backgroundColor ?? AppColors.buttonColor,
       ),
     ).show(context);
   }
@@ -61,6 +66,7 @@ class MyCustomErrorToast {
           fontSize: 14.0,
           fontWeight: FontWeight.w500,
           maxLines: 5,
+          textColor: AppColors.whiteTextColor,
         ),
         color: AppColors.errorColor,
       ),

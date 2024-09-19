@@ -66,7 +66,7 @@ class _SelectVehicleScreenState extends State<SelectVehicleScreen> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: AppColors.primaryColor.withOpacity(0.9),
           onPressed: () {
-            Get.offAll(() => const SearchingForRidersScreen(),
+            Get.to(() => const SearchingForRidersScreen(),
                 transition: Transition.rightToLeft);
           },
           child: const Icon(
@@ -190,30 +190,33 @@ class ShowSelectVehicleContainer extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Column(
               children: [
-                const Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    CustomVehicleContainer(
-                      price: '\$18.6',
-                      imageUrl: 'assets/images/bike.png',
-                      vehicleInfo: 'Bike',
-                    ),
-                    CustomVehicleContainer(
-                      price: '\$33.9',
-                      imageUrl: 'assets/images/auto.png',
-                      vehicleInfo: 'Auto',
-                    ),
-                    CustomVehicleContainer(
-                      price: '\$60',
-                      imageUrl: 'assets/images/car.png',
-                      vehicleInfo: 'Car',
-                    ),
-                    CustomVehicleContainer(
-                      price: '\$100',
-                      imageUrl: 'assets/images/ac-car.png',
-                      vehicleInfo: 'AC Car',
-                    ),
-                  ],
+                const SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CustomVehicleContainer(
+                        price: '\$18.6',
+                        imageUrl: 'assets/images/bike.png',
+                        vehicleInfo: 'Bike',
+                      ),
+                      CustomVehicleContainer(
+                        price: '\$33.9',
+                        imageUrl: 'assets/images/auto.png',
+                        vehicleInfo: 'Auto',
+                      ),
+                      CustomVehicleContainer(
+                        price: '\$60',
+                        imageUrl: 'assets/images/car.png',
+                        vehicleInfo: 'Car',
+                      ),
+                      CustomVehicleContainer(
+                        price: '\$100',
+                        imageUrl: 'assets/images/ac-car.png',
+                        vehicleInfo: 'AC Car',
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 6.0),
                 CustomPriceWheelSpinner(controller: controller),
@@ -348,10 +351,12 @@ class _CustomVehicleContainerState extends State<CustomVehicleContainer> {
 
 class CustomHeaderContainer extends StatelessWidget {
   final String title;
+  final VoidCallback? onBackButtonTap;
 
   const CustomHeaderContainer({
     super.key,
     required this.title,
+    this.onBackButtonTap,
   });
 
   @override
@@ -361,7 +366,15 @@ class CustomHeaderContainer extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
-            onPressed: () => Get.back(),
+            // onPressed: () => onBackButtonTap ?? Get.back(),
+            // onPressed: () => onBackButtonTap?.call() ?? Get.back(),
+            onPressed: () {
+              if (onBackButtonTap != null) {
+                onBackButtonTap!();
+              } else {
+                Get.back();
+              }
+            },
             icon: const Icon(LucideIcons.circleArrowLeft,
                 color: AppColors.buttonColor)),
         CustomTextWidget(

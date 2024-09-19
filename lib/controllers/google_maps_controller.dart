@@ -165,11 +165,12 @@ class MyGoogleMapsController extends GetxController {
           await placemarkFromCoordinates(position.latitude, position.longitude);
       if (placemarks.isNotEmpty) {
         // Update pickup or destination location based on the parameter
+        var location =
+            "${placemarks.first.subLocality}, ${placemarks.first.locality} , ${placemarks.first.administrativeArea} , ${placemarks.first.country}";
         isPickupLocation
-            ? selectedPickupLocation.value =
-                "${placemarks.first.street}, ${placemarks.first.locality} , ${placemarks.first.country}"
-            : selectedDestinationLocation.value =
-                "${placemarks.first.street}, ${placemarks.first.locality} , ${placemarks.first.country}";
+            ? selectedPickupLocation.value = location
+            : selectedDestinationLocation.value = location;
+
         update();
       }
     } catch (e) {

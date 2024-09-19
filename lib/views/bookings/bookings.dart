@@ -26,7 +26,9 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
           body: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.symmetric(
+                    horizontal: context.width * 0.05,
+                    vertical: context.height * 0.01),
                 child: TabBar(
                   isScrollable: true,
                   labelColor: AppColors.primaryColor,
@@ -70,39 +72,43 @@ class BookingTabContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        CustomBookingExpansionTile(
-          driverName: 'Mr Smith Jane',
-          pickupLocation: 'Cape Town Cbd 1, South Africa',
-          destination: 'Clinton Street, London',
-          date: '12/12/2022',
-          time: '10:00 AM',
-          distance: '2.5 km',
-          payment: 'Cash',
-          vehicle: 'Toyota Camry',
-          price: 100.0,
-          status: 'Pending',
-          availableSeats: '3',
-          additionalInfo: 'No additional info',
-          isRideShareBooking: isRideShare,
-        ),
-        CustomBookingExpansionTile(
-          driverName: 'Mr John Doe',
-          pickupLocation: 'Cape Town Cbd 1, South Africa',
-          destination: 'Clinton Street, London',
-          date: '12/12/2022',
-          time: '10:00 AM',
-          distance: '2.5 km',
-          payment: 'Cash',
-          vehicle: 'Toyota Camry',
-          price: 75.0,
-          status: 'Completed',
-          availableSeats: '3',
-          additionalInfo: 'N/A',
-          isRideShareBooking: isRideShare,
-        ),
-      ],
+    return Padding(
+      padding: EdgeInsets.symmetric(
+          horizontal: context.width * 0.02, vertical: context.height * 0.01),
+      child: ListView(
+        children: [
+          CustomBookingExpansionTile(
+            driverName: 'Mr Smith Jane',
+            pickupLocation: 'Cape Town Cbd 1, South Africa',
+            destination: 'Clinton Street, London',
+            date: '12/12/2022',
+            time: '10:00 AM',
+            distance: '2.5 km',
+            payment: 'Cash',
+            vehicle: 'Toyota Camry',
+            price: 100.0,
+            status: 'Pending',
+            availableSeats: '3',
+            additionalInfo: 'No additional info',
+            isRideShareBooking: isRideShare,
+          ),
+          CustomBookingExpansionTile(
+            driverName: 'Mr John Doe',
+            pickupLocation: 'Cape Town Cbd 1, South Africa',
+            destination: 'Clinton Street, London',
+            date: '12/12/2022',
+            time: '10:00 AM',
+            distance: '2.5 km',
+            payment: 'Cash',
+            vehicle: 'Toyota Camry',
+            price: 75.0,
+            status: 'Completed',
+            availableSeats: '3',
+            additionalInfo: 'N/A',
+            isRideShareBooking: isRideShare,
+          ),
+        ],
+      ),
     );
   }
 }

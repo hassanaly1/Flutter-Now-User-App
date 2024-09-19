@@ -142,6 +142,7 @@ class MyRideController extends GetxController {
     // Move the camera to show the entire route
     var result = _controller?.calculateDistanceAndTimeFromLatLng(
         userCurrentLocation.value, driverCurrentLocation.value);
+    print('Resultttt: $result');
     if (result != null && result['distance'] < 5000) {
       googleMapsController?.animateCamera(
         CameraUpdate.newLatLngZoom(userCurrentLocation.value, 15),
