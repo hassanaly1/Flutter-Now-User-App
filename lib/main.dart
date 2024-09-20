@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:user_app/controllers/connectivity_controller.dart';
-import 'package:user_app/controllers/universal_controller.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/storage_helper.dart';
 import 'package:user_app/views/authentications/onboarding.dart';
@@ -52,7 +51,6 @@ class MyInitialBindings implements Bindings {
 
   @override
   void dependencies() {
-    Get.lazyPut<MyUniversalController>(() => MyUniversalController());
     Get.lazyPut<ConnectivityController>(() => ConnectivityController());
   }
 }

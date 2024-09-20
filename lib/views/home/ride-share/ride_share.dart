@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:user_app/utils/appbar.dart';
-import 'package:user_app/utils/reusable_container.dart';
+import 'package:user_app/helpers/appbar.dart';
+import 'package:user_app/helpers/reusable_container.dart';
 import 'package:user_app/views/home/google_maps/select_location.dart';
 
 class MainRideShareScreen extends StatefulWidget {

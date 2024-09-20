@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:user_app/controllers/food_controller.dart';
 import 'package:user_app/controllers/universal_controller.dart';
+import 'package:user_app/helpers/custom_text.dart';
+import 'package:user_app/helpers/reusable_container.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/common_widgets.dart';
-import 'package:user_app/utils/custom_text.dart';
-import 'package:user_app/utils/reusable_container.dart';
 import 'package:user_app/views/home/food_delivery/common_widgets/custom_food_widget.dart';
-import 'package:user_app/views/home/food_delivery/favourites.dart';
 import 'package:user_app/views/home/food_delivery/food_description.dart';
 import 'package:user_app/views/home/food_delivery/popular_deals.dart';
 import 'package:user_app/views/home/home.dart';
@@ -23,7 +23,9 @@ class MainFoodScreen extends StatefulWidget {
 }
 
 class _MainFoodScreenState extends State<MainFoodScreen> {
-  final MyUniversalController _controller = Get.find<MyUniversalController>();
+  final MyFoodController _controller = Get.put(MyFoodController());
+  final MyUniversalController _universalController =
+      Get.find<MyUniversalController>();
   final FocusNode _searchFocusNode = FocusNode();
   final CarouselSliderController _carouselController =
       CarouselSliderController();
@@ -36,10 +38,9 @@ class _MainFoodScreenState extends State<MainFoodScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = context.width;
+    double screenHeight = context.height;
 
-    // Calculate the child aspect ratio to ensure items are responsive
     double childAspectRatio = (screenWidth / 2) / (screenHeight * 0.35);
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -60,21 +61,11 @@ class _MainFoodScreenState extends State<MainFoodScreen> {
                 ),
                 centerTitle: true,
                 actions: [
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    visualDensity: VisualDensity.compact,
-                    onPressed: () {
-                      Get.to(() => const FavouritesScreen(),
-                          transition: Transition.upToDown);
-                    },
-                    icon: const Icon(
-                      LucideIcons.heart,
-                      color: AppColors.blackTextColor,
-                    ),
-                  ),
-                  const MyCartIcon(),
+                  Obx(() =>
+                      MyFavouriteIcon(count: _controller.favorites.length)),
+                  Obx(() => MyCartIcon(count: _controller.cartItems.length)),
                 ],
-                expandedHeight: context.height * 0.22,
+                expandedHeight: context.height * 0.18,
                 backgroundColor: AppColors.backgroundColor,
                 bottom: CustomSearchbar(
                   hintText: 'Search for Food',
@@ -89,7 +80,7 @@ class _MainFoodScreenState extends State<MainFoodScreen> {
               Image.asset('assets/images/home_background.png',
                   fit: BoxFit.cover),
               RefreshIndicator(
-                onRefresh: () => _controller.getCurrentLocation(),
+                onRefresh: () => _universalController.getCurrentLocation(),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -170,12 +161,13 @@ class _MainFoodScreenState extends State<MainFoodScreen> {
                             ),
                             InkWell(
                               onTap: () {
-                                Get.to(() => const PopularDealsScreen(),
+                                Get.to(
+                                    () => const PopularDealsAndCategoryScreen(),
                                     transition: Transition.rightToLeft);
                               },
                               child: const CustomTextWidget(
                                 text: 'See All',
-                                fontSize: 12.0,
+                                fontSize: 14.0,
                                 maxLines: 2,
                                 fontWeight: FontWeight.w400,
                                 textColor: AppColors.buttonColor,
@@ -187,59 +179,34 @@ class _MainFoodScreenState extends State<MainFoodScreen> {
                       const SizeBetweenWidgets(),
                       GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2, // Always 2 columns
-                          childAspectRatio:
-                              childAspectRatio, // Responsive aspect ratio
+                          crossAxisCount: 2,
+                          childAspectRatio: childAspectRatio,
                         ),
-                        itemCount: 10,
+                        itemCount: _controller.foodItemsList.length,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
+                          final item = _controller.foodItemsList[index];
                           return OpenContainer(
                             openColor: Colors.transparent,
                             closedColor: Colors.transparent,
                             transitionDuration:
                                 const Duration(milliseconds: 500),
                             closedBuilder: (context, action) =>
-                                CustomFoodWidget(onTap: action),
+                                CustomFoodWidget(
+                              onTap: action,
+                              model: item,
+                            ),
                             openBuilder: (context, action) =>
-                                const ProductDetailScreen(),
+                                ProductDetailScreen(model: item),
                             openElevation: 0,
                             closedElevation: 0,
                             closedShape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  0), // Set border radius to 0
+                              borderRadius: BorderRadius.circular(0),
                             ),
                           );
                         },
                       )
-                      // GridView.builder(
-                      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      //     crossAxisCount: 2,
-                      //     childAspectRatio: context.height * 0.0012,
-                      //   ),
-                      //   itemCount: 10,
-                      //   shrinkWrap: true,
-                      //   physics: const NeverScrollableScrollPhysics(),
-                      //   itemBuilder: (context, index) {
-                      //     return OpenContainer(
-                      //       openColor: Colors.transparent,
-                      //       closedColor: Colors.transparent,
-                      //       transitionDuration:
-                      //           const Duration(milliseconds: 500),
-                      //       closedBuilder: (context, action) =>
-                      //           CustomFoodWidget(onTap: action),
-                      //       openBuilder: (context, action) =>
-                      //           const ProductDetailScreen(),
-                      //       openElevation: 0,
-                      //       closedElevation: 0,
-                      //       closedShape: RoundedRectangleBorder(
-                      //         borderRadius: BorderRadius.circular(
-                      //             0), // Set border radius to 0
-                      //       ),
-                      //     );
-                      //   },
-                      // )
                     ],
                   ),
                 ),
@@ -281,6 +248,8 @@ class CustomSearchbar extends StatelessWidget implements PreferredSizeWidget {
                 filled: true,
                 fillColor: Colors.transparent,
                 hintText: hintText,
+                hintStyle: const TextStyle(
+                    fontSize: 14.0, color: AppColors.lightTextColor),
                 prefixIcon: const Icon(
                   LucideIcons.search,
                   color: AppColors.blackTextColor,
@@ -312,32 +281,83 @@ class CustomSearchbar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
-class FoodCategoryList extends StatelessWidget {
+class FoodCategoryList extends StatefulWidget {
   const FoodCategoryList({super.key});
+
+  @override
+  State<FoodCategoryList> createState() => _FoodCategoryListState();
+}
+
+class _FoodCategoryListState extends State<FoodCategoryList> {
+  List<Map<String, String>> categories = [
+    {
+      'image':
+          'https://img.freepik.com/free-photo/delicious-vietnamese-food-including-pho-ga-noodles-spring-rolls-white-table_181624-34062.jpg',
+      'name': 'Asian',
+    },
+    {
+      'image':
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR16X0FcgkfLnrKW1xK3DIhpVkvZ3xgqPQnSJFIk2BbpK9HJ8mXvBAceVmCFEfSwT6PI4A&usqp=CAU',
+      'name': 'Chinese',
+    },
+    {
+      'image':
+          'https://t4.ftcdn.net/jpg/02/10/97/65/360_F_210976505_c4vXGI6NCIaV8qlANGNP1gDPIt2rjYjC.jpg',
+      'name': 'American',
+    },
+    {
+      'image':
+          'https://t3.ftcdn.net/jpg/01/08/74/94/360_F_108749462_n5gFesQla84wyfXTDUEG8zNochvWQXx4.jpg',
+      'name': 'Mexican',
+    },
+    {
+      'image':
+          'https://img.freepik.com/free-photo/gourmet-italian-bolognese-pasta-with-fresh-parmesan-generated-by-ai_188544-9453.jpg',
+      'name': 'Italian',
+    },
+    {
+      'image':
+          'https://www.shutterstock.com/image-photo/top-view-bbq-pork-ribs-260nw-1448812934.jpg',
+      'name': 'Western',
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: context.height * 0.16,
+      height: context.height * 0.15,
       color: Colors.transparent,
       child: ListView.builder(
-        itemCount: 10,
+        itemCount: categories.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) => SizedBox(
           width: context.width * 0.22,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CircleAvatar(
-                radius: context.height * 0.05,
-                backgroundImage: const AssetImage('assets/images/food-1.png'),
-              ),
-              CustomTextWidget(
-                text: 'Category $index',
-                maxLines: 1,
-                fontSize: 12.0,
-              ),
-            ],
+          child: Padding(
+            padding: EdgeInsets.only(left: context.width * 0.03),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Get.to(
+                        () => PopularDealsAndCategoryScreen(
+                              isCategoryScreen: true,
+                              categoryName: '${categories[index]['name']}',
+                            ),
+                        transition: Transition.rightToLeft);
+                  },
+                  child: CircleAvatar(
+                    radius: context.height * 0.05,
+                    backgroundImage: NetworkImage(categories[index]['image']!),
+                  ),
+                ),
+                CustomTextWidget(
+                  text: '${categories[index]['name']}',
+                  maxLines: 1,
+                  fontSize: 12.0,
+                ),
+              ],
+            ),
           ),
         ),
       ),

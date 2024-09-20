@@ -3,18 +3,32 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:readmore/readmore.dart';
+import 'package:user_app/controllers/food_controller.dart';
+import 'package:user_app/helpers/custom_text.dart';
+import 'package:user_app/helpers/reusable_container.dart';
+import 'package:user_app/models/food_item_model.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/common_widgets.dart';
-import 'package:user_app/utils/custom_text.dart';
-import 'package:user_app/utils/reusable_container.dart';
 import 'package:user_app/views/home/food_delivery/common_widgets/custom_food_widget.dart';
 import 'package:user_app/views/home/food_delivery/restaurant_page.dart';
 
-class ProductDetailScreen extends StatelessWidget {
-  const ProductDetailScreen({super.key});
+class ProductDetailScreen extends StatefulWidget {
+  final MyFoodItemModel model;
+
+  const ProductDetailScreen({super.key, required this.model});
+
+  @override
+  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+}
+
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  final MyFoodController _controller = Get.find<MyFoodController>();
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    double childAspectRatio = (screenWidth / 2) / (screenHeight * 0.35);
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: Container(
@@ -37,8 +51,8 @@ class ProductDetailScreen extends StatelessWidget {
                     color: AppColors.blackTextColor,
                   ),
                   const SizedBox(width: 8.0),
-                  const CustomTextWidget(
-                    text: '7',
+                  CustomTextWidget(
+                    text: '${widget.model.totalCount}',
                     fontSize: 18.0,
                     textColor: AppColors.whiteTextColor,
                   ),
@@ -53,19 +67,28 @@ class ProductDetailScreen extends StatelessWidget {
               ),
               SizedBox(
                 width: 150,
-                child: ReUsableContainer(
-                  width: 150,
-                  verticalPadding: context.height * 0.02,
-                  height: 50,
-                  color: AppColors.buttonColor.withOpacity(0.9),
-                  child: const Center(
-                      child: CustomTextWidget(
-                    text: 'Add to cart',
-                    fontSize: 16.0,
-                    textColor: AppColors.blackTextColor,
-                    fontWeight: FontWeight.w400,
-                    textAlign: TextAlign.center,
-                  )),
+                child: InkWell(
+                  onTap: () {
+                    _controller.addOrRemoveFromCart(widget.model);
+                  },
+                  child: ReUsableContainer(
+                    width: 150,
+                    verticalPadding: context.height * 0.02,
+                    height: 50,
+                    color: AppColors.buttonColor.withOpacity(0.9),
+                    child: Center(
+                        child: Obx(
+                      () => CustomTextWidget(
+                        text: _controller.cartItems.contains(widget.model)
+                            ? 'Added to cart'
+                            : 'Add to cart',
+                        fontSize: 16.0,
+                        textColor: AppColors.blackTextColor,
+                        fontWeight: FontWeight.w400,
+                        textAlign: TextAlign.center,
+                      ),
+                    )),
+                  ),
                 ),
               )
             ],
@@ -76,9 +99,8 @@ class ProductDetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //Image
-              const DetailsImageContainer(
-                imageLink:
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReAU10nVk5FVvnYPvmyd9m7kGtKFc22fb7sw&s',
+              DetailsImageContainer(
+                imageLink: '${widget.model.image}',
               ),
               //Description
               Padding(
@@ -99,40 +121,49 @@ class ProductDetailScreen extends StatelessWidget {
                               TextSpan(
                                 children: [
                                   TextSpan(
-                                      text: '5.0 ',
+                                      text: '${widget.model.rating} ',
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyLarge),
-                                  const TextSpan(text: '(199)')
+                                  TextSpan(text: '(${widget.model.reviews})'),
                                 ],
                               ),
                             )
                           ],
                         ),
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              CupertinoIcons.heart_fill,
-                              color: AppColors.errorColor,
-                            ))
+                        Obx(
+                          () => IconButton(
+                            onPressed: () {
+                              _controller
+                                  .addOrRemoveFromFavorites(widget.model);
+                            },
+                            icon: const Icon(CupertinoIcons.heart_fill),
+                            color: _controller.favorites.contains(widget.model)
+                                ? AppColors.errorColor
+                                : AppColors.lightGreyColor,
+                          ),
+                        )
                       ],
                     ),
                     const SizeBetweenWidgets(),
                     //Price
                     Row(
                       children: [
-                        ReUsableContainer(
-                          color: AppColors.successColor.withOpacity(0.7),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 4.0),
-                          child: const CustomTextWidget(
-                            text: '25% OFF',
-                            textColor: AppColors.secondaryColor,
+                        Visibility(
+                          visible: widget.model.discount != 0,
+                          child: ReUsableContainer(
+                            color: AppColors.successColor.withOpacity(0.7),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8.0, vertical: 4.0),
+                            child: CustomTextWidget(
+                              text: '${widget.model.discount}% OFF',
+                              textColor: AppColors.secondaryColor,
+                            ),
                           ),
                         ),
                         const SizedBox(width: 8.0),
-                        const CustomTextWidget(
-                          text: '\$ 100',
+                        CustomTextWidget(
+                          text: '\$${widget.model.price}',
                           fontSize: 24.0,
                           fontWeight: FontWeight.w600,
                         ),
@@ -150,16 +181,16 @@ class ProductDetailScreen extends StatelessWidget {
                     ),
                     const SizeBetweenWidgets(),
                     //Title
-                    const CustomTextWidget(
-                      text: 'Arabian Pasta',
+                    CustomTextWidget(
+                      text: '${widget.model.name}',
                       fontSize: 18.0,
                       fontWeight: FontWeight.w500,
                     ),
                     const SizeBetweenWidgets(),
                     //Stock
                     const CustomTextWidget(text: 'Status'),
-                    const CustomTextWidget(
-                      text: 'In Stock',
+                    CustomTextWidget(
+                      text: 'In Stock: ${widget.model.quantityAvailable}',
                       fontSize: 16.0,
                       fontWeight: FontWeight.w500,
                     ),
@@ -185,23 +216,23 @@ class ProductDetailScreen extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                     const SizeBetweenWidgets(),
-                    const ReadMoreText(
-                      'Arabian Pasta is a fusion dish that combines traditional pasta with Middle Eastern flavors, creating a unique and aromatic meal. Typically, this pasta features a rich and creamy sauce infused with spices like cumin, coriander, and cinnamon, alongside ingredients such as garlic, onions, and peppers. Often garnished with toasted pine nuts, fresh herbs, and sometimes topped with grilled chicken or lamb, Arabian Pasta offers a delightful blend of creamy textures and bold, exotic spices, making it a flavorful twist on a classic pasta dish.',
+                    ReadMoreText(
+                      '${widget.model.description}',
                       trimLines: 2,
                       trimMode: TrimMode.Line,
                       trimCollapsedText: 'Show More',
                       trimExpandedText: 'Less',
-                      moreStyle: TextStyle(
+                      moreStyle: const TextStyle(
                           fontSize: 14.0, fontWeight: FontWeight.w800),
-                      lessStyle: TextStyle(
+                      lessStyle: const TextStyle(
                           fontSize: 14.0, fontWeight: FontWeight.w800),
                     ),
                     const SizeBetweenWidgets(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const CustomTextWidget(
-                          text: 'Reviews (199)',
+                        CustomTextWidget(
+                          text: 'Reviews (${widget.model.reviews})',
                           fontSize: 16.0,
                           fontWeight: FontWeight.w500,
                         ),
@@ -221,7 +252,10 @@ class ProductDetailScreen extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () {
-                            Get.to(() => const RestaurantPageScreen(),
+                            Get.to(
+                                () => RestaurantPageScreen(
+                                      model: widget.model,
+                                    ),
                                 transition: Transition.rightToLeft);
                           },
                           child: const CustomTextWidget(
@@ -238,7 +272,7 @@ class ProductDetailScreen extends StatelessWidget {
                     Container(
                       height: context.height * 0.4,
                       color: Colors.transparent,
-                      child: const MoreFromThisRestaurant(),
+                      child: MoreFromThisRestaurant(controller: _controller),
                     )
                   ],
                 ),
@@ -252,18 +286,19 @@ class ProductDetailScreen extends StatelessWidget {
 }
 
 class MoreFromThisRestaurant extends StatelessWidget {
-  const MoreFromThisRestaurant({super.key});
+  final MyFoodController controller;
+
+  const MoreFromThisRestaurant({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 10,
+      itemCount: controller.foodItemsList.length,
       shrinkWrap: true,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
-        return CustomFoodWidget(
-          onTap: () {},
-        );
+        final item = controller.foodItemsList[index];
+        return CustomFoodWidget(onTap: () {}, model: item);
       },
     );
   }
@@ -279,29 +314,23 @@ class DetailsImageContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: AppColors.blackTextColor,
-      child: Stack(
-        children: [
-          SizedBox(
-            height: 200,
-            width: double.infinity,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(
-                child:
-                    Image(image: NetworkImage(imageLink), fit: BoxFit.contain),
-              ),
-            ),
+    return Stack(
+      children: [
+        Center(
+          child: Image(
+            image: NetworkImage(imageLink),
+            fit: BoxFit.cover,
+            height: context.height * 0.3,
+            width: context.width,
           ),
-          const Positioned(
-              left: 0,
-              top: 0,
-              child: MyBackIcon(
-                color: Colors.white,
-              )),
-        ],
-      ),
+        ),
+        const Positioned(
+            left: 0,
+            top: 0,
+            child: MyBackIcon(
+              color: Colors.white,
+            )),
+      ],
     );
   }
 }

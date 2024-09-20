@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/views/home/food_delivery/add_to_cart.dart';
+import 'package:user_app/views/home/food_delivery/favourites.dart';
 
 class MyCustomDivider extends StatelessWidget {
   const MyCustomDivider({
@@ -47,8 +48,44 @@ class MyBackIcon extends StatelessWidget {
 }
 
 class MyCartIcon extends StatelessWidget {
+  final int? count;
+  final Color? color;
+
   const MyCartIcon({
     super.key,
+    this.color,
+    this.count,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 8.0),
+      child: IconButton(
+        onPressed: () {
+          Get.to(() => const AddToCartScreen(),
+              transition: Transition.upToDown);
+        },
+        icon: Badge.count(
+          count: count ?? 0,
+          child: Icon(
+            LucideIcons.shoppingCart,
+            color: color ?? AppColors.blackTextColor,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class MyFavouriteIcon extends StatelessWidget {
+  final int? count;
+  final Color? color;
+
+  const MyFavouriteIcon({
+    super.key,
+    this.color,
+    this.count,
   });
 
   @override
@@ -57,11 +94,14 @@ class MyCartIcon extends StatelessWidget {
       padding: EdgeInsets.zero,
       visualDensity: VisualDensity.compact,
       onPressed: () {
-        Get.to(() => const AddToCartScreen(), transition: Transition.upToDown);
+        Get.to(() => const FavouritesScreen(), transition: Transition.upToDown);
       },
-      icon: const Icon(
-        LucideIcons.shoppingCart,
-        color: AppColors.blackTextColor,
+      icon: Badge.count(
+        count: count ?? 0,
+        child: Icon(
+          LucideIcons.heart,
+          color: color ?? AppColors.blackTextColor,
+        ),
       ),
     );
   }

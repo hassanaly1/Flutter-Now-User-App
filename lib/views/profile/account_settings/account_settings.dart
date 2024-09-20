@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:user_app/utils/appbar.dart';
+import 'package:user_app/helpers/appbar.dart';
 import 'package:user_app/views/profile/account_settings/app_notifications.dart';
 import 'package:user_app/views/profile/account_settings/delete_account.dart';
 import 'package:user_app/views/profile/account_settings/personal_information.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:user_app/utils/appbar.dart';
+import 'package:user_app/helpers/appbar.dart';
+import 'package:user_app/helpers/custom_text.dart';
 import 'package:user_app/utils/appcolors.dart';
-import 'package:user_app/utils/custom_text.dart';
 
 class AppNotificationsScreen extends StatefulWidget {
   const AppNotificationsScreen({super.key});

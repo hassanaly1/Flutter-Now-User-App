@@ -6,9 +6,10 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:user_app/controllers/connectivity_controller.dart';
 import 'package:user_app/controllers/universal_controller.dart';
+import 'package:user_app/helpers/custom_text.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/common_widgets.dart';
-import 'package:user_app/utils/custom_text.dart';
+import 'package:user_app/utils/shiimmers.dart';
 import 'package:user_app/utils/toast.dart';
 import 'package:user_app/views/home/food_delivery/food.dart';
 import 'package:user_app/views/home/google_maps/select_location.dart';
@@ -23,7 +24,8 @@ class MyHomeScreen extends StatefulWidget {
 }
 
 class _MyHomeScreenState extends State<MyHomeScreen> {
-  final MyUniversalController _controller = Get.find<MyUniversalController>();
+  var isLoading = true.obs;
+  final MyUniversalController _controller = Get.put(MyUniversalController());
   final ConnectivityController _connectivityController =
       Get.find<ConnectivityController>();
   final CarouselSliderController _carouselController =
@@ -38,6 +40,9 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
   @override
   void initState() {
     super.initState();
+    Future.delayed(const Duration(seconds: 10), () {
+      isLoading.value = false;
+    });
     _controller.getCurrentLocation();
     // Listeners to update internet connectivity status.
     ever(_connectivityController.isInternetConnected,
@@ -74,48 +79,56 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
                     Obx(
                       () => Padding(
                         padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Image.asset(
-                              'assets/images/app-logo-dark.png',
-                              height: 40,
-                            ),
-                            Visibility(
-                              visible:
-                                  _controller.userCurrentLocation.value != '',
-                              child: InkWell(
-                                onTap: () => _controller.getCurrentLocation(),
-                                child: const Icon(
-                                  LucideIcons.mapPinCheckInside,
-                                  color: AppColors.buttonColor,
-                                ),
+                        child: isLoading.value
+                            ? const MyListTileWithTrailingShimmerEffect()
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Image.asset(
+                                    'assets/images/app-logo-dark.png',
+                                    height: 40,
+                                  ),
+                                  Visibility(
+                                    visible:
+                                        _controller.userCurrentLocation.value !=
+                                            '',
+                                    child: InkWell(
+                                      onTap: () =>
+                                          _controller.getCurrentLocation(),
+                                      child: const Icon(
+                                        LucideIcons.mapPinCheckInside,
+                                        color: AppColors.buttonColor,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4.0),
+                                  Flexible(
+                                    child: InkWell(
+                                      onTap: () =>
+                                          _controller.getCurrentLocation(),
+                                      child: CustomTextWidget(
+                                        text: _controller.userCurrentLocation
+                                                    .value ==
+                                                ''
+                                            ? ''
+                                            : _controller
+                                                .userCurrentLocation.value,
+                                        textColor: AppColors.buttonColor,
+                                        maxLines: 2,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4.0),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                        Icons.notification_add,
+                                        color: AppColors.buttonColor,
+                                      ))
+                                ],
                               ),
-                            ),
-                            const SizedBox(width: 4.0),
-                            Flexible(
-                              child: InkWell(
-                                onTap: () => _controller.getCurrentLocation(),
-                                child: CustomTextWidget(
-                                  text: _controller.userCurrentLocation.value ==
-                                          ''
-                                      ? ''
-                                      : _controller.userCurrentLocation.value,
-                                  textColor: AppColors.buttonColor,
-                                  maxLines: 2,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 4.0),
-                            IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.notification_add,
-                                  color: AppColors.buttonColor,
-                                ))
-                          ],
-                        ),
                       ),
                     ),
                     const SizeBetweenWidgets(),
@@ -129,37 +142,45 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
                       ),
                     ),
                     const SizeBetweenWidgets(),
-                    CarouselSlider.builder(
-                      carouselController: _carouselController,
-                      itemCount: _images.length,
-                      itemBuilder: (context, index, realIndex) {
-                        return CustomBannerContainer(imageUrl: _images[index]);
-                      },
-                      options: CarouselOptions(
-                        height: context.height * 0.2,
-                        autoPlay: true,
-                        viewportFraction: 0.7,
-                        enlargeCenterPage: true,
-                        onPageChanged: (index, reason) {
-                          _currentIndex.value = index;
-                        },
-                      ),
+                    Obx(
+                      () => isLoading.value
+                          ? const MyCarouselShimmerEffect() // Show shimmer while loading
+                          : CarouselSlider.builder(
+                              carouselController: _carouselController,
+                              itemCount: _images.length,
+                              itemBuilder: (context, index, realIndex) {
+                                return CustomBannerContainer(
+                                    imageUrl: _images[index]);
+                              },
+                              options: CarouselOptions(
+                                height: context.height * 0.2,
+                                autoPlay: true,
+                                viewportFraction: 0.7,
+                                enlargeCenterPage: true,
+                                onPageChanged: (index, reason) {
+                                  _currentIndex.value = index;
+                                },
+                              ),
+                            ),
                     ),
                     const SizeBetweenWidgets(),
                     Obx(
-                      () => Center(
-                        child: AnimatedSmoothIndicator(
-                          activeIndex: _currentIndex.value,
-                          count: _images.length,
-                          effect: ExpandingDotsEffect(
-                            dotHeight: 12,
-                            dotWidth: 12,
-                            activeDotColor: AppColors.buttonColor,
-                            dotColor: AppColors.buttonColor.withOpacity(0.5),
+                      () => Visibility(
+                        visible: isLoading.value == false,
+                        child: Center(
+                          child: AnimatedSmoothIndicator(
+                            activeIndex: _currentIndex.value,
+                            count: _images.length,
+                            effect: ExpandingDotsEffect(
+                              dotHeight: 12,
+                              dotWidth: 12,
+                              activeDotColor: AppColors.buttonColor,
+                              dotColor: AppColors.buttonColor.withOpacity(0.5),
+                            ),
+                            onDotClicked: (index) {
+                              _carouselController.animateToPage(index);
+                            },
                           ),
-                          onDotClicked: (index) {
-                            _carouselController.animateToPage(index);
-                          },
                         ),
                       ),
                     ),

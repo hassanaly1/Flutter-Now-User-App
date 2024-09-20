@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:user_app/helpers/custom_text.dart';
 import 'package:user_app/utils/appcolors.dart';
-import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/utils/toast.dart';
 import 'package:user_app/views/home/bottom_navigation_bar.dart';
 
@@ -104,6 +105,65 @@ void showExitDialog(BuildContext context) {
               ),
             ),
           ],
+        ),
+      ],
+    ),
+  );
+}
+
+// Method to show a dialog prompting the user to open app settings
+void showSettingsDialog() {
+  Get.defaultDialog(
+    title: '',
+    titleStyle: const TextStyle(fontSize: 1),
+    contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+    barrierDismissible: false,
+    radius: 16.0,
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const CustomTextWidget(
+          text: "Location Permission Required",
+          fontSize: 18.0,
+          fontWeight: FontWeight.w700,
+          textColor: AppColors.buttonColor,
+          textAlign: TextAlign.start,
+        ),
+        const CustomTextWidget(
+          text:
+              "Location permission is permanently denied. Please enable it from app settings for a better user experience.",
+          fontSize: 15.0,
+          maxLines: 5,
+          fontWeight: FontWeight.w400,
+          textColor: AppColors.blackTextColor,
+          textAlign: TextAlign.start,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              InkWell(
+                  onTap: () => Get.back(),
+                  child: const CustomTextWidget(
+                    text: "Cancel",
+                    textColor: Colors.redAccent,
+                    fontWeight: FontWeight.w700,
+                  )),
+              const SizedBox(width: 10.0),
+              InkWell(
+                  onTap: () async {
+                    await Geolocator.openAppSettings();
+                    Get.back();
+                  },
+                  child: const CustomTextWidget(
+                    text: "Open Settings",
+                    textColor: AppColors.buttonColor,
+                    fontWeight: FontWeight.w700,
+                  )),
+            ],
+          ),
         ),
       ],
     ),

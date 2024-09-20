@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:user_app/helpers/custom_text.dart';
 import 'package:user_app/utils/appcolors.dart';
-import 'package:user_app/utils/custom_text.dart';
 
 class ReUsableTextField extends StatelessWidget {
   final String hintText;

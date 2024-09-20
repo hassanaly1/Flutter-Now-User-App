@@ -1,8 +1,8 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:user_app/helpers/heading_and_textfield.dart';
 import 'package:user_app/utils/appcolors.dart';
-import 'package:user_app/utils/heading_and_textfield.dart';
 
 class MyCustomCountryCodePicker extends StatelessWidget {
   const MyCustomCountryCodePicker({

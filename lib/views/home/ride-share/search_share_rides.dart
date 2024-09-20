@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:user_app/helpers/appbar.dart';
+import 'package:user_app/helpers/custom_button.dart';
+import 'package:user_app/helpers/custom_text.dart';
+import 'package:user_app/helpers/dropdown.dart';
 import 'package:user_app/utils/app_sizes.dart';
-import 'package:user_app/utils/appbar.dart';
 import 'package:user_app/utils/appcolors.dart';
-import 'package:user_app/utils/custom_button.dart';
-import 'package:user_app/utils/custom_text.dart';
-import 'package:user_app/utils/dropdown.dart';
 
 class SearchShareRidesScreen extends StatefulWidget {
   const SearchShareRidesScreen({super.key});
@@ -98,7 +98,7 @@ void _showFilterBottomSheet(BuildContext context) {
                     onChanged: (p0) {},
                     hintText: 'Select Vehicle Type',
                   ),
-                 
+
                   const SizedBox(height: 16),
                   // Price Range Slider
                   const CustomTextWidget(text: 'Price Range'),

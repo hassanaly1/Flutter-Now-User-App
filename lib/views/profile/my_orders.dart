@@ -3,9 +3,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:user_app/utils/appbar.dart';
+import 'package:user_app/helpers/appbar.dart';
+import 'package:user_app/helpers/custom_text.dart';
 import 'package:user_app/utils/appcolors.dart';
-import 'package:user_app/utils/custom_text.dart';
 
 class MyOrdersScreen extends StatelessWidget {
   const MyOrdersScreen({super.key});
@@ -272,7 +272,7 @@ class MyDatePickerWidget extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: EasyDateTimeLine(
           initialDate: DateTime.now(),
-          activeColor: AppColors.primaryColor.withOpacity(0.8),
+          activeColor: AppColors.buttonColor.withOpacity(0.8),
           headerProps: const EasyHeaderProps(
             centerHeader: false,
             monthPickerType: MonthPickerType.switcher,

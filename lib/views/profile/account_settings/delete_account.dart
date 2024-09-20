@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:user_app/utils/appbar.dart';
+import 'package:user_app/helpers/appbar.dart';
+import 'package:user_app/helpers/custom_text.dart';
+import 'package:user_app/helpers/heading_and_textfield.dart';
+import 'package:user_app/helpers/reusable_container.dart';
 import 'package:user_app/utils/appcolors.dart';
-import 'package:user_app/utils/custom_text.dart';
-import 'package:user_app/utils/heading_and_textfield.dart';
-import 'package:user_app/utils/reusable_container.dart';
 import 'package:user_app/utils/validator.dart';
 
 class DeleteAccountScreen extends StatefulWidget {

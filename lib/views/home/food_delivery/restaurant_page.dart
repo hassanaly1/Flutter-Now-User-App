@@ -2,10 +2,12 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:user_app/controllers/food_controller.dart';
 import 'package:user_app/controllers/universal_controller.dart';
+import 'package:user_app/helpers/custom_text.dart';
+import 'package:user_app/models/food_item_model.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/common_widgets.dart';
-import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/views/chats/message_detail.dart';
 import 'package:user_app/views/home/food_delivery/common_widgets/custom_food_widget.dart';
 import 'package:user_app/views/home/food_delivery/food.dart';
@@ -13,14 +15,18 @@ import 'package:user_app/views/home/food_delivery/food_description.dart';
 import 'package:user_app/views/home/food_delivery/popular_deals.dart';
 
 class RestaurantPageScreen extends StatefulWidget {
-  const RestaurantPageScreen({super.key});
+  final MyFoodItemModel model;
+
+  const RestaurantPageScreen({super.key, required this.model});
 
   @override
   State<RestaurantPageScreen> createState() => _RestaurantPageScreenState();
 }
 
 class _RestaurantPageScreenState extends State<RestaurantPageScreen> {
-  final MyUniversalController _controller = Get.find<MyUniversalController>();
+  final MyFoodController _controller = Get.find<MyFoodController>();
+  final MyUniversalController _universalController =
+      Get.find<MyUniversalController>();
   final FocusNode _searchFocusNode = FocusNode();
   final ScrollController _scrollController = ScrollController();
   final ValueNotifier<Color> _appBarColorNotifier =
@@ -78,10 +84,12 @@ class _RestaurantPageScreenState extends State<RestaurantPageScreen> {
               appbarColorNotifier: _appBarColorNotifier,
               searchFocusNode: _searchFocusNode,
               scrollController: _scrollController,
+              controller: _controller,
             ),
           ],
           body: RestaurantPageBody(
             controller: _controller,
+            universalController: _universalController,
             scrollController: _scrollController, // Pass the same controller
           ),
         ),
@@ -104,12 +112,14 @@ class CustomSliverAppBar extends StatelessWidget {
   final ValueNotifier<Color> appbarColorNotifier;
   final FocusNode? searchFocusNode;
   final ScrollController scrollController;
+  final MyFoodController controller;
 
   const CustomSliverAppBar({
     super.key,
     required this.appbarColorNotifier,
     this.searchFocusNode,
     required this.scrollController,
+    required this.controller,
   });
 
   @override
@@ -140,13 +150,10 @@ class CustomSliverAppBar extends StatelessWidget {
         ValueListenableBuilder<Color>(
           valueListenable: appbarColorNotifier,
           builder: (context, color, child) {
-            return IconButton(
-              padding: EdgeInsets.zero,
-              visualDensity: VisualDensity.compact,
-              onPressed: () {},
-              icon: Icon(
-                LucideIcons.heart,
+            return Obx(
+              () => MyFavouriteIcon(
                 color: color,
+                count: controller.favorites.length,
               ),
             );
           },
@@ -154,13 +161,10 @@ class CustomSliverAppBar extends StatelessWidget {
         ValueListenableBuilder<Color>(
           valueListenable: appbarColorNotifier,
           builder: (context, color, child) {
-            return IconButton(
-              padding: EdgeInsets.zero,
-              visualDensity: VisualDensity.compact,
-              onPressed: () {},
-              icon: Icon(
-                LucideIcons.shoppingCart,
+            return Obx(
+              () => MyCartIcon(
                 color: color,
+                count: controller.cartItems.length,
               ),
             );
           },
@@ -181,22 +185,27 @@ class CustomSliverAppBar extends StatelessWidget {
 }
 
 class RestaurantPageBody extends StatelessWidget {
-  final MyUniversalController controller;
+  final MyFoodController controller;
+  final MyUniversalController universalController;
   final ScrollController
       scrollController; // Pass the main scroll controller here
 
   const RestaurantPageBody({
     super.key,
     required this.controller,
+    required this.universalController,
     required this.scrollController,
   });
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = context.width;
+    double screenHeight = context.height;
+
+    double childAspectRatio = (screenWidth / 2) / (screenHeight * 0.35);
     return RefreshIndicator(
-      onRefresh: () => controller.getCurrentLocation(),
+      onRefresh: () => universalController.getCurrentLocation(),
       child: SingleChildScrollView(
-        // controller: scrollController, // Use the same scroll controller
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -227,15 +236,13 @@ class RestaurantPageBody extends StatelessWidget {
                     textColor: AppColors.buttonColor,
                   ),
                   InkWell(
-                    onTap: () {
-                      Get.to(
-                        () => const PopularDealsScreen(),
-                        transition: Transition.rightToLeft,
-                      );
-                    },
+                    onTap: () => Get.to(
+                      () => const PopularDealsAndCategoryScreen(),
+                      transition: Transition.rightToLeft,
+                    ),
                     child: const CustomTextWidget(
                       text: 'See All',
-                      fontSize: 12.0,
+                      fontSize: 14.0,
                       maxLines: 2,
                       fontWeight: FontWeight.w400,
                       textColor: AppColors.buttonColor,
@@ -244,28 +251,30 @@ class RestaurantPageBody extends StatelessWidget {
                 ],
               ),
             ),
-            const SizeBetweenWidgets(),
             GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: context.height * 0.0012,
+                childAspectRatio: childAspectRatio,
               ),
               itemCount: 10,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
+                final item = controller.foodItemsList[index];
                 return OpenContainer(
                   openColor: Colors.transparent,
                   closedColor: Colors.transparent,
                   transitionDuration: const Duration(milliseconds: 500),
-                  closedBuilder: (context, action) =>
-                      CustomFoodWidget(onTap: action),
-                  openBuilder: (context, action) => const ProductDetailScreen(),
+                  closedBuilder: (context, action) => CustomFoodWidget(
+                    onTap: action,
+                    model: item,
+                  ),
+                  openBuilder: (context, action) =>
+                      ProductDetailScreen(model: item),
                   openElevation: 0,
                   closedElevation: 0,
                   closedShape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(0), // Set border radius to 0
+                    borderRadius: BorderRadius.circular(0),
                   ),
                 );
               },

@@ -5,8 +5,8 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:user_app/controllers/google_maps_controller.dart';
 import 'package:user_app/services/google_maps_service.dart';
 import 'package:user_app/utils/appcolors.dart';
-import 'package:user_app/utils/custom_text.dart';
-import 'package:user_app/utils/reusable_container.dart';
+import 'package:user_app/helpers/custom_text.dart';
+import 'package:user_app/helpers/reusable_container.dart';
 
 class CustomSearchBar extends StatefulWidget {
   const CustomSearchBar({super.key});

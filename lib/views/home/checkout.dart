@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-import 'package:user_app/utils/appbar.dart';
+import 'package:user_app/controllers/food_controller.dart';
+import 'package:user_app/helpers/appbar.dart';
+import 'package:user_app/helpers/custom_text.dart';
+import 'package:user_app/helpers/reusable_container.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/common_widgets.dart';
-import 'package:user_app/utils/custom_text.dart';
-import 'package:user_app/utils/reusable_container.dart';
 import 'package:user_app/views/home/food_delivery/add_to_cart.dart';
-import 'package:user_app/views/home/food_delivery/food_description.dart';
 import 'package:user_app/views/home/success.dart';
 
-class CheckoutScreen extends StatelessWidget {
+class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
+
+  @override
+  State<CheckoutScreen> createState() => _CheckoutScreenState();
+}
+
+class _CheckoutScreenState extends State<CheckoutScreen> {
+  final MyFoodController _controller = Get.find<MyFoodController>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,22 +30,7 @@ class CheckoutScreen extends StatelessWidget {
           bottomNavigationBar: InkWell(
             onTap: () => Get.to(() => const SuccessScreen(),
                 transition: Transition.rightToLeft),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: context.width * 0.06),
-              child: ReUsableContainer(
-                verticalPadding: context.height * 0.02,
-                height: 50,
-                color: AppColors.buttonColor.withOpacity(0.9),
-                child: const Center(
-                    child: CustomTextWidget(
-                  text: 'Place Order',
-                  fontSize: 16.0,
-                  textColor: AppColors.blackTextColor,
-                  fontWeight: FontWeight.w400,
-                  textAlign: TextAlign.center,
-                )),
-              ),
-            ),
+            child: const CustomBottomNavigationBarButton(title: 'Place Order'),
           ),
           body: SingleChildScrollView(
             child: Padding(
@@ -51,17 +43,21 @@ class CheckoutScreen extends StatelessWidget {
                     fontSize: 16.0,
                     fontWeight: FontWeight.w500,
                   ),
-                  SizedBox(
-                    height: context.height * 0.3,
-                    child: ListView.builder(
-                      itemCount: 20,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () =>
-                              Get.to(() => const ProductDetailScreen()),
-                          child: const CustomAddToCartWidget(),
-                        );
-                      },
+                  Obx(
+                    () => SizedBox(
+                      height: context.height * 0.3,
+                      child: _controller.cartItems.isEmpty
+                          ? Center(
+                              child: Image.asset(
+                              'assets/images/empty_cart.png',
+                            ))
+                          : ListView.builder(
+                              itemCount: _controller.cartItems.length,
+                              itemBuilder: (context, index) {
+                                final cartItem = _controller.cartItems[index];
+                                return CustomAddToCartWidget(model: cartItem);
+                              },
+                            ),
                     ),
                   ),
                   const MyCustomDivider(),
@@ -140,9 +136,19 @@ class CheckoutScreen extends StatelessWidget {
                     fontSize: 16.0,
                     fontWeight: FontWeight.w500,
                   ),
-                  const OrderSummaryWidget(title: 'SubTotal', price: 120),
-                  const OrderSummaryWidget(title: 'Delivery', price: 6),
-                  const OrderSummaryWidget(title: 'Total', price: 126),
+                  Obx(
+                    () => OrderSummaryWidget(
+                        title: 'SubTotal',
+                        price: _controller.calculateTotalPrice()),
+                  ),
+                  Obx(() => OrderSummaryWidget(
+                      title: 'Delivery',
+                      price: _controller.cartItems.isEmpty ? 0.0 : 5.0)),
+                  Obx(
+                    () => OrderSummaryWidget(
+                        title: 'Total',
+                        price: _controller.calculateTotalPriceWithDelivery()),
+                  ),
                 ],
               ),
             ),
@@ -155,7 +161,7 @@ class CheckoutScreen extends StatelessWidget {
 
 class OrderSummaryWidget extends StatelessWidget {
   final String title;
-  final int price;
+  final double price;
 
   const OrderSummaryWidget({
     super.key,

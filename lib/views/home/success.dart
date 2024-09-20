@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:user_app/helpers/custom_button.dart';
+import 'package:user_app/helpers/custom_text.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/common_widgets.dart';
-import 'package:user_app/utils/custom_button.dart';
-import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/views/home/bottom_navigation_bar.dart';
 
 class SuccessScreen extends StatelessWidget {
@@ -19,7 +19,7 @@ class SuccessScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Lottie.asset('assets/lottie/success.json'),
+            Lottie.asset('assets/lottie/done.json', height: 200),
             const SizeBetweenWidgets(),
             const SizeBetweenWidgets(),
             const CustomTextWidget(
@@ -39,7 +39,7 @@ class SuccessScreen extends StatelessWidget {
             ),
             const SizeBetweenWidgets(),
             const CustomTextWidget(
-              text: 'You can check your order status in My Orders.',
+              text: 'You can check your order status in My Orders section.',
               fontSize: 14.0,
               textAlign: TextAlign.center,
               textColor: AppColors.lightTextColor,

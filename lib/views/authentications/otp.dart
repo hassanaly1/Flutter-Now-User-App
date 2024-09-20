@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
+import 'package:user_app/helpers/custom_button.dart';
+import 'package:user_app/helpers/custom_text.dart';
 import 'package:user_app/utils/appcolors.dart';
-import 'package:user_app/utils/custom_button.dart';
-import 'package:user_app/utils/custom_text.dart';
 import 'package:user_app/views/authentications/change_password.dart';
 
 class OtpScreen extends StatefulWidget {
