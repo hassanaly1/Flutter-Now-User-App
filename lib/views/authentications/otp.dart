@@ -6,7 +6,8 @@ import 'package:pinput/pinput.dart';
 import 'package:user_app/helpers/custom_button.dart';
 import 'package:user_app/helpers/custom_text.dart';
 import 'package:user_app/utils/appcolors.dart';
-import 'package:user_app/views/authentications/change_password.dart';
+import 'package:user_app/utils/toast.dart';
+import 'package:user_app/views/authentications/login.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
@@ -126,9 +127,13 @@ class _OtpScreenState extends State<OtpScreen> {
                             ),
                             onCompleted: (pin) {
                               if (_otpFormKey.currentState!.validate()) {
-                                Get.off(() => const ChangePasswordScreen(),
+                                Get.off(() => const LoginScreen(),
                                     transition: Transition.size,
                                     duration: 400.milliseconds);
+                                MyCustomSuccessToast(
+                                  title: 'OTP Verified Successfully',
+                                  backgroundColor: AppColors.successColor,
+                                ).showToast(context);
                               }
                             },
                           ),
@@ -173,9 +178,13 @@ class _OtpScreenState extends State<OtpScreen> {
                           buttonText: 'Verify OTP',
                           onTap: () {
                             if (_otpFormKey.currentState!.validate()) {
-                              Get.off(() => const ChangePasswordScreen(),
+                              Get.off(() => const LoginScreen(),
                                   transition: Transition.size,
                                   duration: 400.milliseconds);
+                              MyCustomSuccessToast(
+                                title: 'OTP Verified Successfully',
+                                backgroundColor: AppColors.successColor,
+                              ).showToast(context);
                             }
                           },
                         ),

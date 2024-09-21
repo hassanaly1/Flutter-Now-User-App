@@ -10,7 +10,6 @@ import 'package:user_app/models/food_item_model.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/toast.dart';
 import 'package:user_app/views/home/checkout.dart';
-import 'package:user_app/views/home/food_delivery/food_description.dart';
 
 class AddToCartScreen extends StatefulWidget {
   const AddToCartScreen({super.key});
@@ -41,25 +40,52 @@ class _AddToCartScreenState extends State<AddToCartScreen> {
                     itemBuilder: (context, index) {
                       final cartItem = _controller.cartItems[index];
                       return InkWell(
-                        onTap: () =>
-                            Get.to(() => ProductDetailScreen(model: cartItem)),
+                        // onTap: () =>
+                        //     Get.to(() => ProductDetailScreen(model: cartItem)),
                         child: CustomAddToCartWidget(model: cartItem),
                       );
                     },
                   ),
           ),
         ),
-        bottomNavigationBar: InkWell(
-          onTap: () {
-            if (_controller.cartItems.isNotEmpty) {
-              Get.to(() => const CheckoutScreen(),
-                  transition: Transition.rightToLeft);
-            } else {
-              MyCustomErrorToast(title: 'Please Add atleast one item to cart')
-                  .showToast(context);
-            }
-          },
-          child: const CustomBottomNavigationBarButton(title: 'Checkout'),
+        bottomNavigationBar: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: context.width * 0.06),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const CustomTextWidget(
+                    text: 'Total:',
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  Obx(
+                    () => CustomTextWidget(
+                      text:
+                          '\$${_controller.calculateTotalPrice().toStringAsFixed(2)}',
+                      fontSize: 22.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                if (_controller.cartItems.isNotEmpty) {
+                  Get.to(() => const CheckoutScreen(),
+                      transition: Transition.rightToLeft);
+                } else {
+                  MyCustomErrorToast(
+                          title: 'Please Add atleast one item to cart')
+                      .showToast(context);
+                }
+              },
+              child: const CustomBottomNavigationBarButton(title: 'Checkout'),
+            ),
+          ],
         ),
       ),
     );
@@ -68,10 +94,12 @@ class _AddToCartScreenState extends State<AddToCartScreen> {
 
 class CustomBottomNavigationBarButton extends StatelessWidget {
   final String title;
+  final Color? backgroundColor;
 
   const CustomBottomNavigationBarButton({
     super.key,
     required this.title,
+    this.backgroundColor,
   });
 
   @override
@@ -81,7 +109,7 @@ class CustomBottomNavigationBarButton extends StatelessWidget {
       child: ReUsableContainer(
         verticalPadding: context.height * 0.02,
         height: 50,
-        color: AppColors.buttonColor.withOpacity(0.9),
+        color: backgroundColor ?? AppColors.buttonColor.withOpacity(0.9),
         child: Center(
             child: CustomTextWidget(
           text: title,
@@ -122,7 +150,6 @@ class _CustomAddToCartWidgetState extends State<CustomAddToCartWidget> {
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -147,22 +174,30 @@ class _CustomAddToCartWidgetState extends State<CustomAddToCartWidget> {
                     CustomTextWidget(
                       text: '${widget.model?.name}',
                       fontSize: 16.0,
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.w500,
                       maxLines: 2,
                     ),
+                    SizedBox(height: context.height * 0.01),
                     CustomTextWidget(
                       text: '${widget.model?.restaurantName}',
-                      fontSize: 12.0,
+                      fontSize: 14.0,
                       fontWeight: FontWeight.w600,
                       textColor: AppColors.lightTextColor,
                     ),
+                    SizedBox(height: context.height * 0.01),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(
-                          CupertinoIcons.plus_circle_fill,
-                          color: AppColors.buttonColor,
-                          size: 24.0,
+                        InkWell(
+                          onTap: () {
+                            // Increase quantity
+                            _controller.incrementQuantity(widget.model!);
+                          },
+                          child: const Icon(
+                            CupertinoIcons.plus_circle_fill,
+                            color: AppColors.buttonColor,
+                            size: 24.0,
+                          ),
                         ),
                         const SizedBox(width: 8.0),
                         CustomTextWidget(
@@ -172,10 +207,16 @@ class _CustomAddToCartWidgetState extends State<CustomAddToCartWidget> {
                           textColor: AppColors.blackTextColor,
                         ),
                         const SizedBox(width: 8.0),
-                        const Icon(
-                          LucideIcons.circleMinus,
-                          color: AppColors.buttonColor,
-                          size: 24.0,
+                        InkWell(
+                          onTap: () {
+                            // Increase quantity
+                            _controller.decrementQuantity(widget.model!);
+                          },
+                          child: const Icon(
+                            LucideIcons.circleMinus,
+                            color: AppColors.buttonColor,
+                            size: 24.0,
+                          ),
                         ),
                       ],
                     ),
@@ -189,7 +230,8 @@ class _CustomAddToCartWidgetState extends State<CustomAddToCartWidget> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   CustomTextWidget(
-                    text: '\$${widget.model?.price}',
+                    text:
+                        '\$${_controller.calculateItemTotalPrice(widget.model!).toStringAsFixed(2)}',
                     fontSize: 18.0,
                     fontWeight: FontWeight.w600,
                   ),

@@ -4,6 +4,7 @@ import 'package:user_app/helpers/appbar.dart';
 import 'package:user_app/helpers/custom_button.dart';
 import 'package:user_app/helpers/custom_text.dart';
 import 'package:user_app/helpers/heading_and_textfield.dart';
+import 'package:user_app/utils/common_widgets.dart';
 
 class SecurityScreen extends StatelessWidget {
   const SecurityScreen({super.key});
@@ -22,11 +23,12 @@ class SecurityScreen extends StatelessWidget {
           children: [
             const Center(
               child: CustomTextWidget(
-                text: 'Personal Details',
+                text: 'Change Password',
                 fontSize: 18.0,
                 fontWeight: FontWeight.w500,
               ),
             ),
+            const SizeBetweenWidgets(),
             const HeadingAndTextfield(title: 'Current Password'),
             const HeadingAndTextfield(title: 'New Password'),
             const HeadingAndTextfield(title: 'Confirm New Password'),

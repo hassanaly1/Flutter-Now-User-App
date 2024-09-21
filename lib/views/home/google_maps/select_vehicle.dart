@@ -93,81 +93,85 @@ class ShowSelectedLocationsContainer extends StatelessWidget {
         // color: AppColors.buttonColor.withOpacity(0.3),
         width: context.width,
         // height: context.height * 0.06,
-        child: ListTile(
-          dense: true,
-          leading: Image.asset(
-            'assets/images/indicator.png',
-            color: AppColors.primaryColor,
-            width: 20,
-          ),
-          visualDensity: VisualDensity.compact,
-          title: Text.rich(
-            TextSpan(
-              children: [
-                const TextSpan(
-                  text: 'Pickup Location: ',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.0),
-                ),
-                TextSpan(
-                  text: _controller.selectedPickupLocation.value,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w400, fontSize: 12.0),
-                ),
-              ],
+        child: Obx(
+          () => ListTile(
+            dense: true,
+            leading: Image.asset(
+              'assets/images/indicator.png',
+              color: AppColors.primaryColor,
+              width: 20,
             ),
-            maxLines: 2,
-          ),
-          subtitle: Text.rich(
-            TextSpan(
-              children: [
-                const TextSpan(
-                  text: 'Drop-off Location: ',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.0),
-                ),
-                TextSpan(
-                  text: _controller.selectedDestinationLocation.value,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w400, fontSize: 12.0),
-                ),
-              ],
-            ),
-            maxLines: 2,
-          ),
-          trailing: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
+            visualDensity: VisualDensity.compact,
+            title: Text.rich(
+              TextSpan(
                 children: [
-                  const Icon(Icons.social_distance_sharp, size: 16.0),
-                  const SizedBox(width: 4.0),
-                  Text(
-                    _controller.calculatedDistance.value,
+                  const TextSpan(
+                    text: 'Pickup Location: ',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 12.0),
+                  ),
+                  TextSpan(
+                    text: _controller.selectedPickupLocation.value,
                     style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 12.0,
-                    ),
-                    maxLines: 2,
+                        fontWeight: FontWeight.w400, fontSize: 12.0),
                   ),
                 ],
               ),
-              const SizedBox(height: 4.0),
-              Row(
-                mainAxisSize: MainAxisSize.min,
+              maxLines: 2,
+            ),
+            subtitle: Text.rich(
+              TextSpan(
                 children: [
-                  const Icon(LucideIcons.timer, size: 16.0),
-                  const SizedBox(width: 4.0),
-                  Text(
-                    _controller.calculatedDuration.value,
+                  const TextSpan(
+                    text: 'Drop-off Location: ',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 12.0),
+                  ),
+                  TextSpan(
+                    text: _controller.selectedDestinationLocation.value,
                     style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 12.0,
-                    ),
-                    maxLines: 2,
+                        fontWeight: FontWeight.w400, fontSize: 12.0),
                   ),
                 ],
               ),
-            ],
+              maxLines: 2,
+            ),
+            trailing: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.social_distance_sharp, size: 16.0),
+                    const SizedBox(width: 4.0),
+                    Text(
+                      _controller.calculatedDistance.value,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12.0,
+                      ),
+                      maxLines: 2,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4.0),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(LucideIcons.timer, size: 16.0),
+                    const SizedBox(width: 4.0),
+                    Text(
+                      _controller.calculatedDuration.value,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12.0,
+                      ),
+                      maxLines: 2,
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ));
   }

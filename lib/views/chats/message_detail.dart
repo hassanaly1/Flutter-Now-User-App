@@ -61,6 +61,7 @@ class MessageDetailScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   hintText: 'Write your message',
+                  hintStyle: const TextStyle(fontSize: 12.0),
                   prefixIcon: const Icon(LucideIcons.plus),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: AppColors.lightGreyColor),

@@ -45,7 +45,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               Row(
                 children: [
                   CircularIcon(
-                    onTap: () {},
+                    onTap: () {
+                      // Decrease quantity
+                      _controller.decrementQuantity(widget.model);
+                    },
                     backgroundColor: AppColors.buttonColor.withOpacity(0.9),
                     icon: LucideIcons.minus,
                     color: AppColors.blackTextColor,
@@ -53,12 +56,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   const SizedBox(width: 8.0),
                   CustomTextWidget(
                     text: '${widget.model.totalCount}',
+                    // Display current quantity
                     fontSize: 18.0,
                     textColor: AppColors.whiteTextColor,
                   ),
                   const SizedBox(width: 8.0),
                   CircularIcon(
-                    onTap: () {},
+                    onTap: () {
+                      // Increase quantity
+                      _controller.incrementQuantity(widget.model);
+                    },
                     backgroundColor: AppColors.buttonColor.withOpacity(0.9),
                     icon: LucideIcons.plus,
                     color: AppColors.blackTextColor,

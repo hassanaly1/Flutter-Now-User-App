@@ -31,6 +31,10 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
     } else {
       _controller = Get.put(MyGoogleMapsController());
     }
+    MyCustomSuccessToast(
+      title: 'Please select Pickup location',
+      duration: 2,
+    ).showToast(context);
   }
 
   @override
@@ -153,6 +157,13 @@ class ShowAddressContainer extends StatelessWidget {
                           if (_controller.isSelectingPickupLocation.value) {
                             _controller.searchController.clear();
                             _toggleLocations(isSelectingPickupLocation: false);
+                            if (_controller.selectedDestinationLocation.value ==
+                                '') {
+                              MyCustomSuccessToast(
+                                title: 'Now Please select Drop-off location',
+                                duration: 2,
+                              ).showToast(context);
+                            }
                           } else {
                             if (_controller.destinationLatLng.value ==
                                 const LatLng(0, 0)) {

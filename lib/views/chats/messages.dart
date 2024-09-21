@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:user_app/helpers/appbar.dart';
-import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/helpers/custom_text.dart';
+import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/shiimmers.dart';
 import 'package:user_app/views/chats/message_detail.dart';
 
@@ -21,7 +21,7 @@ class _MyMessageScreenState extends State<MyMessageScreen> {
   void initState() {
     super.initState();
     print('MessageScreenInitStateCalled');
-    Future.delayed(const Duration(seconds: 15), () {
+    Future.delayed(const Duration(seconds: 10), () {
       isLoading.value = false;
     });
   }

@@ -24,7 +24,7 @@ class MyHomeScreen extends StatefulWidget {
 }
 
 class _MyHomeScreenState extends State<MyHomeScreen> {
-  var isLoading = true.obs;
+  var isLoading = false.obs;
   final MyUniversalController _controller = Get.put(MyUniversalController());
   final ConnectivityController _connectivityController =
       Get.find<ConnectivityController>();
@@ -40,9 +40,9 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 10), () {
-      isLoading.value = false;
-    });
+    // Future.delayed(const Duration(seconds: 10), () {
+    //   isLoading.value = false;
+    // });
     _controller.getCurrentLocation();
     // Listeners to update internet connectivity status.
     ever(_connectivityController.isInternetConnected,
@@ -484,7 +484,7 @@ class CustomBannerContainer extends StatelessWidget {
         // height: context.height * 0.15,
         width: context.width * 0.7,
         decoration: BoxDecoration(
-            color: Colors.redAccent,
+            color: Colors.grey.shade200,
             borderRadius: BorderRadius.circular(16.0),
             image:
                 DecorationImage(image: AssetImage(imageUrl), fit: BoxFit.cover),

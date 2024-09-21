@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -20,7 +19,8 @@ class MyRideController extends GetxController {
   var markers = <Marker>{}.obs;
   var polylines = <Polyline>{}.obs;
   GoogleMapController? googleMapsController;
-  late StreamSubscription<Position> locationSubscription;
+
+  // late StreamSubscription<Position> locationSubscription;
 
   // BitmapDescriptor? customMarkerIconForDriver;
 
@@ -49,47 +49,47 @@ class MyRideController extends GetxController {
   }
 
   // Initialize location tracking for user and driver
-  Future<void> _initializeLocationTracking() async {
-    // Request permissions
-    LocationPermission permission = await Geolocator.requestPermission();
-    if (permission != LocationPermission.always) {
-      permission = await Geolocator.requestPermission();
-    }
-
-    // Track user's location
-    locationSubscription = Geolocator.getPositionStream(
-      locationSettings: const LocationSettings(
-        accuracy: LocationAccuracy.high,
-        distanceFilter: 10,
-      ),
-    ).listen((Position position) {
-      userCurrentLocation.value = LatLng(position.latitude, position.longitude);
-      updateMarkersAndPolyline();
-      _checkDriverArrival();
-    });
-
-    // Simulate driver moving towards user location
-    Timer.periodic(const Duration(seconds: 5), (timer) {
-      if (driverCurrentLocation.value == userCurrentLocation.value) {
-        timer.cancel(); // Stop when driver reaches user
-      } else {
-        // Calculate the step to move driver towards user location
-        final double stepLat = (userCurrentLocation.value.latitude -
-                driverCurrentLocation.value.latitude) *
-            0.1; // move 10% closer
-        final double stepLng = (userCurrentLocation.value.longitude -
-                driverCurrentLocation.value.longitude) *
-            0.1;
-
-        driverCurrentLocation.value = LatLng(
-          driverCurrentLocation.value.latitude + stepLat,
-          driverCurrentLocation.value.longitude + stepLng,
-        );
-        updateMarkersAndPolyline();
-        _checkDriverArrival();
-      }
-    });
-  }
+  // Future<void> _initializeLocationTracking() async {
+  //   // Request permissions
+  //   LocationPermission permission = await Geolocator.requestPermission();
+  //   if (permission != LocationPermission.always) {
+  //     permission = await Geolocator.requestPermission();
+  //   }
+  //
+  //   // Track user's location
+  //   locationSubscription = Geolocator.getPositionStream(
+  //     locationSettings: const LocationSettings(
+  //       accuracy: LocationAccuracy.high,
+  //       distanceFilter: 10,
+  //     ),
+  //   ).listen((Position position) {
+  //     userCurrentLocation.value = LatLng(position.latitude, position.longitude);
+  //     updateMarkersAndPolyline();
+  //     _checkDriverArrival();
+  //   });
+  //
+  //   // Simulate driver moving towards user location
+  //   Timer.periodic(const Duration(seconds: 5), (timer) {
+  //     if (driverCurrentLocation.value == userCurrentLocation.value) {
+  //       timer.cancel(); // Stop when driver reaches user
+  //     } else {
+  //       // Calculate the step to move driver towards user location
+  //       final double stepLat = (userCurrentLocation.value.latitude -
+  //               driverCurrentLocation.value.latitude) *
+  //           0.1; // move 10% closer
+  //       final double stepLng = (userCurrentLocation.value.longitude -
+  //               driverCurrentLocation.value.longitude) *
+  //           0.1;
+  //
+  //       driverCurrentLocation.value = LatLng(
+  //         driverCurrentLocation.value.latitude + stepLat,
+  //         driverCurrentLocation.value.longitude + stepLng,
+  //       );
+  //       updateMarkersAndPolyline();
+  //       _checkDriverArrival();
+  //     }
+  //   });
+  // }
 
   // Update markers and draw polyline between user and driver
   void updateMarkersAndPolyline() async {
@@ -210,7 +210,7 @@ class MyRideController extends GetxController {
 
   @override
   void onClose() {
-    locationSubscription.cancel();
+    // locationSubscription.cancel();
     super.onClose();
   }
 }

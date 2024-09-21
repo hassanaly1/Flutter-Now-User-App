@@ -7,8 +7,15 @@ import 'package:user_app/helpers/appbar.dart';
 import 'package:user_app/helpers/custom_text.dart';
 import 'package:user_app/utils/appcolors.dart';
 
-class MyOrdersScreen extends StatelessWidget {
+class MyOrdersScreen extends StatefulWidget {
   const MyOrdersScreen({super.key});
+
+  @override
+  State<MyOrdersScreen> createState() => _MyOrdersScreenState();
+}
+
+class _MyOrdersScreenState extends State<MyOrdersScreen> {
+  RxInt selectedChipIndex = 0.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +32,7 @@ class MyOrdersScreen extends StatelessWidget {
                 shape: ContinuousRectangleBorder(
                   borderRadius: BorderRadius.circular(16.0),
                 ),
-                expandedHeight: context.height * 0.35,
+                expandedHeight: context.height * 0.3,
                 backgroundColor: AppColors.whiteTextColor,
                 flexibleSpace: ListView(
                   shrinkWrap: true,
@@ -56,11 +63,12 @@ class MyOrdersScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        _buildFilterChip('Ride', LucideIcons.car),
-                        _buildFilterChip('Ride Share', Icons.car_crash_rounded),
-                        _buildFilterChip('Food', Icons.fastfood_outlined),
-                        _buildFilterChip('Package', LucideIcons.package),
-                        _buildFilterChip('Document', LucideIcons.fileText),
+                        _buildFilterChip('Ride', LucideIcons.car, 0),
+                        _buildFilterChip(
+                            'Ride Share', Icons.car_crash_rounded, 1),
+                        _buildFilterChip('Food', Icons.fastfood_outlined, 2),
+                        _buildFilterChip('Package', LucideIcons.package, 3),
+                        _buildFilterChip('Document', LucideIcons.fileText, 4),
                       ],
                     ),
                   ),
@@ -81,18 +89,41 @@ class MyOrdersScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-Widget _buildFilterChip(String label, IconData icon) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: FilterChip(
-      label: CustomTextWidget(text: label),
-      onSelected: (value) {},
-      avatar: Icon(icon),
-      backgroundColor: Colors.white,
-    ),
-  );
+  Widget _buildFilterChip(String label, IconData icon, int index) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Obx(
+        () => FilterChip(
+          label: CustomTextWidget(
+              text: label,
+              textColor: selectedChipIndex.value == index
+                  ? AppColors.whiteTextColor
+                  : AppColors.blackTextColor),
+          selected: selectedChipIndex.value == index,
+          selectedColor: AppColors.buttonColor,
+          onSelected: (value) {
+            selectedChipIndex.value = index;
+          },
+          chipAnimationStyle: ChipAnimationStyle(
+              avatarDrawerAnimation:
+                  AnimationStyle(duration: const Duration(milliseconds: 0)),
+              deleteDrawerAnimation:
+                  AnimationStyle(duration: const Duration(milliseconds: 0)),
+              enableAnimation:
+                  AnimationStyle(duration: const Duration(milliseconds: 0)),
+              selectAnimation:
+                  AnimationStyle(duration: const Duration(milliseconds: 0))),
+          showCheckmark: false,
+          avatar: Icon(icon,
+              color: selectedChipIndex.value == index
+                  ? AppColors.whiteTextColor
+                  : AppColors.blackTextColor),
+          backgroundColor: Colors.grey.shade200,
+        ),
+      ),
+    );
+  }
 }
 
 class MyCustomExpansionTile extends StatelessWidget {
@@ -264,7 +295,7 @@ class MyDatePickerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: context.height * 0.3,
+      height: context.height * 0.25,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
           border: Border.all(color: AppColors.lightGreyColor)),
@@ -326,9 +357,7 @@ class MyDatePickerWidget extends StatelessWidget {
           timeLineProps: const EasyTimeLineProps(
             backgroundColor: AppColors.whiteTextColor,
           ),
-          onDateChange: (selectedDate) {
-            //`selectedDate` the new date selected.
-          },
+          onDateChange: (selectedDate) {},
         ),
       ),
     );

@@ -6,6 +6,7 @@ import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/common_widgets.dart';
 import 'package:user_app/utils/storage_helper.dart';
 import 'package:user_app/views/authentications/login.dart';
+import 'package:user_app/views/authentications/register.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -53,7 +54,7 @@ class OnBoardingScreen extends StatelessWidget {
                     buttonText: 'Register',
                     onTap: () {
                       appStorage.write('isFirstTime', false);
-                      Get.offAll(() => const LoginScreen());
+                      Get.offAll(() => const RegisterScreen());
                     },
                   ),
                 ],

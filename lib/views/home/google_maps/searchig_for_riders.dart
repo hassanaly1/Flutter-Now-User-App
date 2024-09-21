@@ -38,6 +38,15 @@ class _SearchingForRidersScreenState extends State<SearchingForRidersScreen> {
               Obx(
                 () => controller.isRidersAreLoading.value
                     ? const MyListTileShimmerEffect()
+                    // : controller.isRidersAreLoading.value == false &&
+                    //         controller.showItems[9] == false
+                    //     ? const Center(
+                    //         child: CustomTextWidget(
+                    //           text: 'No Requests Found',
+                    //           fontWeight: FontWeight.w600,
+                    //           textColor: AppColors.blackTextColor,
+                    //         ),
+                    //       )
                     : Expanded(
                         child: ListView.builder(
                           itemCount: 10,

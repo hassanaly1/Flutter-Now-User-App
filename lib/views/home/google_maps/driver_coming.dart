@@ -33,7 +33,7 @@ class _DriverComingScreenState extends State<DriverComingScreen> {
     _controller = Get.put(MyRideController());
     _universalController = Get.find<MyUniversalController>();
     Timer(
-      const Duration(seconds: 3),
+      const Duration(seconds: 10),
       () => _controller.isDriverArrived.value = true,
     );
   }
@@ -244,7 +244,7 @@ void showCompleteRideDialog(BuildContext context) {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
           child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.55,
+            // height: MediaQuery.of(context).size.height * 0.55,
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -314,6 +314,7 @@ void showCompleteRideDialog(BuildContext context) {
                         decoration: InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.auto,
                           hintText: 'Write your comments here',
+                          hintStyle: const TextStyle(fontSize: 14.0),
                           contentPadding: const EdgeInsets.symmetric(
                               horizontal: 16.0, vertical: 14.0),
                           enabledBorder: OutlineInputBorder(

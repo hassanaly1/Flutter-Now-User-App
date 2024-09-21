@@ -7,6 +7,7 @@ import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/toast.dart';
 import 'package:user_app/utils/validator.dart';
 import 'package:user_app/views/authentications/login.dart';
+import 'package:user_app/views/authentications/otp.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -77,11 +78,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         CustomButton(
                           buttonText: 'Register',
                           onTap: () {
-                            if (_registerFormKey.currentState!.validate()) {
-                              MyCustomErrorToast(
-                                title: 'Account Created Successfully',
-                              ).showToast(context);
-                            }
+                            MyCustomSuccessToast(
+                              title:
+                                  'Please verify your email, We have sent a verification code to your email.',
+                              duration: 5,
+                            ).showToast(context);
+                            MyCustomSuccessToast(
+                              title: 'Account Created Successfully',
+                              backgroundColor: AppColors.successColor,
+                            ).showToast(context);
+
+                            Get.to(() => const OtpScreen());
+                            // if (_registerFormKey.currentState!.validate()) {
+                            //   MyCustomErrorToast(
+                            //     title: 'Account Created Successfully',
+                            //   ).showToast(context);
+                            // }
                           },
                         ),
                         SizedBox(height: context.height * 0.01),

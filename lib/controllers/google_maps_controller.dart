@@ -166,7 +166,7 @@ class MyGoogleMapsController extends GetxController {
       if (placemarks.isNotEmpty) {
         // Update pickup or destination location based on the parameter
         var location =
-            "${placemarks.first.subLocality}, ${placemarks.first.locality} , ${placemarks.first.administrativeArea} , ${placemarks.first.country}";
+            "${placemarks.first.street}, ${placemarks.first.locality}, ${placemarks.first.administrativeArea}, ${placemarks.first.country}.";
         isPickupLocation
             ? selectedPickupLocation.value = location
             : selectedDestinationLocation.value = location;
@@ -183,8 +183,8 @@ class MyGoogleMapsController extends GetxController {
     var result = await googleMapsService.getDistanceAndDuration(start, end);
 
     if (result != null) {
-      calculatedDistance.value = result['distance'] ?? '';
-      calculatedDuration.value = result['duration'] ?? '';
+      calculatedDistance.value = result['distance'] ?? 'NA';
+      calculatedDuration.value = result['duration'] ?? 'NA';
       print('CalculatedDistance: ${calculatedDistance.value}');
       print('CalculatedDuration: ${calculatedDuration.value}');
       return result;
