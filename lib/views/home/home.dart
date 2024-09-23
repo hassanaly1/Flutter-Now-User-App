@@ -25,7 +25,8 @@ class MyHomeScreen extends StatefulWidget {
 
 class _MyHomeScreenState extends State<MyHomeScreen> {
   var isLoading = false.obs;
-  final MyUniversalController _controller = Get.put(MyUniversalController());
+  final MyUniversalController _controller =
+      Get.put(MyUniversalController(), permanent: true);
   final ConnectivityController _connectivityController =
       Get.find<ConnectivityController>();
   final CarouselSliderController _carouselController =

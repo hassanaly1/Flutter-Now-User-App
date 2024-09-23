@@ -10,7 +10,6 @@ import 'package:user_app/helpers/dialogs.dart';
 import 'package:user_app/helpers/reusable_container.dart';
 import 'package:user_app/utils/appcolors.dart';
 import 'package:user_app/utils/shiimmers.dart';
-import 'package:user_app/utils/toast.dart';
 import 'package:user_app/views/home/google_maps/driver_coming.dart';
 import 'package:user_app/views/home/google_maps/select_vehicle.dart';
 
@@ -203,17 +202,10 @@ class CustomDriverRequestWidget extends StatelessWidget {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  // controller.selectRider(index);
-                                  Timer(
+                                  Future.delayed(
                                     const Duration(seconds: 5),
-                                    () {
-                                      MyCustomSuccessToast(
-                                              title:
-                                                  'Rider has accepted your Ride Request.')
-                                          .showToast(context);
-                                      Get.back();
-                                      Get.off(() => const DriverComingScreen());
-                                    },
+                                    () => Get.off(
+                                        () => const DriverComingScreen()),
                                   );
                                   showWaitingForDriverDialog();
                                 },

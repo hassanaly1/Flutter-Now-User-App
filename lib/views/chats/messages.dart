@@ -21,7 +21,7 @@ class _MyMessageScreenState extends State<MyMessageScreen> {
   void initState() {
     super.initState();
     print('MessageScreenInitStateCalled');
-    Future.delayed(const Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 5), () {
       isLoading.value = false;
     });
   }

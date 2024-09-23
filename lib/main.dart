@@ -51,7 +51,8 @@ class MyInitialBindings implements Bindings {
 
   @override
   void dependencies() {
-    Get.lazyPut<ConnectivityController>(() => ConnectivityController());
+    Get.lazyPut<ConnectivityController>(() => ConnectivityController(),
+        fenix: true);
   }
 }
 

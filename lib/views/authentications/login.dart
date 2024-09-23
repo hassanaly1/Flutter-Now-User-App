@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:user_app/helpers/custom_button.dart';
+import 'package:user_app/helpers/custom_text.dart';
 import 'package:user_app/helpers/reusable_textfield.dart';
 import 'package:user_app/utils/appcolors.dart';
-import 'package:user_app/helpers/custom_text.dart';
 import 'package:user_app/utils/toast.dart';
 import 'package:user_app/utils/validator.dart';
 import 'package:user_app/views/authentications/forget_password.dart';
@@ -83,6 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               text: 'Forget Password?',
                               fontSize: 12.0,
                               fontWeight: FontWeight.w500,
+                              textColor: AppColors.whiteTextColor,
                             ),
                           ),
                         ),
@@ -135,6 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontSize: 12.0,
                           textAlign: TextAlign.center,
                           fontWeight: FontWeight.w500,
+                          textColor: AppColors.whiteTextColor,
                         ),
                         SizedBox(height: context.height * 0.01),
                         CustomButton(

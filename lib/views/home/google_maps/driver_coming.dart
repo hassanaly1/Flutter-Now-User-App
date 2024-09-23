@@ -30,11 +30,17 @@ class _DriverComingScreenState extends State<DriverComingScreen> {
   @override
   void initState() {
     super.initState();
+    MyCustomSuccessToast(title: 'Driver has Accepted your Request')
+        .showToast(context);
     _controller = Get.put(MyRideController());
     _universalController = Get.find<MyUniversalController>();
     Timer(
       const Duration(seconds: 10),
-      () => _controller.isDriverArrived.value = true,
+      () {
+        _controller.isDriverArrived.value = true;
+        MyCustomSuccessToast(title: 'Driver has Arrived to your Location')
+            .showToast(context);
+      },
     );
   }
 
